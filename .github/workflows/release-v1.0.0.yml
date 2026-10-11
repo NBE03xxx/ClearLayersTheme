@@ -1,0 +1,41 @@
+name: Release v1.0.0
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/release-v1.0.0.yml
+    tags:
+      - v1.0.0
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-v1.0.0
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Publish stable release from tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view v1.0.0 >/dev/null 2>&1; then
+            echo 'Release v1.0.0 already exists.'
+            exit 0
+          fi
+          gh api "repos/$GH_REPO/contents/docs/releases/v1.0.0.md?ref=v1.0.0" \
+            --jq '.content' | base64 --decode > "$RUNNER_TEMP/release-notes.md"
+          gh release create v1.0.0 \
+            --verify-tag \
+            --title 'Clear Layers v1.0.0' \
+            --notes-file "$RUNNER_TEMP/release-notes.md" \
+            --latest
