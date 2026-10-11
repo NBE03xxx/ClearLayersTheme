@@ -1,6 +1,6 @@
 {
     "name": "clear_layers",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Collection of build tools for Clear Layers.",
     "author": "Aten Design Group",
     "devDependencies": {

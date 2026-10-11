@@ -122,6 +122,10 @@
   .c-search-bar[data-search-ready] .c-search-bar__content {
     inline-size: 100%;
   }
+  .c-search-bar__content input[type=text],
+  .c-search-bar__content input[type=search] {
+    font-size: max(1rem, 16px);
+  }
 }
 @media (forced-colors: active) {
   .c-search-bar__content .form-actions::before {

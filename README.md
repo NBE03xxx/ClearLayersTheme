@@ -5,7 +5,7 @@ Drupal 11 用の、半透明のパネル・柔らかなぼかし・重なりに�
 ![Clear Layers の標準背景](images/backgrounds/waves-blue.png)
 
 - 機械名: `clear_layers`
-- バージョン: `1.0.0`
+- バージョン: `1.0.1`
 - 検証環境: Drupal 11.4.9 / Canvas 1.12.0
 - 親テーマ: なし（`base theme: false`）
 

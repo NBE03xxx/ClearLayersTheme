@@ -134,6 +134,12 @@
   .c-search-bar[data-search-ready] .c-search-bar__content {
     inline-size: 100%;
   }
+
+  // Avoid focus zoom shifting the viewport on iPhones.
+  .c-search-bar__content input[type='text'],
+  .c-search-bar__content input[type='search'] {
+    font-size: max(1rem, 16px);
+  }
 }
 
 @media (forced-colors: active) {

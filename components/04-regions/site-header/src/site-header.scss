@@ -121,8 +121,10 @@
     position: absolute;
     z-index: var(--lg-zindex-over, 10);
     inset-block-start: calc(100% + 0.5rem);
-    inset-inline: 0;
-    padding: 1rem;
+    inset-inline-start: auto;
+    inset-inline-end: 0.5rem;
+    inline-size: min(17.5rem, calc(100% - 1rem));
+    padding: 0.75rem;
     border: 1px solid var(--lg-glass-edge, var(--lg-shell-line));
     border-radius: 1.25rem;
     background: var(--lg-glass-surface, var(--lg-shell-paper));
