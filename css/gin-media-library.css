@@ -1,0 +1,16 @@
+/**
+ * Optional Gin media-library compatibility styles.
+ *
+ * Install through Gin's public://gin-custom.css; see docs/migration.md.
+ * These styles are not part of Clear Layers' frontend libraries.
+ *
+ * Claro's minimum content height adds to Gin's percentage padding, making
+ * previews taller than they are wide. Use an explicit square instead.
+ * The extra grid class keeps this rule effective regardless of CSS order.
+ */
+.media-library-item.media-library-item--grid .media-library-item__preview {
+  min-height: 0;
+  padding-block-end: 0;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+}
