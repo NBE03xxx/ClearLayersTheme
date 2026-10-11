@@ -1,0 +1,8 @@
+/* stylelint-disable no-invalid-position-declaration */
+.c-video__wrapper {
+  position: relative;
+}
+
+.c-video__caption {
+  margin: 0;
+}

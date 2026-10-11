@@ -1,0 +1,12 @@
+<div{{ attributes.addClass('c-article-header') }}>
+  <div class="c-article-header__meta">
+    {% if date %}<time datetime="{{ date|format_date('custom', 'c') }}">{{ date|format_date('custom', 'Y-m-d') }}</time>{% endif %}
+    {% if author %}<span>{% if author_url %}<a href="{{ author_url }}">{{ author }}</a>{% else %}{{ author }}{% endif %}</span>{% endif %}
+  </div>
+  {{ include('clear_layers:content-heading', {heading_text: heading_text|default(''), level: level|default(1), text_color: 'default', text_size: 'heading-responsive-6xl', align: 'left'}, with_context = false) }}
+  {% if media.src %}
+    <div class="c-article-header__media">
+      {{ include('canvas:image', {src: media.src, alt: media.alt|default(''), width: media.width, height: media.height, loading: 'eager'}, with_context = false) }}
+    </div>
+  {% endif %}
+</div>

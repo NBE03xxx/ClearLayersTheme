@@ -1,0 +1,112 @@
+// Override the core moderation library only inside this component.
+.c-moderation-panel.entity-moderation-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2fr) auto;
+  align-items: end;
+  gap: 1.25rem;
+  margin-block: 1.5rem;
+  margin-inline: 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--lg-glass-edge, #9eb6d3);
+  border-radius: 1.25rem;
+  color: var(--lg-shell-ink, #122b49);
+  background: var(--lg-glass-surface, #edf6ff);
+  box-shadow: var(--lg-glass-shadow, none);
+  -webkit-backdrop-filter: var(--lg-glass-filter, none);
+  backdrop-filter: var(--lg-glass-filter, none);
+
+  .entity-moderation-form__item {
+    display: block;
+    min-inline-size: 0;
+    margin: 0;
+  }
+
+  .form-item {
+    margin: 0;
+  }
+
+  .form-item label {
+    display: block;
+    margin-block-end: 0.5rem;
+    padding: 0;
+    color: var(--lg-shell-muted, #405671);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .c-moderation-panel__state .form-item {
+    min-block-size: 3rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  select,
+  input[type='text'] {
+    inline-size: 100%;
+    min-inline-size: 0;
+    block-size: 3rem;
+    padding: 0.75rem;
+    border: 1px solid var(--lg-shell-line, #9eb6d3);
+    border-radius: 0.875rem;
+    color: var(--lg-shell-ink, #122b49);
+    background-color: var(--lg-shell-paper, #edf6ff);
+  }
+
+  select {
+    padding-inline-end: 2.75rem;
+  }
+
+  [dir='rtl'] & select {
+    background-position: left 12px center;
+  }
+
+  option {
+    color: var(--lg-shell-ink, #122b49);
+    background: var(--lg-shell-paper, #edf6ff);
+  }
+
+  input[type='submit'] {
+    min-block-size: 3rem;
+    margin: 0;
+    padding-inline: 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--lg-shell-paper, #edf6ff);
+    background: var(--lg-shell-accent, #0753b5);
+    font-weight: 600;
+    white-space: normal;
+  }
+
+  select:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--lg-shell-accent, #0753b5);
+    outline-offset: 3px;
+  }
+}
+
+@media (width < 60rem) {
+  .c-moderation-panel.entity-moderation-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width < 40rem) {
+  .c-moderation-panel.entity-moderation-form {
+    grid-template-columns: minmax(0, 1fr);
+
+    input[type='submit'] {
+      inline-size: 100%;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .c-moderation-panel.entity-moderation-form {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+}

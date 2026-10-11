@@ -1,0 +1,56 @@
+/* stylelint-disable no-invalid-position-declaration */
+figure {
+  margin-block: 40px 0;
+  margin-inline: 0;
+}
+figure:first-child {
+  margin-block-start: 0;
+}
+figure img {
+  display: block;
+}
+
+img {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+figcaption {
+  margin-block: 12px 0;
+  margin-inline: 0;
+}
+
+.media--remote-video {
+  inline-size: 100%;
+}
+.media--remote-video iframe {
+  aspect-ratio: 16/9;
+  block-size: auto;
+  inline-size: 100%;
+}
+
+@media (max-width: 767.98px) {
+  .align-left,
+  .align-right {
+    float: none;
+  }
+}
+@media (min-width: 768px) {
+  .align-left,
+  .align-right {
+    margin-block-start: 8px;
+    max-inline-size: 40%;
+  }
+}
+
+@media (min-width: 768px) {
+  .align-left {
+    margin-inline-end: 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .align-right {
+    margin-inline-start: 32px;
+  }
+}

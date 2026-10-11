@@ -1,0 +1,19 @@
+{% set branding_markup %}{% block branding %}{% endblock %}{% endset %}
+{% set actions_markup %}
+  {% block actions %}{% endblock %}
+{% endset %}
+{% set header_branding_width = max(1, min(branding_width ?? 25, 99)) %}
+{% set header_branding_alignment = branding_alignment in ['left', 'center', 'right'] ? branding_alignment : 'left' %}
+{% set header_branding_align = {left: 'flex-start', center: 'center', right: 'flex-end'}[header_branding_alignment] %}
+{% set header_actions_alignment = actions_alignment in ['left', 'center', 'right'] ? actions_alignment : 'left' %}
+{% set header_actions_align = {left: 'flex-start', center: 'center', right: 'flex-end'}[header_actions_alignment] %}
+<header{{ attributes.addClass('site-header').setAttribute('data-branding-alignment', header_branding_alignment).setAttribute('data-actions-alignment', header_actions_alignment).setAttribute('style', attributes.style|default('') ~ '; --header-branding-column: ' ~ header_branding_width ~ 'fr; --header-actions-column: ' ~ (100 - header_branding_width) ~ 'fr; --header-branding-align: ' ~ header_branding_align ~ '; --header-branding-text-align: ' ~ header_branding_alignment ~ '; --header-actions-align: ' ~ header_actions_align) }}>
+  <div class="site-header__inner l-container">
+    {% if branding_markup|trim %}
+      <div class="site-header__branding">{{ branding_markup }}</div>
+    {% endif %}
+    {% if actions_markup|trim %}
+      <div class="site-header__actions">{{ actions_markup }}</div>
+    {% endif %}
+  </div>
+</header>

@@ -1,0 +1,11 @@
+/* stylelint-disable no-invalid-position-declaration */
+a {
+  color: var(--lg-color-primary);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+a:hover, a:focus {
+  color: var(--lg-color-secondary);
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}

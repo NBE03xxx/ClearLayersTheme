@@ -1,0 +1,483 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming.
+ */
+
+use Drupal\block_content\BlockContentInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Uuid\Uuid;
+use Drupal\Core\Extension\ThemeSettingsProvider;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
+use Drupal\views\ViewExecutable;
+
+require_once __DIR__ . '/includes/palettes.inc';
+require_once __DIR__ . '/includes/background.inc';
+require_once __DIR__ . '/includes/spacing.inc';
+require_once __DIR__ . '/includes/glass.inc';
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function clear_layers_element_info_alter(array &$info): void {
+  if (isset($info['component'])) {
+    array_unshift($info['component']['#pre_render'], [\Drupal\clear_layers\Render\SharedSiteSection::class, 'prepare']);
+    array_unshift($info['component']['#pre_render'], [\Drupal\clear_layers\Render\TaxonomyListing::class, 'prepare']);
+    array_unshift($info['component']['#pre_render'], [\Drupal\clear_layers\Render\FooterMenu::class, 'prepare']);
+    array_unshift($info['component']['#pre_render'], [\Drupal\clear_layers\Render\AccountMenu::class, 'prepare']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function clear_layers_preprocess_html(array &$variables): void {
+  $config = \Drupal::config('clear_layers.settings');
+  $palette_id = clear_layers_resolve_palette($config->get('color_palette'));
+  $palette = clear_layers_color_palettes()[$palette_id];
+  $attributes = $variables['html_attributes'];
+  $attributes->setAttribute('data-site-palette', $palette_id);
+  $attributes->setAttribute('data-glass-depth', clear_layers_glass_depth($config->get('glass_depth')));
+  $style = (string) ($attributes['style'] ?? '');
+  foreach (['light', 'dark'] as $mode) {
+    foreach ($palette[$mode] as $token => $color) {
+      $style .= '; --lg-palette-' . $mode . '-' . $token . ': ' . $color;
+    }
+  }
+  $style .= '; --lg-block-gap: ' . clear_layers_spacing_value($config->get('block_spacing')) . 'px';
+  $style .= '; --lg-page-gutter: ' . clear_layers_spacing_value($config->get('page_gutter')) . 'px';
+  $style .= '; --lg-glass-tint: ' . (100 - clear_layers_glass_value('glass_transparency', $config->get('glass_transparency'))) . '%';
+  $style .= '; --lg-glass-blur: ' . clear_layers_glass_value('glass_blur', $config->get('glass_blur')) . 'px';
+  $cacheability = CacheableMetadata::createFromObject($config);
+  if (\Drupal::moduleHandler()->moduleExists('media') && ($uuid = $config->get('background_media_uuid'))) {
+    // The list tag also handles a configured item being deleted/restored.
+    $cacheability->addCacheTags(\Drupal::entityTypeManager()->getDefinition('media')->getListCacheTags());
+    if ($media = clear_layers_background_media($uuid)) {
+      $cacheability->addCacheableDependency($media);
+      if ($media->getSource()->getPluginId() === 'image') {
+        $field_name = $media->getSource()->getConfiguration()['source_field'];
+        if ($source_file = $media->get($field_name)->entity) {
+          // File changes must invalidate HTML even if the file is unusable.
+          $cacheability->addCacheableDependency($source_file);
+        }
+      }
+      if ($file = clear_layers_background_file($media)) {
+        $url = \Drupal::service('file_url_generator')->generateString($file->getFileUri());
+        $style .= '; --lg-page-background-image: ' . clear_layers_background_css_url($url);
+      }
+    }
+  }
+  $attributes->setAttribute('style', ltrim($style, '; '));
+  // Rendering this tag also bubbles the setting's cache dependency into HTML.
+  $variables['clear_layers_meta'] = [
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => ['name' => 'theme-color', 'content' => $palette['dark']['backdrop']],
+    '#cache' => ['tags' => $config->getCacheTags()],
+  ];
+  $cacheability->applyTo($variables['clear_layers_meta']);
+}
+
+/**
+ * Get a theme setting value.
+ *
+ * @param string $setting_name
+ *   The name of the theme setting to retrieve.
+ * @param mixed $default
+ *   The default value if the setting is not found.
+ *
+ * @return mixed
+ *   The theme setting value or default.
+ */
+function clear_layers_get_theme_setting($setting_name, $default = NULL) {
+  try {
+    /** @var \Drupal\Core\Extension\ThemeSettingsProvider $provider */
+    $provider = \Drupal::service(ThemeSettingsProvider::class);
+    return $provider->getSetting($setting_name) ?? $default;
+  }
+  catch (\Exception $e) {
+    return $default;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function clear_layers_preprocess_checkboxes(&$variables) {
+  $variables['attributes']['class'][] = 'form-boolean-group';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function clear_layers_preprocess_field(&$variables) {
+  $rich_field_types = ['text_with_summary', 'text', 'text_long'];
+
+  if (in_array($variables['field_type'], $rich_field_types, TRUE)) {
+    $variables['attributes']['class'][] = 'text-content';
+  }
+}
+
+/**
+ * Implements hook_preprocess_form_element().
+ */
+function clear_layers_preprocess_form_element(&$variables) {
+  if (in_array($variables['element']['#type'] ?? FALSE, ['checkbox', 'radio'], TRUE)) {
+    $variables['attributes']['class'][] = 'form-type-boolean';
+  }
+
+  if (!empty($variables['description']['attributes'])) {
+    $variables['description']['attributes']->addClass('form-item__description');
+  }
+
+  if ($variables['disabled']) {
+    $variables['label']['#attributes']['class'][] = 'is-disabled';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function clear_layers_preprocess_form_element_label(&$variables) {
+  $variables['attributes']['class'][] = 'form-item__label';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function clear_layers_preprocess_input(&$variables) {
+  if (
+    !empty($variables['element']['#title_display']) &&
+    $variables['element']['#title_display'] === 'attribute' &&
+    !empty((string) $variables['element']['#title'])
+  ) {
+    $variables['attributes']['title'] = (string) $variables['element']['#title'];
+  }
+
+  $type_api = $variables['element']['#type'];
+  $type_html = $variables['attributes']['type'];
+  $text_types_html = [
+    'text',
+    'email',
+    'tel',
+    'number',
+    'search',
+    'password',
+    'date',
+    'time',
+    'file',
+    'color',
+    'datetime-local',
+    'url',
+    'month',
+    'week',
+  ];
+
+  if (in_array($type_html, $text_types_html, TRUE)) {
+    $variables['attributes']['class'][] = 'form-element';
+    $variables['attributes']['class'][] = Html::getClass('form-element--type-' . $type_html);
+    $variables['attributes']['class'][] = Html::getClass('form-element--api-' . $type_api);
+
+    if (!empty($variables['element']['#autocomplete_route_name'])) {
+      $variables['autocomplete_message'] = t('Loading…');
+    }
+  }
+
+  if (in_array($type_html, ['checkbox', 'radio'], TRUE)) {
+    $variables['attributes']['class'][] = 'form-boolean';
+    $variables['attributes']['class'][] = Html::getClass('form-boolean--type-' . $type_html);
+  }
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function clear_layers_preprocess_menu(&$variables) {
+  $menu_name = $variables['menu_name'];
+  $attributes = &$variables['attributes'];
+
+  // Add base classes to our menu.
+  $attributes['class'][] = 'menu';
+  $attributes['class'][] = "menu--{$menu_name}";
+
+  clear_layers_prepare_menu_items($variables['items']);
+}
+
+/**
+ * Helper function to standardize gaps in the menu markup.
+ *
+ * @param array $items
+ *   The array of menu items.
+ */
+function clear_layers_prepare_menu_items(&$items) {
+  foreach ($items as &$item) {
+    if (!isset($item['url'])) {
+      continue;
+    }
+
+    $item['url'] = clear_layers_prepare_menu_url($item['url']);
+
+    // Add the data-plugin-id attribute based on the menu link's plugin ID.
+    // This is utilized in the menu components.
+    if (isset($item['original_link'])) {
+      $link_attributes = $item['url']->getOption('attributes') ?? [];
+      $link_attributes['data-plugin-id'] = Html::getUniqueId($item['original_link']->getPluginId());
+      $item['url']->setOption('attributes', $link_attributes);
+    }
+
+    // Set classes for the link wrapper.
+    $item_classes = ['menu__item'];
+
+    if ($item['is_expanded'] ?? FALSE) {
+      $item_classes[] = 'menu__item--expanded';
+    }
+
+    if ($item['is_collapsed'] ?? FALSE) {
+      $item_classes[] = 'menu__item--collapsed';
+    }
+
+    if ($item['in_active_trail'] ?? FALSE) {
+      $item_classes[] = 'menu__item--active-trail';
+    }
+
+    // Ensure the attributes key exists and is an Attribute object.
+    if (!isset($item['attributes'])) {
+      $item['attributes'] = new Attribute();
+    }
+    $item['attributes']->addClass($item_classes);
+    $item['link_type'] = $item['url']->getOption('link_type') ?? '';
+
+    switch ($item['link_type']) {
+      case 'button':
+        $item['link'] = [
+          '#type' => 'html_tag',
+          '#tag' => 'button',
+          '#value' => $item['title'] ?? '',
+          '#attributes' => $item['url']->getOption('attributes') ?? [],
+        ];
+        break;
+
+      case 'nolink':
+        $item['link'] = [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#value' => $item['title'] ?? '',
+          '#attributes' => $item['url']->getOption('attributes') ?? [],
+        ];
+        break;
+
+      default:
+        $item['link'] = [
+          '#type' => 'link',
+          '#title' => $item['title'] ?? '',
+          '#url' => $item['url'],
+        ];
+        break;
+    }
+
+    if (!empty($item['below'])) {
+      clear_layers_prepare_menu_items($item['below']);
+    }
+  }
+}
+
+/**
+ * Process a menu URL object.
+ */
+function clear_layers_prepare_menu_url(Url $url): Url {
+  $attributes = $url->getOption('attributes') ?? [];
+
+  if (isset($attributes['class']) && is_string($attributes['class'])) {
+    $attributes['class'] = explode(' ', $attributes['class']);
+  }
+
+  $attributes['class'][] = 'menu__link';
+  $link_type = 'link';
+
+  if ($url->isRouted()) {
+    $link_type = match ($url->getRouteName()) {
+      '<nolink>' => 'nolink',
+      '<button>' => 'button',
+      default => 'link',
+    };
+  }
+
+  if ($link_type === 'button') {
+    $attributes['class'][] = 'menu__button';
+    $attributes['aria-haspopup'] = 'true';
+    $attributes['aria-expanded'] = 'false';
+  }
+
+  $url->setOption('attributes', $attributes);
+  $url->setOption('link_type', $link_type);
+
+  return $url;
+}
+
+/**
+ * Implements hook_preprocess_menu_link_content().
+ */
+function clear_layers_preprocess_menu_link_content(&$variables): void {
+  $menu_item = $variables['menu_link_content'];
+
+  $url = clear_layers_prepare_menu_url($menu_item->getUrlObject());
+
+  $variables['title'] = $menu_item->getTitle();
+  $variables['url'] = $url;
+  $variables['link_type'] = $url->getOption('link_type') ?? '';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function clear_layers_preprocess_radios(&$variables) {
+  $variables['attributes']['class'][] = 'form-boolean-group';
+}
+
+/**
+ * Implements hook_preprocess_page() for clear_layers theme.
+ *
+ * NOTE: If you want to use this outside the footer, you need to
+ * rename this function to clear_layers_preprocess_page and adjust the
+ * region--footer.html.twig file and add the backToTop variable to the
+ * page.html.twig file.
+ */
+function clear_layers_preprocess_region__footer(array &$variables) {
+
+  if (clear_layers_get_theme_setting('display_back_to_top')) {
+    $variables['backToTop'] = [
+      '#type' => 'component',
+      '#component' => 'clear_layers:back-to-top',
+      '#props' => [
+        'text' => t('Back to Top'),
+      ],
+    ];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function clear_layers_preprocess_select(&$variables) {
+  $variables['attributes']['class'][] = 'form-element';
+  $variables['attributes']['class'][] = $variables['element']['#multiple'] ?
+    'form-element--type-select-multiple' :
+    'form-element--type-select';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function clear_layers_preprocess_textarea(&$variables) {
+  $variables['attributes']['class'][] = 'form-element';
+  $variables['attributes']['class'][] = 'form-element--type-textarea';
+  $variables['attributes']['class'][] = 'form-element--api-textarea';
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function clear_layers_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  $content = $variables['elements']['content'];
+
+  if (isset($content['#block_content']) && $content['#block_content'] instanceof BlockContentInterface) {
+    $suggestions[] = 'block__block_content__' . $content['#block_content']->bundle();
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function clear_layers_preprocess_block(array &$variables): void {
+  $footer_menu = !empty($variables['elements']['#clear_layers_footer_menu']);
+  if (($variables['base_plugin_id'] ?? '') === 'system_menu_block' && (($variables['derivative_plugin_id'] ?? '') === 'footer' || $footer_menu)) {
+    $variables['attributes']['class'][] = 'lg-footer-menu-block';
+    if ($footer_menu || Uuid::isValid($variables['elements']['#id'] ?? '')) {
+      // Canvas hides label_display. Component props control the visual heading;
+      // keep its text available as the navigation's accessible name.
+      $variables['label'] = $variables['configuration']['label'];
+      $variables['configuration']['label_display'] = TRUE;
+      $variables['attributes']['class'][] = 'lg-footer-menu-block--canvas';
+    }
+  }
+  if (($variables['base_plugin_id'] ?? '') === 'views_block' && str_starts_with($variables['derivative_plugin_id'] ?? '', 'tag-')) {
+    $variables['attributes']['class'][] = 'lg-tag-block';
+    // Canvas uses component UUIDs as block IDs and hides label_display in its
+    // form. Let its editable Views title control whether a heading is shown.
+    // Regular Block layout instances keep their own label visibility setting.
+    if (Uuid::isValid($variables['elements']['#id'] ?? '')) {
+      $variables['label'] = trim($variables['configuration']['views_label'] ?? '');
+    }
+    $variables['title_attributes']['class'][] = 'block__title';
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_grid_responsive().
+ */
+function clear_layers_preprocess_views_view_grid_responsive(array &$variables): void {
+  if (($variables['view'] ?? NULL) instanceof ViewExecutable && $variables['view']->id() === 'tag' && ($variables['options']['alignment'] ?? '') === 'horizontal') {
+    $columns = max(1, (int) $variables['options']['columns']);
+    // Footer instances set this variable independently. Outside a footer,
+    // preserve the column count configured in Views.
+    $variables['options']['columns'] = 'var(--footer-tag-columns, ' . $columns . ')';
+    $variables['attributes']['class'][] = 'lg-tag-grid';
+  }
+}
+
+/**
+ * Implements theme_theme_suggestions_input_alter().
+ */
+function clear_layers_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  // Add Twig template suggestion based on data attributes. To use this, in a
+  // `hook_form_alter()` add an element to the `#attributes` array for
+  // `data-twig-suggestion`. `button` elements have a template already made.
+  if (isset($element['#attributes']['data-twig-suggestion'])) {
+    $suggestions[] = "input__{$element['#type']}__{$element['#attributes']['data-twig-suggestion']}";
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function clear_layers_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables) {
+  $view_mode = $variables['elements']['#view_mode'];
+  $suggestions[] = 'taxonomy_term__' . $view_mode;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * @todo remove after these are resolved:
+ * https://www.drupal.org/project/drupal/issues/2270883
+ * https://www.drupal.org/project/drupal/issues/2766379
+ */
+function clear_layers_theme_suggestions_user_alter(array &$suggestions, array $variables) {
+  $view_mode = $variables['elements']['#view_mode'] ?? '';
+  if ($view_mode) {
+    $suggestions[] = 'user__' . $view_mode;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function clear_layers_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  $view = $variables['view'];
+
+  if (
+    $view instanceof ViewExecutable
+    && $display = $view->current_display
+  ) {
+    $view_id = $view->id();
+    $original = $variables['theme_hook_original'];
+
+    $suggestions[] = "{$original}__$view_id";
+    $suggestions[] = "{$original}__{$view_id}__$display";
+  }
+}

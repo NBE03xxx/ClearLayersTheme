@@ -1,0 +1,8 @@
+name: Clear Layers Canvas Taxonomy
+type: module
+description: Applies an editable Canvas page template to taxonomy listing pages.
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - canvas:canvas
+  - drupal:taxonomy

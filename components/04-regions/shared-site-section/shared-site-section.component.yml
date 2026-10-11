@@ -1,0 +1,20 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: サイト共通ヘッダー・フッター
+group: サイト共通
+description: 共通パターンを参照して表示します。内容は Canvas の「サイト共通ヘッダー」「サイト共通フッター」で編集・公開すると、Home・記事・分類一覧へ一括反映されます。
+status: stable
+props:
+  type: object
+  required: [section]
+  properties:
+    section:
+      type: string
+      title: 共通部品
+      description: '各ページには共通部品の参照を配置しています。内部の部品は <a href="/canvas/pattern/site_header" target="_blank" rel="noopener">サイト共通ヘッダーを編集（別タブ）</a> または <a href="/canvas/pattern/site_footer" target="_blank" rel="noopener">サイト共通フッターを編集（別タブ）</a> から変更し、公開してください。変更は共通部品を使う全ページに反映されます。'
+      enum: [header, footer]
+      meta:enum:
+        header: ナビゲーションとヘッダー
+        footer: フッター
+      default: header
+      examples: [header]
+# There are no editor-managed slots. The render callback supplies the content.

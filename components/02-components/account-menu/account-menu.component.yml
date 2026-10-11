@@ -1,0 +1,37 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: ログイン・ログアウトメニュー
+group: メニュー
+description: Drupal のユーザーアカウントメニューを表示します。ログイン状態に応じてログイン・ログアウトを自動で切り替え、タイトルも設定できます。
+status: stable
+libraryOverrides:
+  dependencies:
+    - core/components.clear_layers--footer-menu
+props:
+  type: object
+  properties:
+    title_override:
+      type: string
+      title: タイトルの上書き
+      description: 空欄の場合は、ユーザーアカウントメニューのタイトルを使用します。
+      default: ''
+    show_title:
+      type: boolean
+      title: タイトルを表示
+      default: false
+      examples: [false]
+    title_alignment:
+      type: string
+      title: タイトルの表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    show_account_link:
+      type: boolean
+      title: ユーザーアカウント情報を表示
+      description: オフならログイン／ログアウトだけを表示し、オンならアカウント情報へのリンクも表示します。この配置だけに適用します。
+      default: false
+      examples: [false]

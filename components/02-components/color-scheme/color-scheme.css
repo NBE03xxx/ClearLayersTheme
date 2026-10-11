@@ -1,0 +1,64 @@
+.color-scheme {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--lg-shell-ink, #26332f);
+}
+
+.color-scheme[hidden] {
+  display: none !important;
+}
+
+.color-scheme-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.25rem;
+  border: 0;
+  border-radius: 999px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.color-scheme-button:hover {
+  background: color-mix(in srgb, var(--lg-shell-accent, #31594a) 10%, transparent);
+}
+
+.color-scheme-button:focus-visible {
+  outline: 2px solid var(--lg-shell-accent, #31594a);
+  outline-offset: 4px;
+}
+
+.color-scheme-icon {
+  display: none;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+}
+
+.color-scheme-button[data-effective-scheme=light] .color-scheme-icon-light,
+.color-scheme-button[data-effective-scheme=dark] .color-scheme-icon-dark {
+  display: block;
+}
+
+.color-scheme-auto {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  display: none;
+  padding: 0.0625rem 0.1875rem;
+  border-radius: 999px;
+  background: var(--lg-shell-paper, #faf9f6);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.color-scheme-button[data-mode=system] .color-scheme-auto {
+  display: block;
+}

@@ -1,0 +1,13 @@
+<div{{ attributes.addClass('color-scheme').setAttribute('data-color-scheme-control', '').setAttribute('data-label', label|default('表示'|t)).setAttribute('data-system-label', system_label|default('自動'|t)).setAttribute('data-light-label', light_label|default('ライト'|t)).setAttribute('data-dark-label', dark_label|default('ダーク'|t)).setAttribute('hidden', true) }}>
+  <button type="button" class="color-scheme-button" data-color-scheme-button data-mode="system" aria-label="{{ label|default('表示'|t) }}">
+    <svg class="color-scheme-icon color-scheme-icon-light" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true" focusable="false">
+      <circle cx="16" cy="16" r="6"/>
+      <path d="M16 3v3m0 20v3M3 16h3m20 0h3M6.8 6.8l2.1 2.1m14.2 14.2 2.1 2.1M6.8 25.2l2.1-2.1M23.1 8.9l2.1-2.1"/>
+    </svg>
+    <svg class="color-scheme-icon color-scheme-icon-dark" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M27 18.3A11.5 11.5 0 0 1 13.7 5a11.5 11.5 0 1 0 13.3 13.3Z"/>
+    </svg>
+    <span class="color-scheme-auto" aria-hidden="true">A</span>
+    <span class="visually-hidden" data-color-scheme-label>{{ system_label|default('自動'|t) }}</span>
+  </button>
+</div>

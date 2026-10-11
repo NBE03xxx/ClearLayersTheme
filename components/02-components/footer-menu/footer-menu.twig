@@ -1,0 +1,9 @@
+{% set title_align = title_alignment in ['left', 'center', 'right'] ? title_alignment : 'left' %}
+{% set preview = canvas_is_preview|default(false) %}
+{% if preview %}{% set attributes = attributes.addClass('c-footer-menu--canvas-preview') %}{% endif %}
+<div{{ attributes.addClass('c-footer-menu').setAttribute('style', attributes.style|default('') ~ '; --footer-menu-title-display: ' ~ (show_title|default(false) ? 'block' : 'none') ~ '; --footer-menu-title-align: ' ~ title_align) }}>
+  {% if preview %}
+    <div class="c-footer-menu__editor-label" aria-hidden="true">フッターメニュー（タイトル設定）</div>
+  {% endif %}
+  {% block content %}{% endblock %}
+</div>

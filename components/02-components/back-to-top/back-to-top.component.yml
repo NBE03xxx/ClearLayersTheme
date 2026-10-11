@@ -1,0 +1,19 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json
+name: ページの先頭へ
+group: 操作・補助
+description: A back to top component
+props:
+  type: object
+  required:
+    - text
+  properties:
+    iconType:
+      type: string
+      title: Icon Type
+      enum:
+        - icon-arrow-up
+    text:
+      type: string
+      title: Jump link text
+      examples:
+        - Back to top

@@ -1,0 +1,9 @@
+.c-tag-list {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+.c-tag-list > .lg-tag-block > .block__title {
+  text-align: var(--tag-title-align, left);
+}

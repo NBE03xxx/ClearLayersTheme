@@ -1,0 +1,1 @@
+(()=>{function a(t){var a,e=t.target.closest(".js--block-link");e&&"A"!==t.target.tagName&&(a=e.getAttribute("data-href"),e=e.getAttribute("data-target"),t.metaKey&&a||"_blank"===e?window.open(a,"_blank"):a&&(window.location.href=a))}var t,e;t=Drupal,e=once,t.behaviors.blockLink={attach(){e("blockLink","body").forEach(t=>{t.addEventListener("click",a)})}}})();

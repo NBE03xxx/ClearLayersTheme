@@ -1,0 +1,17 @@
+$schema: https://git.drupalcode.org/project/sdc/-/raw/1.x/src/metadata.schema.json
+name: Moderation panel
+status: stable
+description: A glass panel for Drupal content moderation controls.
+slots:
+  current_state:
+    title: Current state
+    description: The current moderation state, including its label.
+  new_state:
+    title: New state
+    description: The Drupal moderation transition select element.
+  revision_log:
+    title: Revision log
+    description: The Drupal revision log input element.
+  actions:
+    title: Actions
+    description: The Drupal moderation submit control.

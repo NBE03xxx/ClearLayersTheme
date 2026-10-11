@@ -1,0 +1,12 @@
+{% set title_align = title_alignment in ['left', 'center', 'right'] ? title_alignment : 'left' %}
+{% set title_face = title_font in ['theme', 'sans', 'serif'] ? title_font : 'theme' %}
+{% set title_font_size = max(12, min(title_size ?? 28, 72)) %}
+{% set title_font_weight = {normal: 400, medium: 500, bold: 700}[title_weight|default('bold')]|default(700) %}
+<div{{ attributes.addClass('c-blog-list').setAttribute('data-show-feed-link', show_feed_link|default(false) ? 'true' : 'false').setAttribute('data-title-font', title_face).setAttribute('style', attributes.style|default('') ~ '; --blog-title-align: ' ~ title_align ~ '; --blog-title-size: ' ~ title_font_size ~ 'px; --blog-title-weight: ' ~ title_font_weight) }}>
+  {% if title|default('')|trim is not empty %}
+    <h2 class="c-blog-list__title">{{ title }}</h2>
+  {% endif %}
+  <div class="c-blog-list__content">
+    {% block content %}{% endblock %}
+  </div>
+</div>

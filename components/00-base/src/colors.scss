@@ -1,0 +1,60 @@
+//
+// Base - Color
+//
+// - 01 - Theme Colors
+// - 02 - Grayscale
+// - 03 - Semantic Colors
+//
+
+
+//------------------------------------
+//  01 - Theme Colors
+//------------------------------------
+
+:root {
+  --lg-color-blue: #0d6efd;
+  --lg-color-indigo: #6610f2;
+  --lg-color-purple: #6f42c1;
+  --lg-color-pink: #d63384;
+  --lg-color-red: #dc3545;
+  --lg-color-orange: #fd7e14;
+  --lg-color-yellow: #ffc107;
+  --lg-color-green: #198754;
+  --lg-color-teal: #20c997;
+  --lg-color-cyan: #0dcaf0;
+}
+
+
+//------------------------------------
+//  02 - Grayscale
+//------------------------------------
+
+:root {
+  --lg-color-white: #ffffff;
+  --lg-color-gray-100: #f8f9fa;
+  --lg-color-gray-200: #e9ecef;
+  --lg-color-gray-300: #dee2e6;
+  --lg-color-gray-400: #ced4da;
+  --lg-color-gray-500: #adb5bd;
+  --lg-color-gray-600: #6c757d;
+  --lg-color-gray-700: #495057;
+  --lg-color-gray-800: #343a40;
+  --lg-color-gray-900: #212529;
+  --lg-color-black: #000000;
+}
+
+
+//------------------------------------
+//  03 - Semantic Colors
+//------------------------------------
+
+:root {
+  --lg-color-primary: var(--lg-color-blue);
+  --lg-color-secondary: var(--lg-color-gray-900);
+  --lg-color-success: var(--lg-color-green);
+  --lg-color-info: var(--lg-color-cyan);
+  --lg-color-warning: var(--lg-color-yellow);
+  --lg-color-danger: var(--lg-color-red);
+  --lg-color-light: var(--lg-color-gray-100);
+  --lg-color-dark: var(--lg-color-gray-900);
+}

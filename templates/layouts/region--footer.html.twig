@@ -1,0 +1,8 @@
+{% if content %}
+  <div{{ attributes.addClass('region', 'region__name--footer') }}>
+    {% block content %}{{ content }}{% endblock %}
+  </div>
+{% endif %}
+{% if backToTop %}
+  <div class="site-footer__back-to-top">{{ backToTop }}</div>
+{% endif %}

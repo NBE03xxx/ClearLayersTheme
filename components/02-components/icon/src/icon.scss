@@ -1,0 +1,106 @@
+//
+//  @file
+//  Elements - Icon
+//
+//
+
+$icons_path: "/themes/custom/clear_layers/images/icons";
+
+:root {
+  --lg-i-arrow-right:          url("#{$icons_path}/arrow-right.svg");
+  --lg-i-arrow-down:           url("#{$icons_path}/arrow-down.svg");
+  --lg-i-arrow-left:           url("#{$icons_path}/arrow-left.svg");
+  --lg-i-arrow-up:             url("#{$icons_path}/arrow-up.svg");
+  --lg-i-cancel:               url("#{$icons_path}/cancel.svg");
+  --lg-i-checkmark:            url("#{$icons_path}/checkmark.svg");
+  --lg-i-circle-check:         url("#{$icons_path}/circle-check.svg");
+  --lg-i-circle-empty:         url("#{$icons_path}/circle-empty.svg");
+  --lg-i-circle-filled:        url("#{$icons_path}/circle-filled.svg");
+  --lg-i-error:                url("#{$icons_path}/error.svg");
+  --lg-i-minus:                url("#{$icons_path}/minus.svg");
+  --lg-i-plus:                 url("#{$icons_path}/plus.svg");
+  --lg-i-rectangle-checked:    url("#{$icons_path}/rectangle-checked.svg");
+  --lg-i-rectangle-empty:      url("#{$icons_path}/rectangle-empty.svg");
+  --lg-i-status:               url("#{$icons_path}/status.svg");
+  --lg-i-success:              url("#{$icons_path}/success.svg");
+  --lg-i-warning:              url("#{$icons_path}/warning.svg");
+}
+
+// Base
+.c-icon {
+  background-color: var(--lg-color-black);
+  block-size: 32px;
+  display: block;
+  font: 0/0 transparent;
+  inline-size: 32px;
+  mask-size: cover;
+}
+
+//  Icons
+.c-icon--arrow-right {
+  mask: var(--lg-i-arrow-right) no-repeat center;
+}
+
+.c-icon--arrow-down {
+  mask: var(--lg-i-arrow-down) no-repeat center;
+}
+
+.c-icon--arrow-left {
+  mask: var(--lg-i-arrow-left) no-repeat center;
+}
+
+.c-icon--arrow-up {
+  mask: var(--lg-i-arrow-up) no-repeat center;
+}
+
+.c-icon--cancel {
+  mask: var(--lg-i-cancel) no-repeat center;
+}
+
+.c-icon--checkmark {
+  mask: var(--lg-i-checkmark) no-repeat center;
+}
+
+.c-icon--circle-check {
+  mask: var(--lg-i-circle-check) no-repeat center;
+}
+
+.c-icon--circle-empty {
+  mask: var(--lg-i-circle-empty) no-repeat center;
+}
+
+.c-icon--circle-filled {
+  mask: var(--lg-i-circle-filled) no-repeat center;
+}
+
+.c-icon--error {
+  mask: var(--lg-i-error) no-repeat center;
+}
+
+.c-icon--minus {
+  mask: var(--lg-i-minus) no-repeat center;
+}
+
+.c-icon--plus {
+  mask: var(--lg-i-plus) no-repeat center;
+}
+
+.c-icon--rectangle-checked {
+  mask: var(--lg-i-rectangle-checked) no-repeat center;
+}
+
+.c-icon--rectangle-empty {
+  mask: var(--lg-i-rectangle-empty) no-repeat center;
+}
+
+.c-icon--status {
+  mask: var(--lg-i-status) no-repeat center;
+}
+
+.c-icon--success {
+  mask: var(--lg-i-success) no-repeat center;
+}
+
+.c-icon--warning {
+  mask: var(--lg-i-warning) no-repeat center;
+}

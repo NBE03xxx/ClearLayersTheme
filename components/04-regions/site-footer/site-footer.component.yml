@@ -1,0 +1,82 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: フッター（レイアウト）
+group: サイト共通
+description: 上段1列・中段3列・下段1列のフッターです。空の行は公開時に非表示となり、各枠の表示位置を指定できます。ページに1つ配置してください。
+status: stable
+props:
+  type: object
+  properties:
+    tag_columns:
+      type: integer
+      title: タグ：1行あたりの最大要素数
+      description: フッターに配置したタグ一覧の列数です。狭い枠では、タグの文字が読める幅を保つため列数を減らします。
+      minimum: 1
+      maximum: 12
+      default: 8
+      examples: [8]
+    top_alignment:
+      type: string
+      title: 上段の表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    left_alignment:
+      type: string
+      title: 中段・左列の表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    center_alignment:
+      type: string
+      title: 中段・中央列の表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    right_alignment:
+      type: string
+      title: 中段・右列の表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    bottom_alignment:
+      type: string
+      title: 下段の表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+slots:
+  footer_content:
+    title: 上段（1列）
+    description: 横幅全体を使う上段です。ロゴ・説明・メニューなどを配置します。
+  footer_left:
+    title: 中段・左列
+    description: 中段3列の左側です。狭い画面では上から順に縦に並びます。
+  footer_center:
+    title: 中段・中央列
+    description: 中段3列の中央です。
+  footer_right:
+    title: 中段・右列
+    description: 中段3列の右側です。
+  footer_meta:
+    title: 下段（1列）
+    description: 横幅全体を使う下段です。著作権表示・補足リンクなどを配置します。

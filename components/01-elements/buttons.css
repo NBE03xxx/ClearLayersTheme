@@ -1,0 +1,30 @@
+/* stylelint-disable no-invalid-position-declaration */
+.button {
+  font-size: var(--lg-fs-label-18);
+  line-height: var(--lg-lh-label-18);
+  align-items: center;
+  background-color: var(--lg-color-gray-200);
+  display: flex;
+  gap: 10px;
+  padding: 0.625rem 1.25rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.button:hover {
+  cursor: pointer;
+}
+.button a,
+.button span {
+  color: var(--lg-color-black);
+}
+
+.button__icon {
+  display: inline-flex;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.button__icon svg {
+  fill: var(--lg-color-black);
+}

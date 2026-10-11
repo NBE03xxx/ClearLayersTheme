@@ -1,0 +1,10 @@
+{% if content %}
+  {% embed 'clear_layers:site-navigation' with {
+    attributes: attributes.addClass('region', 'region__name--navigation').setAttribute('id', 'main-navigation').setAttribute('tabindex', '-1'),
+    toggle_label: 'Menu'|t,
+    menu_name: 'none',
+    navigation_content: content,
+  } only %}
+    {% block navigation_content %}{{ navigation_content }}{% endblock %}
+  {% endembed %}
+{% endif %}

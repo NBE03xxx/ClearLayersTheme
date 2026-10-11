@@ -1,0 +1,17 @@
+{# Preserve block attributes and contextual editing controls around the SDC. #}
+<div{{ attributes }}>
+  {{ title_prefix }}
+  {% if label %}
+    <h2{{ title_attributes }}>{{ label }}</h2>
+  {% endif %}
+  {{ title_suffix }}
+  {% block content %}
+    {{ include('clear_layers:site-branding', {
+      home_url: path('<front>'),
+      logo_url: site_logo|default(''),
+      site_name: site_name|default(''),
+      site_slogan: site_slogan|default(''),
+      home_label: 'Home'|t,
+    }, with_context = false) }}
+  {% endblock %}
+</div>

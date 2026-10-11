@@ -1,0 +1,131 @@
+.c-search-bar {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  min-inline-size: 0;
+}
+
+.c-search-bar__button[hidden],
+.c-search-bar__content[hidden] {
+  display: none !important;
+}
+
+.c-search-bar__content {
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+.c-search-bar__content form,
+.c-search-bar__content .form--inline {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+.c-search-bar__content .form--inline .form-item,
+.c-search-bar__content form > .form-item {
+  float: none;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  margin: 0;
+}
+.c-search-bar__content input[type=text],
+.c-search-bar__content input[type=search] {
+  inline-size: 100%;
+  min-inline-size: 0;
+  block-size: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--lg-shell-line, #9eb6d3);
+  border-radius: 0.875rem;
+  color: var(--lg-shell-ink, #122b49);
+  background: var(--lg-shell-paper, #edf6ff);
+}
+.c-search-bar__content .form-actions {
+  position: relative;
+  flex: 0 0 auto;
+  align-self: center;
+  margin: 0;
+}
+.c-search-bar__content .form-actions input[type=submit] {
+  inline-size: 2.75rem;
+  min-inline-size: 2.75rem;
+  block-size: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--lg-shell-line, #9eb6d3);
+  border-radius: 50%;
+  color: var(--lg-shell-ink, #122b49);
+  background: transparent;
+  box-shadow: none;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.c-search-bar__content .form-actions::before {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  background: var(--lg-shell-ink, #122b49);
+  -webkit-mask: url("../../../images/icons/search.svg") center/contain no-repeat;
+  mask: url("../../../images/icons/search.svg") center/contain no-repeat;
+  pointer-events: none;
+  content: "";
+}
+.c-search-bar__content .form-actions input[type=submit]:hover {
+  background: color-mix(in srgb, var(--lg-shell-accent, #0753b5) 10%, transparent);
+}
+
+.c-search-bar[data-search-ready] .c-search-bar__content {
+  inline-size: max(12rem, min(24vw, 18.75rem));
+}
+
+.c-search-bar__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0.375rem;
+  border: none;
+  border-radius: 50%;
+  color: var(--lg-shell-ink, #122b49);
+  background: transparent;
+  cursor: pointer;
+}
+.c-search-bar__button:hover, .c-search-bar__button[aria-expanded=true] {
+  background: color-mix(in srgb, var(--lg-shell-accent, #0753b5) 10%, transparent);
+}
+.c-search-bar__button .c-search-bar__button-icon,
+.c-search-bar__button svg {
+  display: block;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+}
+.c-search-bar__button[aria-expanded=false] svg.close, .c-search-bar__button[aria-expanded=true] svg.open {
+  display: none;
+}
+
+.c-search-bar :focus-visible {
+  outline: 2px solid var(--lg-shell-accent, #0753b5);
+  outline-offset: 3px;
+}
+
+@media (max-width: 47.999rem) {
+  .c-search-bar[data-search-ready] .c-search-bar__content {
+    inline-size: 100%;
+  }
+}
+@media (forced-colors: active) {
+  .c-search-bar__content .form-actions::before {
+    forced-color-adjust: none;
+    background: ButtonText;
+  }
+}

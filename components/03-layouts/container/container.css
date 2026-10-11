@@ -1,0 +1,57 @@
+/* stylelint-disable no-invalid-position-declaration */
+[class*=l-container] {
+  --container-gutter: var(--lg-space-36);
+  --container-width: var(--lg-width-xlarge);
+  padding-inline: var(--container-gutter);
+  margin-inline: auto;
+  max-width: var(--container-width);
+  width: 100%;
+}
+
+.l-container--gutter-none {
+  --container-gutter: 0;
+}
+
+.l-container--gutter-large {
+  --container-gutter: var(--lg-space-20);
+}
+
+.l-container--gutter-medium {
+  --container-gutter: var(--lg-space-36);
+}
+
+.l-container--gutter-small {
+  --container-gutter: var(--lg-space-60);
+}
+
+.l-container--width-xxlarge {
+  --container-width: var(--lg-width-xxlarge);
+}
+
+.l-container--width-xlarge {
+  --container-width: var(--lg-width-xlarge);
+}
+
+.l-container--width-large {
+  --container-width: var(--lg-width-large);
+}
+
+.l-container--width-medium {
+  --container-width: var(--lg-width-medium);
+}
+
+.l-container--width-small {
+  --container-width: var(--lg-width-small);
+}
+
+.l-container--width-xsmall {
+  --container-width: var(--lg-width-xsmall);
+}
+
+.l-container--width-xxsmall {
+  --container-width: var(--lg-width-xxsmall);
+}
+
+.l-container--bleed {
+  margin-inline: calc(-1 * var(--container-gutter));
+}

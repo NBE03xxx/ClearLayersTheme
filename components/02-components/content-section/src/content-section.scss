@@ -1,0 +1,84 @@
+.c-content-section {
+  position: relative;
+  isolation: isolate;
+  margin-block: min(var(--content-mt, 0), 8vw) min(var(--content-mb, 0), 8vw);
+  padding-block: min(var(--content-pt, 0), 8vw) min(var(--content-pb, 0), 8vw);
+  color: var(--lg-shell-ink);
+}
+
+.c-content-section[data-tone='muted'] {
+  border: 1px solid var(--lg-glass-edge, var(--lg-shell-line));
+  border-radius: var(--lg-glass-radius, 1.75rem);
+  background: var(--lg-glass-footer, var(--lg-shell-footer));
+  box-shadow: var(--lg-glass-shadow);
+  backdrop-filter: var(--lg-glass-filter, none);
+}
+
+.c-content-section[data-tone='primary'], .c-content-section[data-tone='accent'] {
+  color: var(--lg-shell-paper);
+  background: var(--lg-shell-accent);
+}
+
+.c-content-section[data-tone='secondary'] {
+  color: var(--lg-shell-paper);
+  background: var(--lg-shell-ink);
+}
+
+.c-content-section__background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.c-content-section__background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.c-content-section__inner {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.c-content-section__body {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.c-content-section__body > * {
+  min-width: 0;
+}
+
+.c-content-section__header {
+  margin-block-end: 2rem;
+}
+
+.c-content-section__footer {
+  margin-block-start: 2rem;
+}
+
+.c-content-section[data-mobile-columns='2'] > .c-content-section__inner > .c-content-section__body {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.c-content-section[data-mobile-columns='3'] > .c-content-section__inner > .c-content-section__body {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.c-content-section[data-tone='accent'] a, .c-content-section[data-tone='primary'] a, .c-content-section[data-tone='secondary'] a {
+  color: inherit;
+}
+
+@media (width >= 48rem) {
+  .c-content-section__inner {
+    max-width: var(--content-width, 100%);
+  }
+
+  .c-content-section > .c-content-section__inner > .c-content-section__body {
+    grid-template-columns: var(--content-columns, 1fr);
+  }
+
+}

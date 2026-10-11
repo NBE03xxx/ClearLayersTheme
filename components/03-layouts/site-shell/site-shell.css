@@ -1,0 +1,257 @@
+:root {
+  --csstools-color-scheme--light: initial;
+  color-scheme: light;
+  --lg-shell-paper: var(--lg-palette-light-paper, #edf6ff);
+  --lg-shell-ink: var(--lg-palette-light-ink, #122b49);
+  --lg-shell-muted: var(--lg-palette-light-muted, #405671);
+  --lg-shell-line: var(--lg-palette-light-line, #9eb6d3);
+  --lg-shell-accent: var(--lg-palette-light-accent, #0753b5);
+  --lg-shell-footer: var(--lg-palette-light-footer, #dfedff);
+  --lg-shell-backdrop: var(--lg-palette-light-backdrop, #dceaff);
+  --lg-shell-veil: var(--lg-palette-light-veil, rgba(225, 239, 255, 0.65));
+  --lg-shell-highlight: var(--lg-palette-light-highlight, #58c8ff);
+  --lg-glass-edge: rgba(255, 255, 255, 0.75);
+  --lg-glass-shadow:
+    0 calc(2px * var(--lg-glass-elevation)) calc(6px * var(--lg-glass-elevation)) rgb(9 37 76 / calc(10% * var(--lg-glass-elevation))),
+    0 calc(14px * var(--lg-glass-elevation)) calc(28px * var(--lg-glass-elevation)) calc(-8px * var(--lg-glass-elevation)) rgb(9 37 76 / calc(18% * var(--lg-glass-elevation))),
+    0 calc(30px * var(--lg-glass-elevation)) calc(64px * var(--lg-glass-elevation)) calc(-16px * var(--lg-glass-elevation)) rgb(9 37 76 / calc(22% * var(--lg-glass-elevation))),
+    inset 0 1px 0 rgb(255 255 255 / calc(85% * var(--lg-glass-elevation))),
+    inset 0 -1px 0 rgb(9 37 76 / calc(16% * var(--lg-glass-elevation))),
+    inset 0 0 18px rgb(255 255 255 / calc(5% * var(--lg-glass-elevation)));
+  --lg-glass-elevation: 1;
+  --lg-glass-radius: 1.75rem;
+  --lg-glass-surface: var(--lg-shell-paper);
+  --lg-glass-footer: var(--lg-shell-footer);
+  --lg-glass-filter: none;
+  --lg-responsive-block-gap: var(--lg-block-gap, 24px);
+  --lg-responsive-page-gutter: var(--lg-page-gutter, 24px);
+  --lg-color-primary: var(--lg-shell-accent);
+  --lg-color-secondary: var(--lg-shell-ink);
+  --lg-color-black: var(--lg-shell-ink);
+  --lg-color-white: var(--lg-shell-paper);
+  --lg-color-gray-100: var(--lg-shell-paper);
+  --lg-color-gray-200: var(--lg-shell-footer);
+  --lg-color-gray-300: color-mix(in srgb, var(--lg-shell-paper), var(--lg-shell-ink) 15%);
+  --lg-color-gray-400: color-mix(in srgb, var(--lg-shell-paper), var(--lg-shell-ink) 30%);
+  --lg-color-gray-500: color-mix(in srgb, var(--lg-shell-paper), var(--lg-shell-ink) 45%);
+  --lg-color-gray-600: var(--lg-shell-muted);
+  --lg-color-gray-700: color-mix(in srgb, var(--lg-shell-ink), var(--lg-shell-paper) 20%);
+  --lg-color-gray-800: color-mix(in srgb, var(--lg-shell-ink), var(--lg-shell-paper) 10%);
+  --lg-color-gray-900: var(--lg-shell-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-color-scheme=light]) {
+    --csstools-color-scheme--light:  ;
+    color-scheme: dark;
+    --lg-shell-paper: var(--lg-palette-dark-paper, #0c2039);
+    --lg-shell-ink: var(--lg-palette-dark-ink, #edf6ff);
+    --lg-shell-muted: var(--lg-palette-dark-muted, #abc3df);
+    --lg-shell-line: var(--lg-palette-dark-line, #4c708f);
+    --lg-shell-accent: var(--lg-palette-dark-accent, #8bd5ff);
+    --lg-shell-footer: var(--lg-palette-dark-footer, #102b49);
+    --lg-shell-backdrop: var(--lg-palette-dark-backdrop, #06152c);
+    --lg-shell-veil: var(--lg-palette-dark-veil, rgba(5, 18, 44, 0.4));
+    --lg-shell-highlight: var(--lg-palette-dark-highlight, #35bcff);
+    --lg-glass-edge: rgba(202, 229, 255, 0.24);
+    --lg-glass-shadow:
+      0 calc(2px * var(--lg-glass-elevation)) calc(6px * var(--lg-glass-elevation)) rgb(0 9 26 / calc(22% * var(--lg-glass-elevation))),
+      0 calc(14px * var(--lg-glass-elevation)) calc(28px * var(--lg-glass-elevation)) calc(-8px * var(--lg-glass-elevation)) rgb(0 9 26 / calc(36% * var(--lg-glass-elevation))),
+      0 calc(30px * var(--lg-glass-elevation)) calc(64px * var(--lg-glass-elevation)) calc(-16px * var(--lg-glass-elevation)) rgb(0 9 26 / calc(44% * var(--lg-glass-elevation))),
+      inset 0 1px 0 rgb(224 244 255 / calc(34% * var(--lg-glass-elevation))),
+      inset 0 -1px 0 rgb(0 9 26 / calc(36% * var(--lg-glass-elevation))),
+      inset 0 0 18px rgb(162 217 255 / calc(5% * var(--lg-glass-elevation)));
+  }
+}
+:root[data-color-scheme=dark] {
+  --csstools-color-scheme--light:  ;
+  color-scheme: dark;
+  --lg-shell-paper: var(--lg-palette-dark-paper, #0c2039);
+  --lg-shell-ink: var(--lg-palette-dark-ink, #edf6ff);
+  --lg-shell-muted: var(--lg-palette-dark-muted, #abc3df);
+  --lg-shell-line: var(--lg-palette-dark-line, #4c708f);
+  --lg-shell-accent: var(--lg-palette-dark-accent, #8bd5ff);
+  --lg-shell-footer: var(--lg-palette-dark-footer, #102b49);
+  --lg-shell-backdrop: var(--lg-palette-dark-backdrop, #06152c);
+  --lg-shell-veil: var(--lg-palette-dark-veil, rgba(5, 18, 44, 0.4));
+  --lg-shell-highlight: var(--lg-palette-dark-highlight, #35bcff);
+  --lg-glass-edge: rgba(202, 229, 255, 0.24);
+  --lg-glass-shadow:
+    0 calc(2px * var(--lg-glass-elevation)) calc(6px * var(--lg-glass-elevation)) rgb(0 9 26 / calc(22% * var(--lg-glass-elevation))),
+    0 calc(14px * var(--lg-glass-elevation)) calc(28px * var(--lg-glass-elevation)) calc(-8px * var(--lg-glass-elevation)) rgb(0 9 26 / calc(36% * var(--lg-glass-elevation))),
+    0 calc(30px * var(--lg-glass-elevation)) calc(64px * var(--lg-glass-elevation)) calc(-16px * var(--lg-glass-elevation)) rgb(0 9 26 / calc(44% * var(--lg-glass-elevation))),
+    inset 0 1px 0 rgb(224 244 255 / calc(34% * var(--lg-glass-elevation))),
+    inset 0 -1px 0 rgb(0 9 26 / calc(36% * var(--lg-glass-elevation))),
+    inset 0 0 18px rgb(162 217 255 / calc(5% * var(--lg-glass-elevation)));
+}
+
+:root[data-glass-depth=none] {
+  --lg-glass-elevation: 0;
+  --lg-glass-shadow: none;
+}
+
+:root[data-glass-depth=subtle] {
+  --lg-glass-elevation: 0.5;
+}
+
+:root[data-glass-depth=strong] {
+  --lg-glass-elevation: 1.4;
+}
+
+@supports (background: color-mix(in srgb, white 50%, transparent)) and ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --lg-glass-surface: color-mix(in srgb, var(--lg-shell-paper) var(--lg-glass-tint, 70%), transparent);
+    --lg-glass-footer: color-mix(in srgb, var(--lg-shell-footer) var(--lg-glass-tint, 70%), transparent);
+    --lg-glass-filter: blur(var(--lg-glass-blur, 12px)) saturate(145%);
+  }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  :root {
+    --lg-glass-surface: var(--lg-shell-paper);
+    --lg-glass-footer: var(--lg-shell-footer);
+    --lg-glass-filter: none;
+    --lg-glass-edge: var(--lg-shell-line);
+  }
+}
+@media (prefers-contrast: more), (forced-colors: active) {
+  :root[data-glass-depth] {
+    --lg-glass-shadow: none;
+  }
+}
+body {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  color: var(--lg-shell-ink);
+  background: var(--lg-shell-backdrop);
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background-image: linear-gradient(var(--lg-shell-veil), var(--lg-shell-veil)), var(--lg-page-background-image, url("../../../images/backgrounds/waves-blue.png"));
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
+  content: "";
+}
+
+body :focus-visible {
+  outline: 2px solid var(--lg-shell-accent);
+  outline-offset: 4px;
+}
+
+.lg-page-frame {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--lg-responsive-block-gap) var(--lg-responsive-page-gutter);
+}
+
+.lg-page-flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lg-responsive-block-gap);
+  min-width: 0;
+}
+
+.lg-page-flow > * {
+  min-width: 0;
+}
+
+.site-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lg-responsive-block-gap);
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-block: var(--lg-responsive-block-gap);
+  color: var(--lg-shell-ink);
+  background: transparent;
+}
+
+.site-shell .l-container {
+  --container-width: 76rem;
+  --container-gutter: max(1.25rem, min(4vw, 3rem));
+}
+
+.site-shell > .site-header,
+.site-shell > .site-navigation,
+.site-shell > .site-footer {
+  width: calc(100% - 2 * var(--lg-responsive-page-gutter));
+  max-width: 76rem;
+  margin-inline: auto;
+}
+
+.site-shell__main {
+  flex: 1;
+  min-width: 0;
+  padding-inline: var(--lg-responsive-page-gutter);
+}
+
+.site-shell__main > .l-container {
+  padding-block: max(1.5rem, min(4vw, 3rem));
+  border: 1px solid var(--lg-glass-edge);
+  border-radius: var(--lg-glass-radius);
+  background: var(--lg-glass-surface);
+  box-shadow: var(--lg-glass-shadow);
+  backdrop-filter: var(--lg-glass-filter);
+}
+
+.site-shell > .site-footer {
+  margin-block-start: auto;
+}
+
+.site-shell .breadcrumb,
+.site-shell .region__name--breadcrumb,
+.site-shell .region__name--highlighted,
+.site-shell .region__name--help {
+  color: var(--lg-shell-ink);
+  background: var(--lg-glass-surface);
+}
+
+.site-shell .form-element,
+.site-shell select,
+.site-shell textarea {
+  border: 1px solid var(--lg-shell-line);
+  border-radius: 0.875rem;
+  color: var(--lg-shell-ink);
+  background-color: var(--lg-shell-paper);
+}
+
+.site-shell .button,
+.site-shell input[type=submit] {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--lg-shell-paper);
+  background-color: var(--lg-shell-accent);
+  box-shadow: 0 4px 12px rgba(0, 25, 60, 0.12);
+}
+
+.site-shell .button a,
+.site-shell .button span {
+  color: inherit;
+}
+
+.site-shell .button:hover,
+.site-shell input[type=submit]:hover {
+  box-shadow: 0 6px 18px rgba(0, 25, 60, 0.2);
+}
+
+@media (max-width: 39.999rem) {
+  :root {
+    --lg-responsive-block-gap: calc(var(--lg-block-gap, 24px) * 2 / 3);
+    --lg-responsive-page-gutter: calc(var(--lg-page-gutter, 24px) * 2 / 3);
+  }
+}
+@media (forced-colors: active) {
+  body::before {
+    display: none;
+  }
+  .site-shell__main > .l-container {
+    border-color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+}

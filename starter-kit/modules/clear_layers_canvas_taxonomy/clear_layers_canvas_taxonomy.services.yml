@@ -1,0 +1,6 @@
+services:
+  clear_layers_canvas_taxonomy.page_variant_subscriber:
+    class: Drupal\clear_layers_canvas_taxonomy\EventSubscriber\TaxonomyPageVariantSubscriber
+    arguments: ['@entity_type.manager']
+    tags:
+      - { name: event_subscriber }

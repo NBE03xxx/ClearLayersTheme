@@ -1,0 +1,36 @@
+{# Main menu blocks also need these assets when placed directly in Canvas. #}
+{{ attach_library('core/components.clear_layers--site-navigation') }}
+{% import _self as menus %}
+{% set menu_id = 'site-menu-' ~ random() %}
+{{ menus.menu_links(items, attributes, 0, menu_id) }}
+
+{% macro menu_links(items, attributes, level, branch_id) %}
+  {% import _self as menus %}
+  {% if items %}
+    <ul{{ attributes.addClass(level == 0 ? 'site-navigation__menu' : 'site-navigation__submenu').setAttribute('data-depth', level) }}>
+      {% for item in items %}
+        {% set submenu_id = branch_id ~ '-' ~ loop.index %}
+        <li{{ item.attributes.addClass('site-navigation__item') }}>
+          <div class="site-navigation__item-row">
+            {% if item.link_type == 'button' and item.below %}
+              <button class="site-navigation__submenu-toggle" type="button" aria-expanded="true" aria-controls="{{ submenu_id }}" data-submenu-toggle hidden>
+                {{ item.title }} <span aria-hidden="true">+</span>
+              </button>
+              <span class="site-navigation__no-js-label">{{ item.title }}</span>
+            {% else %}
+              {{ item.link|default(link(item.title, item.url)) }}
+              {% if item.below %}
+                <button class="site-navigation__submenu-toggle" type="button" aria-label="{{ 'Toggle submenu for @title'|t({'@title': item.title}) }}" aria-expanded="true" aria-controls="{{ submenu_id }}" data-submenu-toggle hidden>
+                  <span aria-hidden="true">+</span>
+                </button>
+              {% endif %}
+            {% endif %}
+          </div>
+          {% if item.below %}
+            {{ menus.menu_links(item.below, create_attribute({'id': submenu_id}), level + 1, submenu_id) }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

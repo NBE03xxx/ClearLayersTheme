@@ -1,0 +1,22 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: タグ一覧
+group: 記事一覧・外部情報
+description: タグの Views ブロックを内容に配置し、タイトルの表示位置を一覧ごとに設定します。タイトルの文字は内側のタグブロックで編集します。
+status: stable
+props:
+  type: object
+  properties:
+    title_alignment:
+      type: string
+      title: タイトルの表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+slots:
+  content:
+    title: タグ
+    description: 「タグ（フッター用）」の Views ブロックを配置します。タイトルの上書き欄が空欄なら、見出しは表示されません。

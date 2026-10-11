@@ -1,0 +1,24 @@
+{% set panel_id = 'site-navigation-panel-' ~ random() %}
+{% set navigation_alignment = alignment in ['left', 'center', 'right'] ? alignment : 'left' %}
+{% set navigation_left_spacing = max(0, min(left_spacing ?? 24, 320)) %}
+{% set navigation_right_spacing = max(0, min(right_spacing ?? 24, 320)) %}
+<div{{ attributes.addClass('site-navigation').setAttribute('data-site-navigation', '').setAttribute('data-alignment', navigation_alignment).setAttribute('style', attributes.style|default('') ~ '; --navigation-left-spacing: ' ~ navigation_left_spacing ~ 'px; --navigation-right-spacing: ' ~ navigation_right_spacing ~ 'px').setAttribute('tabindex', '-1') }}>
+  <div class="site-navigation__inner l-container">
+    <button class="site-navigation__toggle" type="button" aria-expanded="true" aria-controls="{{ panel_id }}" data-navigation-toggle hidden>
+      <span class="site-navigation__toggle-icon" aria-hidden="true"></span>
+      <span>{{ toggle_label|default('Menu'|t) }}</span>
+    </button>
+    <div class="site-navigation__panel" id="{{ panel_id }}" data-navigation-panel>
+      {% set selected_menu = menu_name|default('main') %}
+      {% if selected_menu != 'none' %}
+        {% set menu_markup %}{{ drupal_menu(selected_menu, 1, 0, true) }}{% endset %}
+        {% if menu_markup|trim %}
+          <nav class="site-navigation__primary" aria-label="{{ 'Site navigation'|t }}">
+            {{ menu_markup }}
+          </nav>
+        {% endif %}
+      {% endif %}
+      {% block navigation_content %}{% endblock %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: フッターメニュー（タイトル設定）
+group: メニュー
+description: フッターメニューを縦並びの Clear Layers パネルで表示し、タイトルの上書き・表示・位置を個別に設定します。
+status: stable
+props:
+  type: object
+  properties:
+    title_override:
+      type: string
+      title: タイトルの上書き
+      description: 空欄の場合は、内側のフッターメニューブロックのタイトルを使用します。「タイトルを表示」を有効にすると表示されます。
+      default: ''
+    show_title:
+      type: boolean
+      title: タイトルを表示
+      default: false
+      examples: [false]
+    title_alignment:
+      type: string
+      title: タイトルの表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+slots:
+  content:
+    title: フッターメニュー
+    description: 標準ブロックの「フッター」を配置します。メニューの開始階層・表示階層は内側のブロックで設定します。

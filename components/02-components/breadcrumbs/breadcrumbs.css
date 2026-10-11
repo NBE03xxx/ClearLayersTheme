@@ -1,0 +1,51 @@
+/* stylelint-disable no-invalid-position-declaration */
+nav.c-breadcrumb {
+  display: none;
+}
+@media (min-width: 992px) {
+  nav.c-breadcrumb {
+    display: block;
+    padding-top: 2rem;
+    margin: 0 0 2.5rem 0;
+  }
+}
+
+nav.c-breadcrumb ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+nav.c-breadcrumb li {
+  color: var(--lg-color-black);
+  display: inline-block;
+  margin: 0;
+}
+nav.c-breadcrumb li a {
+  color: var(--lg-color-black);
+}
+nav.c-breadcrumb li a:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+nav.c-breadcrumb li a[aria-current=page] {
+  color: var(--lg-color-black);
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+nav.c-breadcrumb li a[aria-current=page]:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+nav.c-breadcrumb li + li::before {
+  display: inline-block;
+  margin: 0 0.75rem 0 0.8125rem;
+  border-right: 0.0625rem solid currentcolor;
+  height: 0.875rem;
+  content: "";
+  position: relative;
+  top: 0.125rem;
+}

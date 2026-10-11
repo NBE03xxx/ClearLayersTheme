@@ -1,0 +1,61 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: ブログ一覧
+group: 記事一覧・外部情報
+description: タイトル付きのブログカード一覧です。ブログの Views ブロックを内容に配置し、一覧ごとにタイトルの表示位置と文字の見た目を設定できます。
+status: stable
+props:
+  type: object
+  properties:
+    show_feed_link:
+      type: boolean
+      title: 「Blogを購読」リンクを表示
+      description: RSS フィードへの購読リンクを表示します。オフにすると、この一覧内の購読リンクを非表示にします。
+      default: false
+      examples: [false]
+    title:
+      type: string
+      title: 一覧のタイトル
+      description: 一覧の見出しです。空欄にするとタイトルを非表示にします。
+      examples: ['最近の投稿']
+    title_alignment:
+      type: string
+      title: タイトルの表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    title_font:
+      type: string
+      title: タイトルのフォント
+      enum: [theme, sans, serif]
+      meta:enum:
+        theme: テーマ標準
+        sans: ゴシック体
+        serif: 明朝体
+      description: ゴシック体・明朝体は訪問者の端末にあるフォントを使います。
+      default: theme
+      examples: [theme]
+    title_size:
+      type: integer
+      title: タイトルの文字サイズ（px）
+      minimum: 12
+      maximum: 72
+      default: 28
+      examples: [28]
+    title_weight:
+      type: string
+      title: タイトルの太さ
+      enum: [normal, medium, bold]
+      meta:enum:
+        normal: 通常
+        medium: 中太
+        bold: 太字
+      default: bold
+      examples: [bold]
+slots:
+  content:
+    title: ブログカード
+    description: 「Blog：Latest blog posts」など、ブログカードを表示する Views ブロックを配置します。タイトルはこの「ブログ一覧」コンポーネントで設定します。

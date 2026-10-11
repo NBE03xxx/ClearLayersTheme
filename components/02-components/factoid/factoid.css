@@ -1,0 +1,24 @@
+/* stylelint-disable no-invalid-position-declaration */
+.c-factoid__icon {
+  margin: 0 0 0.5rem 0;
+}
+
+.c-factoid__icon img {
+  width: 2.5rem;
+  height: 2.5rem;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.c-factoid__fact {
+  font-size: var(--lg-fs-heading-h1);
+  line-height: var(--lg-lh-heading-h1);
+  font-weight: var(--lg-fw-bold);
+}
+
+.c-factoid__label {
+  font-size: var(--lg-fs-heading-h4);
+  line-height: var(--lg-lh-heading-h4);
+  font-weight: var(--lg-fw-regular);
+  margin: 0.5rem 0 0 0;
+}

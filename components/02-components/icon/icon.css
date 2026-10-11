@@ -1,0 +1,114 @@
+:root {
+  --lg-i-arrow-right: url("/themes/custom/clear_layers/images/icons/arrow-right.svg");
+  --lg-i-arrow-down: url("/themes/custom/clear_layers/images/icons/arrow-down.svg");
+  --lg-i-arrow-left: url("/themes/custom/clear_layers/images/icons/arrow-left.svg");
+  --lg-i-arrow-up: url("/themes/custom/clear_layers/images/icons/arrow-up.svg");
+  --lg-i-cancel: url("/themes/custom/clear_layers/images/icons/cancel.svg");
+  --lg-i-checkmark: url("/themes/custom/clear_layers/images/icons/checkmark.svg");
+  --lg-i-circle-check: url("/themes/custom/clear_layers/images/icons/circle-check.svg");
+  --lg-i-circle-empty: url("/themes/custom/clear_layers/images/icons/circle-empty.svg");
+  --lg-i-circle-filled: url("/themes/custom/clear_layers/images/icons/circle-filled.svg");
+  --lg-i-error: url("/themes/custom/clear_layers/images/icons/error.svg");
+  --lg-i-minus: url("/themes/custom/clear_layers/images/icons/minus.svg");
+  --lg-i-plus: url("/themes/custom/clear_layers/images/icons/plus.svg");
+  --lg-i-rectangle-checked: url("/themes/custom/clear_layers/images/icons/rectangle-checked.svg");
+  --lg-i-rectangle-empty: url("/themes/custom/clear_layers/images/icons/rectangle-empty.svg");
+  --lg-i-status: url("/themes/custom/clear_layers/images/icons/status.svg");
+  --lg-i-success: url("/themes/custom/clear_layers/images/icons/success.svg");
+  --lg-i-warning: url("/themes/custom/clear_layers/images/icons/warning.svg");
+}
+
+.c-icon {
+  background-color: var(--lg-color-black);
+  block-size: 32px;
+  display: block;
+  font: 0/0 transparent;
+  inline-size: 32px;
+  -webkit-mask-size: cover;
+          mask-size: cover;
+}
+
+.c-icon--arrow-right {
+  -webkit-mask: var(--lg-i-arrow-right) no-repeat center;
+          mask: var(--lg-i-arrow-right) no-repeat center;
+}
+
+.c-icon--arrow-down {
+  -webkit-mask: var(--lg-i-arrow-down) no-repeat center;
+          mask: var(--lg-i-arrow-down) no-repeat center;
+}
+
+.c-icon--arrow-left {
+  -webkit-mask: var(--lg-i-arrow-left) no-repeat center;
+          mask: var(--lg-i-arrow-left) no-repeat center;
+}
+
+.c-icon--arrow-up {
+  -webkit-mask: var(--lg-i-arrow-up) no-repeat center;
+          mask: var(--lg-i-arrow-up) no-repeat center;
+}
+
+.c-icon--cancel {
+  -webkit-mask: var(--lg-i-cancel) no-repeat center;
+          mask: var(--lg-i-cancel) no-repeat center;
+}
+
+.c-icon--checkmark {
+  -webkit-mask: var(--lg-i-checkmark) no-repeat center;
+          mask: var(--lg-i-checkmark) no-repeat center;
+}
+
+.c-icon--circle-check {
+  -webkit-mask: var(--lg-i-circle-check) no-repeat center;
+          mask: var(--lg-i-circle-check) no-repeat center;
+}
+
+.c-icon--circle-empty {
+  -webkit-mask: var(--lg-i-circle-empty) no-repeat center;
+          mask: var(--lg-i-circle-empty) no-repeat center;
+}
+
+.c-icon--circle-filled {
+  -webkit-mask: var(--lg-i-circle-filled) no-repeat center;
+          mask: var(--lg-i-circle-filled) no-repeat center;
+}
+
+.c-icon--error {
+  -webkit-mask: var(--lg-i-error) no-repeat center;
+          mask: var(--lg-i-error) no-repeat center;
+}
+
+.c-icon--minus {
+  -webkit-mask: var(--lg-i-minus) no-repeat center;
+          mask: var(--lg-i-minus) no-repeat center;
+}
+
+.c-icon--plus {
+  -webkit-mask: var(--lg-i-plus) no-repeat center;
+          mask: var(--lg-i-plus) no-repeat center;
+}
+
+.c-icon--rectangle-checked {
+  -webkit-mask: var(--lg-i-rectangle-checked) no-repeat center;
+          mask: var(--lg-i-rectangle-checked) no-repeat center;
+}
+
+.c-icon--rectangle-empty {
+  -webkit-mask: var(--lg-i-rectangle-empty) no-repeat center;
+          mask: var(--lg-i-rectangle-empty) no-repeat center;
+}
+
+.c-icon--status {
+  -webkit-mask: var(--lg-i-status) no-repeat center;
+          mask: var(--lg-i-status) no-repeat center;
+}
+
+.c-icon--success {
+  -webkit-mask: var(--lg-i-success) no-repeat center;
+          mask: var(--lg-i-success) no-repeat center;
+}
+
+.c-icon--warning {
+  -webkit-mask: var(--lg-i-warning) no-repeat center;
+          mask: var(--lg-i-warning) no-repeat center;
+}

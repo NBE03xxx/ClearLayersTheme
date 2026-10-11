@@ -1,0 +1,124 @@
+/* stylelint-disable no-invalid-position-declaration */
+:root {
+  --lg-ff-base: 'Inter', sans-serif;
+}
+
+/* prettier-ignore */
+:root {
+  /* font-sizes: heading */
+  --lg-fs-heading-h1: 2.75rem; /* 44px */
+  --lg-fs-heading-h2: 2rem; /* 32px */
+  --lg-fs-heading-h3: 1.5rem; /* 24px */
+  --lg-fs-heading-h4: 1.375rem; /* 22px */
+  /* font-sizes: body */
+  --lg-fs-body-base: 0.875rem; /* 14px */
+  --lg-fs-body-18: 0.875rem; /* 14px */
+  --lg-fs-body-16: 0.875rem; /* 14px */
+  /* font-sizes: label */
+  --lg-fs-label-18: 0.875rem; /* 14px */
+  --lg-fs-label-16: 0.875rem; /* 14px */
+  --lg-fs-label-14: 0.75rem; /* 12px */
+  /* line-heights: heading */
+  --lg-lh-heading-h1: 1.1818181818; /* 52px */
+  --lg-lh-heading-h2: 1.125; /* 36px */
+  --lg-lh-heading-h3: 1.1666666667; /* 28px */
+  --lg-lh-heading-h4: 1.2727272727; /* 28px */
+  /* line-heights: body */
+  --lg-lh-body-base: 1.5714285714; /* 22px */
+  --lg-lh-body-18: 1.5714285714; /* 22px */
+  --lg-lh-body-16: 1.5714285714; /* 22px */
+  /* line-heights: label */
+  --lg-lh-label-18: 1.7142857143; /* 24px */
+  --lg-lh-label-16: 1.7142857143; /* 24px */
+  --lg-lh-label-14: 1.8333333333; /* 22px */
+}
+@media (min-width: 768px) {
+  :root {
+    /* font-sizes: heading */
+    --lg-fs-heading-h1: 3.25rem; /* 52px */
+    --lg-fs-heading-h2: 2.625rem; /* 42px */
+    --lg-fs-heading-h3: 1.75rem; /* 28px */
+    --lg-fs-heading-h4: 1.5rem; /* 24px */
+    /* font-sizes: body */
+    --lg-fs-body-base: 1rem; /* 16px */
+    --lg-fs-body-18: 1rem; /* 16px */
+    --lg-fs-body-16: 1rem; /* 16px */
+    /* font-sizes: label */
+    --lg-fs-label-18: 1rem; /* 16px */
+    --lg-fs-label-16: 1rem; /* 16px */
+    --lg-fs-label-14: 0.875rem; /* 14px */
+    /* line-heights: heading */
+    --lg-lh-heading-h1: 1.1538461538; /* 60px */
+    --lg-lh-heading-h2: 1.1428571429; /* 48px */
+    --lg-lh-heading-h3: 1.1428571429; /* 32px */
+    --lg-lh-heading-h4: 1.1666666667; /* 28px */
+    /* line-heights: body */
+    --lg-lh-body-base: 1.625; /* 26px */
+    --lg-lh-body-18: 1.625; /* 26px */
+    --lg-lh-body-16: 1.625; /* 26px */
+    /* line-heights: label */
+    --lg-lh-label-18: 1.75; /* 28px */
+    --lg-lh-label-16: 1.5; /* 24px */
+    --lg-lh-label-14: 1.7142857143; /* 24px */
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    /* font-sizes: heading */
+    --lg-fs-heading-h1: 4.5rem; /* 72px */
+    --lg-fs-heading-h2: 2.75rem; /* 44px */
+    --lg-fs-heading-h3: 2rem; /* 32px */
+    --lg-fs-heading-h4: 1.75rem; /* 28px */
+    /* font-sizes: body */
+    --lg-fs-body-base: 1.125rem; /* 18px */
+    --lg-fs-body-18: 1.125rem; /* 18px */
+    --lg-fs-body-16: 1rem; /* 16px */
+    /* font-sizes: label */
+    --lg-fs-label-18: 1.125rem; /* 18px */
+    --lg-fs-label-16: 1rem; /* 16px */
+    /* line-heights: heading */
+    --lg-lh-heading-h1: 1; /* 72px */
+    --lg-lh-heading-h2: 1.1818181818; /* 52px */
+    --lg-lh-heading-h3: 1.125; /* 36px */
+    --lg-lh-heading-h4: 1.1428571429; /* 32px */
+    /* line-heights: body */
+    --lg-lh-body-base: 1.5555555556; /* 28px */
+    --lg-lh-body-18: 1.5555555556; /* 28px */
+    --lg-lh-body-16: 1.625; /* 26px */
+    /* line-heights: label */
+    --lg-lh-label-18: 1.5555555556; /* 28px */
+    --lg-lh-label-16: 1.75; /* 28px */
+  }
+}
+@media (min-width: 1200px) {
+  :root {
+    /* font-sizes: heading */
+    --lg-fs-heading-h1: 6rem; /* 96px */
+    --lg-fs-heading-h2: 3.25rem; /* 52px */
+    --lg-fs-heading-h3: 2.75rem; /* 44px */
+    --lg-fs-heading-h4: 2rem; /* 32px */
+    /* font-sizes: body */
+    --lg-fs-body-base: 1.125rem; /* 18px */
+    --lg-fs-body-18: 1.125rem; /* 18px */
+    --lg-fs-body-16: 1rem; /* 16px */
+    /* line-heights: heading */
+    --lg-lh-heading-h1: 0.9583333333; /* 92px */
+    --lg-lh-heading-h2: 1.1538461538; /* 60px */
+    --lg-lh-heading-h3: 1.1818181818; /* 52px */
+    --lg-lh-heading-h4: 1.125; /* 36px */
+    /* line-heights: body */
+    --lg-lh-body-base: 1.5555555556; /* 28px */
+    --lg-lh-body-18: 1.5555555556; /* 28px */
+    --lg-lh-body-16: 1.625; /* 26px */
+  }
+}
+
+:root {
+  --lg-fw-thin: 100;
+  --lg-fw-light: 300;
+  --lg-fw-regular: 400;
+  --lg-fw-book: 400;
+  --lg-fw-medium: 500;
+  --lg-fw-semibold: 600;
+  --lg-fw-bold: 700;
+}

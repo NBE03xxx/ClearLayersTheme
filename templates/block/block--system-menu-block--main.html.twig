@@ -1,0 +1,8 @@
+{# Each Drupal menu block keeps its own label and contextual editing controls. #}
+{% set heading_id = attributes.id ~ '-label' %}
+<nav{{ attributes.addClass('site-navigation__primary').setAttribute('aria-labelledby', heading_id)|without('role', 'aria-label') }}>
+  {{ title_prefix }}
+  <h2{{ title_attributes.setAttribute('id', heading_id).addClass('block__title', not configuration.label_display ? 'visually-hidden') }}>{{ label|default('Main navigation'|t) }}</h2>
+  {{ title_suffix }}
+  {% block content %}{{ content }}{% endblock %}
+</nav>

@@ -1,0 +1,16 @@
+{% set attributes = create_attribute(attributes) %}
+{# See 01-elements/button.scss for styles. #}
+{% set classes = ['button'] %}
+
+<a href="{{ url }}" {{ attributes.addClass(classes) }}>
+
+  {% if icon_prefix %}
+    {{ include('clear_layers:icon', {id: icon_prefix|default('arrow-right')}, with_context = false) }}
+  {% endif %}
+
+  <span>{{ title }}</span>
+
+  {% if icon_suffix %}
+    {{ include('clear_layers:icon', {id: icon_suffix|default('arrow-right')}, with_context = false) }}
+  {% endif %}
+</a>

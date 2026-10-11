@@ -1,0 +1,17 @@
+{% set hero_height = height|default('large') %}
+{# Preserve the former ribbon size when rendering an older saved version. #}
+{% set hero_height = hero_height == 'ribbon' ? 'small' : hero_height %}
+{% set hero_image_position = hero_height == 'full' ? 'center' : image_position|default('right') %}
+<div{{ attributes.addClass('c-content-hero').setAttribute('data-height', hero_height).setAttribute('data-image-position', hero_image_position).setAttribute('data-position', flex_position|default('center-left')) }}>
+  <div class="c-content-hero__content">
+    {% if heading_text %}<h2 class="c-content-hero__heading">{{ heading_text }}</h2>{% endif %}
+    {% if text %}<div class="c-content-hero__text">{{ text }}</div>{% endif %}
+    <div class="c-content-hero__extra">{% block hero_slot %}{% endblock %}</div>
+  </div>
+  {% if media.src %}
+    {% set overlays = {'0%': '0', '20%': '0.2', '40%': '0.4', '60%': '0.6', '75%': '0.75'} %}
+    <div class="c-content-hero__media" style="--hero-overlay: {{ overlays[overlay_opacity|default('0%')]|default('0') }}">
+      {{ include('canvas:image', {src: media.src, alt: media.alt|default(''), width: media.width, height: media.height, loading: 'eager'}, with_context = false) }}
+    </div>
+  {% endif %}
+</div>

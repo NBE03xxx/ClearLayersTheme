@@ -1,0 +1,32 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: 表示モード（ライト／ダーク）
+group: 操作・補助
+description: System, light, and dark appearance selector with optional local preference persistence.
+status: stable
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
+props:
+  type: object
+  properties:
+    label:
+      type: string
+      title: Selector label
+      default: Appearance
+      examples: ['表示']
+    system_label:
+      type: string
+      title: System option label
+      default: System
+      examples: ['自動']
+    light_label:
+      type: string
+      title: Light option label
+      default: Light
+      examples: ['ライト']
+    dark_label:
+      type: string
+      title: Dark option label
+      default: Dark
+      examples: ['ダーク']

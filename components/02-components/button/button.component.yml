@@ -1,0 +1,26 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json
+name: ボタン（リンク）
+group: 操作・補助
+description: A basic button component
+status: stable
+slots:
+  icon_prefix:
+    title: Prefix Icon
+    description: Icon rendered before the link text.
+  icon_suffix:
+    title: Suffix Icon
+    description: Icon rendered after the link text.
+props:
+  type: object
+  properties:
+    title:
+      type: ['string', 'null']
+      title: Link Text
+      examples:
+        - Read more about this topic
+        - Submit now
+    url:
+      title: Link Url
+      type: ['string', 'null']
+      examples:
+        - 'https://www.example.org'

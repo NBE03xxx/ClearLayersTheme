@@ -1,0 +1,1 @@
+(()=>{class t{constructor(e){this.element=e,this.mount()}mount(){var e=document.createElement("div");e.classList.add("js-table-wrapper"),this.element.before(e),e.appendChild(this.element)}}var e,a;e=Drupal,a=once,e.behaviors.tableWrap={attach(e){a("clear_layers-table","table",e).forEach(e=>new t(e))}}})();

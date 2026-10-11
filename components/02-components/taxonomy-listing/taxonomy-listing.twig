@@ -1,0 +1,10 @@
+{% set title_align = title_alignment in ['left', 'center', 'right'] ? title_alignment : 'left' %}
+{% set title_font_size = max(12, min(title_size ?? 32, 72)) %}
+<section{{ attributes.addClass('c-taxonomy-listing').setAttribute('style', attributes.style|default('') ~ '; --taxonomy-title-align: ' ~ title_align ~ '; --taxonomy-title-size: ' ~ title_font_size ~ 'px') }}>
+  {% if show_title ?? true %}
+    <h1 class="c-taxonomy-listing__title">{{ taxonomy_title|default('分類・タグの一覧'|t) }}</h1>
+  {% endif %}
+  <div class="c-taxonomy-listing__content">
+    {% block content %}{% endblock %}
+  </div>
+</section>

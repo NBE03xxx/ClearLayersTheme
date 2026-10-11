@@ -1,0 +1,99 @@
+$schema: 'https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json'
+name: ヒーロー（画像・本文）
+group: 本文コンテンツ
+props:
+  type: object
+  required:
+    - height
+    - flex_position
+    - overlay_opacity
+  properties:
+    heading_text:
+      type: string
+      title: '見出し'
+      default: ''
+      examples:
+        - 'ここに見出しを入力してください'
+    text:
+      type: string
+      title: '本文'
+      contentMediaType: text/html
+      x-formatting-context: block
+      default: ''
+      examples:
+        - '<p>ここに本文を入力してください。</p>'
+    image_position:
+      type: string
+      title: '画像の配置'
+      description: 'フルスクリーンでは、左・右を選択しても中央と同じ表示になります。'
+      enum:
+        - left
+        - center
+        - right
+      'meta:enum':
+        left: '左'
+        center: '中央'
+        right: '右'
+      default: right
+      examples:
+        - right
+    height:
+      type: string
+      title: '画像の表示サイズ'
+      description: '表示領域の横幅に対して、大は75%・中は50%・小は25%。画像全体を縦横比を保って表示します。'
+      enum:
+        - full
+        - large
+        - medium
+        - small
+      'meta:enum':
+        full: 'フルスクリーン'
+        large: '大（75%）'
+        medium: '中（50%）'
+        small: '小（25%）'
+      default: large
+      examples:
+        - large
+    flex_position:
+      type: string
+      title: 'テキストの配置'
+      enum:
+        - top-left
+        - center-left
+        - bottom-left
+        - hero-center
+      'meta:enum':
+        top-left: '左上'
+        center-left: '左中央'
+        bottom-left: '左下'
+        hero-center: '中央'
+      default: center-left
+      examples:
+        - center-left
+    overlay_opacity:
+      type: string
+      title: '画像のオーバーレイ濃度'
+      enum:
+        - 0%
+        - 20%
+        - 40%
+        - 60%
+        - 75%
+      'meta:enum':
+        '0%': '0%'
+        '20%': '20%'
+        '40%': '40%'
+        '60%': '60%'
+        '75%': '75%'
+      default: 0%
+      examples:
+        - 0%
+    media:
+      $ref: 'json-schema-definitions://canvas.module/image'
+      title: '画像'
+      type: object
+slots:
+  hero_slot:
+    title: '追加コンテンツ'
+description: '見出し・本文・画像を設定できる Hero。画像の左右・中央配置と表示サイズを選択できます。'
+status: stable

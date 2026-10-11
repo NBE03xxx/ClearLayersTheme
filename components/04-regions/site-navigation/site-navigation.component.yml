@@ -1,0 +1,77 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: サイトナビゲーション（配置・余白）
+group: メニュー
+description: Display a configured Drupal menu with responsive controls and optional additional navigation blocks.
+status: stable
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
+props:
+  type: object
+  properties:
+    alignment:
+      type: string
+      title: メニューの配置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左寄せ
+        center: 中央
+        right: 右寄せ
+      default: left
+      examples: [left]
+    left_spacing:
+      type: integer
+      title: 左側の余白（px）
+      description: 左寄せのときだけ適用します。
+      minimum: 0
+      maximum: 320
+      default: 24
+      examples: [24]
+    right_spacing:
+      type: integer
+      title: 右側の余白（px）
+      description: 右寄せのときだけ適用します。
+      minimum: 0
+      maximum: 320
+      default: 24
+      examples: [24]
+    menu_name:
+      type: string
+      title: 表示するメニュー
+      description: Choose a configured menu, or disable automatic menu display when using a menu block in the slot.
+      default: main
+      examples: ['main']
+      enum:
+        - main
+        - footer
+        - secondary
+        - social
+        - account
+        - content
+        - tools
+        - top-tasks
+        - navigation-user-links
+        - admin
+        - none
+      meta:enum:
+        main: メインナビゲーション
+        footer: フッター
+        secondary: Secondary navigation
+        social: Social
+        account: ユーザーアカウントメニュー
+        content: コンテンツ
+        tools: ツール
+        top-tasks: Top tasks
+        navigation-user-links: Navigation user links
+        admin: 管理
+        none: 自動表示なし（スロットのブロックを使用）
+    toggle_label:
+      type: string
+      title: Mobile menu label
+      default: Menu
+      examples: ['メニュー']
+slots:
+  navigation_content:
+    title: Navigation content
+    description: Additional menus, utility links, or search blocks. Select no automatic menu when supplying the primary menu here.

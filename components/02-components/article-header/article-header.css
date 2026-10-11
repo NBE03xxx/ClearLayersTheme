@@ -1,0 +1,26 @@
+.c-article-header {
+  display: grid;
+  grid-gap: 1.5rem;
+  gap: 1.5rem;
+  margin-block: 2rem;
+}
+
+.c-article-header__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  color: var(--lg-shell-muted);
+  font-size: 0.875rem;
+}
+
+.c-article-header__meta a {
+  color: inherit;
+}
+
+.c-article-header__media img {
+  display: block;
+  width: 100%;
+  max-height: 40rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}

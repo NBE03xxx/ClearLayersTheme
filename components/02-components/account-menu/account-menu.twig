@@ -1,0 +1,4 @@
+{% set title_align = title_alignment in ['left', 'center', 'right'] ? title_alignment : 'left' %}
+<div{{ attributes.addClass('c-footer-menu', 'c-account-menu').setAttribute('style', attributes.style|default('') ~ '; --footer-menu-title-display: ' ~ (show_title|default(false) ? 'block' : 'none') ~ '; --footer-menu-title-align: ' ~ title_align) }}>
+  {{ account_menu }}
+</div>

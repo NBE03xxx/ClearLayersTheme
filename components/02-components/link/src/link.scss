@@ -1,0 +1,27 @@
+@use 'partials' as *;
+
+.c-link {
+  @include type-scale(body, 18);
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  text-decoration: none;
+  width: fit-content;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.c-link__icon {
+  display: inline-flex;
+
+  .c-icon {
+    @include square(16px);
+  }
+
+  svg {
+    fill: var(--lg-color-black);
+  }
+}

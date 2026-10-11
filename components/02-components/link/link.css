@@ -1,0 +1,28 @@
+/* stylelint-disable no-invalid-position-declaration */
+.c-link {
+  font-size: var(--lg-fs-body-18);
+  line-height: var(--lg-lh-body-18);
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.c-link:hover {
+  cursor: pointer;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c-link__icon {
+  display: inline-flex;
+}
+.c-link__icon .c-icon {
+  block-size: 16px;
+  inline-size: 16px;
+}
+.c-link__icon svg {
+  fill: var(--lg-color-black);
+}

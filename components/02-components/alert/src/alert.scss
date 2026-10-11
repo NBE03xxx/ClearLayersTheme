@@ -1,0 +1,110 @@
+// Site notifications share the shell palette and glass settings.
+.c-alert {
+  --lg-alert-icon: var(--lg-i-status);
+  --lg-alert-accent: var(--lg-shell-accent, #0753b5);
+
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
+  margin-block: 1.25rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--lg-glass-edge, #9eb6d3);
+  border-inline-start: 3px solid var(--lg-alert-accent);
+  border-radius: 1.25rem;
+  color: var(--lg-shell-ink, #122b49);
+  background: var(--lg-glass-surface, #edf6ff);
+  box-shadow: var(--lg-glass-shadow, none);
+  -webkit-backdrop-filter: var(--lg-glass-filter, none);
+  backdrop-filter: var(--lg-glass-filter, none);
+  overflow-wrap: anywhere;
+}
+
+.c-alert__icon {
+  display: grid;
+  place-items: center;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  border: 1px solid color-mix(in srgb, var(--lg-alert-accent) 30%, transparent);
+  border-radius: 50%;
+  color: var(--lg-alert-accent);
+  background: color-mix(in srgb, var(--lg-alert-accent) 10%, transparent);
+
+  &::before {
+    content: '';
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    background: currentColor;
+    -webkit-mask: var(--lg-alert-icon) center / contain no-repeat;
+    mask: var(--lg-alert-icon) center / contain no-repeat;
+  }
+}
+
+.c-alert__content {
+  min-inline-size: 0;
+  align-self: center;
+  color: inherit;
+
+  a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    &:hover {
+      color: var(--lg-shell-accent, #0753b5);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--lg-shell-accent, #0753b5);
+      outline-offset: 3px;
+      border-radius: 0.2rem;
+    }
+  }
+}
+
+.c-alert__list,
+.c-alert__item {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.c-alert__item {
+  font-weight: 500;
+  line-height: 1.65;
+
+  + .c-alert__item {
+    margin-block-start: 0.5rem;
+  }
+}
+
+.c-alert--warning {
+  --lg-alert-icon: var(--lg-i-warning);
+  --lg-alert-accent: color-mix(in srgb, #ad6500 75%, var(--lg-shell-ink, #122b49));
+}
+
+.c-alert--error {
+  --lg-alert-icon: var(--lg-i-error);
+  --lg-alert-accent: color-mix(in srgb, #c43c4a 75%, var(--lg-shell-ink, #122b49));
+}
+
+@media (forced-colors: active) {
+  .c-alert {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .c-alert__icon {
+    color: CanvasText;
+    border-color: CanvasText;
+  }
+
+  .c-alert__icon::before {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}

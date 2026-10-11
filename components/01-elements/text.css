@@ -1,0 +1,21 @@
+/* stylelint-disable no-invalid-position-declaration */
+body {
+  font-size: var(--lg-fs-body-base);
+  line-height: var(--lg-lh-body-base);
+  color: var(--lg-color-black);
+  font-family: var(--lg-ff-base);
+}
+
+strong,
+b {
+  font-weight: var(--lg-fw-bold);
+}
+
+blockquote {
+  text-indent: -0.4em;
+  font-style: italic;
+}
+
+* + blockquote {
+  margin-top: 16px;
+}

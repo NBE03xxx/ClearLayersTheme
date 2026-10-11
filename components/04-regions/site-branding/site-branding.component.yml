@@ -1,0 +1,31 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: ロゴ・サイト名（手入力）
+group: サイト共通
+description: Site logo, name, and slogan using the configured Drupal branding values.
+status: stable
+props:
+  type: object
+  properties:
+    home_url:
+      type: string
+      title: Home URL
+      default: '/'
+      examples: ['/']
+    logo_url:
+      type: string
+      title: Logo URL
+      default: ''
+    site_name:
+      type: string
+      title: Site name
+      default: ''
+      examples: ['Clear Layers']
+    site_slogan:
+      type: string
+      title: Site slogan
+      default: ''
+    home_label:
+      type: string
+      title: Accessible home link label
+      default: Home
+      examples: ['ホーム']

@@ -1,0 +1,9 @@
+:root {
+  --lg-width-xxlarge: 1920px;
+  --lg-width-xlarge: 1440px;
+  --lg-width-large: 1280px;
+  --lg-width-medium: 960px;
+  --lg-width-small: 768px;
+  --lg-width-xsmall: 640px;
+  --lg-width-xxsmall: 480px;
+}

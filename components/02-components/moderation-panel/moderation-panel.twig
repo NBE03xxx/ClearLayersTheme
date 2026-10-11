@@ -1,0 +1,14 @@
+<div class="c-moderation-panel entity-moderation-form">
+  <div class="c-moderation-panel__state entity-moderation-form__item">
+    {% block current_state %}{% endblock %}
+  </div>
+  <div class="c-moderation-panel__transition entity-moderation-form__item">
+    {% block new_state %}{% endblock %}
+  </div>
+  <div class="c-moderation-panel__log entity-moderation-form__item">
+    {% block revision_log %}{% endblock %}
+  </div>
+  <div class="c-moderation-panel__actions entity-moderation-form__item">
+    {% block actions %}{% endblock %}
+  </div>
+</div>

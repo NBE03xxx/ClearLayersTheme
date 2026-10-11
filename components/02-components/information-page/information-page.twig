@@ -1,0 +1,4 @@
+<article{{ attributes.addClass('c-information-page').setAttribute('data-width', width|default('75%')) }}>
+  <header class="c-information-page__header">{% block header_slot %}{% endblock %}</header>
+  <div class="c-information-page__body">{% block main_slot %}{% endblock %}</div>
+</article>

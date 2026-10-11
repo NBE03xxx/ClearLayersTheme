@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Components - Alert
+ *
+ * Available props:
+ * - attributes: [array] Any custom attributes needed for this component.
+ * - type: [string] The type of alert, which determines the styling. Possible values include 'status', 'warning', and 'error'.
+ * - heading: [string] A visually hidden heading for accessibility purposes.
+ * - alerts: [array] An array of alert messages to be displayed. If there is more than one message, they will be rendered as a list.
+ */
+#}
+
+{% set attributes = create_attribute(attributes)
+  .setAttribute('role', 'region')
+  .setAttribute('aria-label', heading)
+%}
+
+{% set classes = [
+  'c-alert',
+  'c-alert--' ~ type,
+] %}
+
+<div {{ attributes.addClass(classes) }}>
+  <div class="c-alert__icon" aria-hidden="true"></div>
+
+  <div class="c-alert__content" {{ type == 'error' ? 'role="alert"' }}>
+    {% if heading %}
+      <h2 class="visually-hidden">{{ heading }}</h2>
+    {% endif %}
+
+    {% if alerts|length > 1 %}
+      <ul class="c-alert__list">
+        {% for alert in alerts %}
+          <li class="c-alert__item">{{ alert }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="c-alert__item">{{ alerts|first }}</p>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,139 @@
+.c-content-text {
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.c-content-text > :first-child {
+  margin-block-start: 0;
+}
+
+.c-content-text > :last-child {
+  margin-block-end: 0;
+}
+
+.c-content-text p + p {
+  margin-block-start: 1em;
+}
+
+.c-content-text[data-tone='primary'] {
+  color: var(--lg-shell-accent);
+}
+
+.c-content-text[data-size='text-xs'] {
+  font-size: 0.75rem;
+}
+
+.c-content-text[data-size='text-sm'] {
+  font-size: 0.875rem;
+}
+
+.c-content-text[data-size='text-lg'] {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+}
+
+.c-content-text[data-size='text-xl'] {
+  font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+}
+
+.c-content-text[data-size='text-2xl'] {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+
+.c-content-text[data-size='text-3xl'] {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+}
+
+.c-content-text .text-align-center {
+  text-align: center;
+}
+
+.c-content-text .text-align-right {
+  text-align: right;
+}
+
+.c-content-text h2 {
+  margin-block: 1.5em 0.5em;
+  font-size: 1.75em;
+}
+
+.c-content-text h3 {
+  margin-block: 1.5em 0.5em;
+  font-size: 1.4em;
+}
+
+.c-content-text h4 {
+  font-size: 1.2em;
+}
+
+.c-content-text table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.c-content-text blockquote {
+  margin-inline: 0;
+  padding-inline-start: 1.25rem;
+  border-inline-start: 2px solid var(--lg-shell-line);
+}
+
+// Override Canvas' fixed light pre background with the current glass palette.
+.c-content-text pre {
+  max-width: 100%;
+  margin-block: 1.25em;
+  padding: 1.25rem;
+  overflow-x: auto;
+  border: 1px solid var(--lg-glass-edge, var(--lg-shell-line));
+  border-radius: min(var(--lg-glass-radius, 1.75rem), 1.25rem);
+  color: var(--lg-shell-ink);
+  background: var(--lg-glass-surface, var(--lg-shell-paper));
+  box-shadow: var(--lg-glass-shadow);
+  backdrop-filter: var(--lg-glass-filter, none);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  text-align: left;
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+  tab-size: 4;
+}
+
+.c-content-text :not(pre) > code {
+  display: inline;
+  width: auto;
+  padding: 0.12em 0.35em;
+  border: 1px solid var(--lg-glass-edge, var(--lg-shell-line));
+  border-radius: 0.35rem;
+  color: var(--lg-shell-ink);
+  background: var(--lg-glass-surface, var(--lg-shell-paper));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.c-content-text pre code {
+  display: block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: none;
+  box-shadow: none;
+  font: inherit;
+  white-space: inherit;
+}
+
+@media (forced-colors: active) {
+  .c-content-text pre,
+  .c-content-text :not(pre) > code {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+}

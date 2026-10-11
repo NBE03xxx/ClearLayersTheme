@@ -1,0 +1,17 @@
+$schema: https://git.drupalcode.org/project/sdc/-/raw/1.x/src/metadata.schema.json
+name: ページ見出し（手入力）
+group: 本文コンテンツ
+status: 'experimental'
+description: A simple page title component
+props:
+  required:
+    - title
+  type: object
+  properties:
+    title:
+      type: string
+      title: Page Title Text
+      description: The title text displayed on screen
+      examples:
+        - Example Page Title
+        - A complex example that is much longer

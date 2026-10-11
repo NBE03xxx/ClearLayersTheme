@@ -1,0 +1,4 @@
+{% set heading_level = level in [1, 2, 3, 4, 5, 6] ? level : 2 %}
+<h{{ heading_level }}{{ attributes.addClass('c-content-heading').setAttribute('data-size', text_size|default('default')).setAttribute('data-tone', text_color|default('default')).setAttribute('data-align', align|default('left')) }}>
+  {% if url and url != 'No URL' %}<a href="{{ url }}">{{ heading_text }}</a>{% else %}{{ heading_text }}{% endif %}
+</h{{ heading_level }}>

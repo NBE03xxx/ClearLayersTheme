@@ -1,0 +1,20 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: 案内ページ
+group: 本文コンテンツ
+description: リンク集やサイト方針のための、読みやすい幅と目次を備えたガラス面です。
+status: stable
+props:
+  type: object
+  required: [width]
+  properties:
+    width:
+      type: string
+      title: 本文幅
+      enum: ['75%', '100%']
+      default: '75%'
+      examples: ['75%']
+slots:
+  header_slot:
+    title: ページの見出し
+  main_slot:
+    title: 本文

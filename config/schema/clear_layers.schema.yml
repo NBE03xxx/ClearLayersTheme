@@ -1,0 +1,52 @@
+# Schema for the configuration files of the clear_layers theme.
+clear_layers.settings:
+  type: theme_settings
+  label: 'clear_layers settings'
+  mapping:
+    glass_depth:
+      type: string
+      label: 'Glass surface elevation preset'
+      constraints:
+        Choice: [none, subtle, standard, strong]
+    glass_transparency:
+      type: integer
+      label: 'Glass surface transparency in percent'
+      constraints:
+        Range:
+          min: 0
+          max: 100
+    glass_blur:
+      type: integer
+      label: 'Glass background blur in pixels'
+      constraints:
+        Range:
+          min: 0
+          max: 40
+    block_spacing:
+      type: integer
+      label: 'Spacing between top-level page blocks in pixels'
+      constraints:
+        Range:
+          min: 0
+          max: 64
+    page_gutter:
+      type: integer
+      label: 'Page side gutters in pixels'
+      constraints:
+        Range:
+          min: 0
+          max: 64
+    background_media_uuid:
+      type: string
+      label: 'Page background image media UUID (empty uses theme default)'
+    color_palette:
+      type: string
+      label: 'Site-wide Clear Layers color palette'
+      constraints:
+        Choice: [ocean, arctic, indigo, lagoon]
+    display_back_to_top:
+      type: boolean
+      label: 'Display a back to top button on the site'
+    mobile_menu_direction:
+      type: string
+      label: 'Mobile menu direction'

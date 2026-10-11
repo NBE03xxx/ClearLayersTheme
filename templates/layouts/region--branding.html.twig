@@ -1,0 +1,5 @@
+{% if content %}
+  <div{{ attributes.addClass('region', 'region__name--branding') }}>
+    {% block content %}{{ content }}{% endblock %}
+  </div>
+{% endif %}

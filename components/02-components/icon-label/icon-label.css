@@ -1,0 +1,15 @@
+/* stylelint-disable no-invalid-position-declaration */
+.e-icon-label {
+  align-items: var(--icon-label-alignment, center);
+  display: flex;
+  gap: var(--icon-label-gap, 8px);
+}
+.e-icon-label .icon {
+  block-size: var(--icon-label-size, 24px);
+  inline-size: var(--icon-label-size, 24px);
+}
+.e-icon-label svg {
+  block-size: 100%;
+  inline-size: 100%;
+  fill: currentColor;
+}

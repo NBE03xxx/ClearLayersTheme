@@ -1,0 +1,18 @@
+{% set spacing = {'0': '0', '8': '0.5rem', '16': '1rem', '20': '1.25rem', '32': '2rem', '48': '3rem', '64': '4rem', '96': '6rem', '128': '8rem'} %}
+{% set widths = {'100%': '100%', '90%': '90%', '80%': '80%', '75%': '75%', '50%': '50%'} %}
+{% set layout = {'100': '1fr', '50-50': '1fr 1fr', '33-33-33': '1fr 1fr 1fr', '75-25': '3fr 1fr', '25-75': '1fr 3fr', '67-33': '2fr 1fr', '33-67': '1fr 2fr', '50-25-25': '2fr 1fr 1fr', '25-25-50': '1fr 1fr 2fr', '25-25-25-25': '1fr 1fr 1fr 1fr'} %}
+{% set section_style = '--content-width:' ~ widths[width|default('100%')]|default('100%') ~ ';--content-columns:' ~ layout[columns|default('100')]|default('1fr') ~ ';--views-columns:' ~ layout[views_columns|default('100')]|default('1fr') ~ ';--content-mt:' ~ spacing[margin_block_start|default('0')]|default('0') ~ ';--content-mb:' ~ spacing[margin_block_end|default('0')]|default('0') ~ ';--content-pt:' ~ spacing[padding_block_start|default('0')]|default('0') ~ ';--content-pb:' ~ spacing[padding_block_end|default('0')]|default('0') %}
+<div{{ attributes.addClass('c-content-section').setAttribute('style', section_style).setAttribute('data-tone', background_color|default('default')).setAttribute('data-mobile-columns', mobile_columns|default('1')) }}>
+  {% if background_media.src %}
+    <div class="c-content-section__background" aria-hidden="true">
+      {{ include('canvas:image', {src: background_media.src, alt: '', width: background_media.width, height: background_media.height, loading: 'lazy'}, with_context = false) }}
+    </div>
+  {% endif %}
+  <div class="c-content-section__inner">
+    {% set header_markup %}{% block header_slot %}{% endblock %}{% endset %}
+    {% if section_header and header_markup|trim %}<div class="c-content-section__header">{{ header_markup }}</div>{% endif %}
+    <div class="c-content-section__body">{% block main_slot %}{% endblock %}</div>
+    {% set footer_markup %}{% block footer_slot %}{% endblock %}{% endset %}
+    {% if section_footer and footer_markup|trim %}<div class="c-content-section__footer">{{ footer_markup }}</div>{% endif %}
+  </div>
+</div>

@@ -1,0 +1,4 @@
+{% set title_align = title_alignment in ['left', 'center', 'right'] ? title_alignment : 'left' %}
+<div{{ attributes.addClass('c-tag-list').setAttribute('style', attributes.style|default('') ~ '; --tag-title-align: ' ~ title_align) }}>
+  {% block content %}{% endblock %}
+</div>

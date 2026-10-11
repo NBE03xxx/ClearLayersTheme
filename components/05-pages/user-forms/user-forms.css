@@ -1,0 +1,12 @@
+/* stylelint-disable no-invalid-position-declaration */
+.user-login-form .form-item {
+  margin-top: var(--lg-space-36);
+}
+
+.user-register-form .form-item {
+  margin-top: var(--lg-space-36);
+}
+
+.user-pass .form-item {
+  margin-top: var(--lg-space-36);
+}

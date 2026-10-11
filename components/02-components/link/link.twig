@@ -1,0 +1,14 @@
+{% set attributes = create_attribute(attributes).setAttribute('href', url) %}
+
+{% set classes = [
+  'c-link'
+] | merge(classes|default([])) %}
+
+<a {{ attributes.addClass(classes) }}>
+  {{ title }}
+  {% if icon %}
+    <span class='c-link__icon'>
+      {{ include('clear_layers:icon', {id: icon|default('arrow-right')}, with_context = false) }}
+    </span>
+  {% endif %}
+</a>

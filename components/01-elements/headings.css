@@ -1,0 +1,67 @@
+/* stylelint-disable no-invalid-position-declaration */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: var(--lg-color-black);
+  margin-bottom: 0;
+}
+h1 > a,
+h2 > a,
+h3 > a,
+h4 > a,
+h5 > a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p,
+h5 + p {
+  margin-top: 16px;
+}
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child {
+  margin-top: 0;
+}
+
+h1 {
+  font-weight: var(--lg-fw-bold);
+  font-size: var(--lg-fs-heading-h1);
+  line-height: var(--lg-lh-heading-h1);
+}
+
+h2 {
+  font-weight: var(--lg-fw-bold);
+  font-size: var(--lg-fs-heading-h2);
+  line-height: var(--lg-lh-heading-h2);
+}
+
+h3 {
+  font-weight: var(--lg-fw-bold);
+  font-size: var(--lg-fs-heading-h3);
+  line-height: var(--lg-lh-heading-h3);
+}
+
+h4 {
+  font-weight: var(--lg-fw-bold);
+  font-size: var(--lg-fs-heading-h4);
+  line-height: var(--lg-lh-heading-h4);
+}
+
+h5 {
+  font-weight: var(--lg-fw-bold);
+  font-size: var(--lg-fs-body-18);
+  line-height: var(--lg-lh-body-18);
+}
+
+h6 {
+  font-weight: var(--lg-fw-bold);
+  font-size: var(--lg-fs-body-16);
+  line-height: var(--lg-lh-body-16);
+}

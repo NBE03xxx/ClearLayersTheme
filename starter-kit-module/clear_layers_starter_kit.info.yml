@@ -1,0 +1,7 @@
+name: Clear Layers Starter Kit
+type: module
+description: Restores saved Canvas component versions when applying the Clear Layers starter recipe.
+package: Custom
+core_version_requirement: ^11.4
+dependencies:
+  - canvas:canvas

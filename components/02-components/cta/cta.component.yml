@@ -1,0 +1,40 @@
+$schema: https://git.drupalcode.org/project/sdc/-/raw/1.x/src/metadata.schema.json
+name: 案内パネル（CTA）
+group: 本文コンテンツ
+status: 'experimental'
+description: A CTA component
+slots:
+  title_block: { title: CTA Title Block }
+  text_block: { title: Callout Text Block }
+  link_block: { title: Callout Link Block }
+props:
+  type: object
+  properties:
+    title:
+      type: ['string', 'null']
+      title: Title
+      examples:
+        - Basic page with a long title
+        - Basic page
+    text:
+      title: Text
+      type: ['string', 'null']
+      examples:
+        - '<p><strong>Example paragraph</strong>. Interdum risus tortor turpis gravida sed. Risus sit et egestas tellus ac sed. Purus ut eu fermentum non. Arcu lectus sed in quisque vitae posuere. Adipiscing nullam mauris iaculis leo turpis leo, congue.</p>'
+    link_title:
+      type: ['string', 'null']
+      title: Link Text
+      examples:
+        - Read more about this topic
+        - Submit now
+    link_url:
+      title: Link Url
+      type: ['string', 'null']
+      examples:
+        - 'https://www.example.org'
+    icon:
+      type: ['string', 'null']
+      title: Icon Type
+      examples:
+        - icon-arrow-right
+        - external-link

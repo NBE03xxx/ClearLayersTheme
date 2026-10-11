@@ -1,0 +1,44 @@
+{% set footer_markup %}{% block footer_content %}{% endblock %}{% endset %}
+{% set left_markup %}{% block footer_left %}{% endblock %}{% endset %}
+{% set center_markup %}{% block footer_center %}{% endblock %}{% endset %}
+{% set right_markup %}{% block footer_right %}{% endblock %}{% endset %}
+{% set meta_markup %}{% block footer_meta %}{% endblock %}{% endset %}
+{% set preview = canvas_is_preview|default(false) %}
+{% set has_top = footer_markup|trim is not empty %}
+{% set has_left = left_markup|trim is not empty %}
+{% set has_center = center_markup|trim is not empty %}
+{% set has_right = right_markup|trim is not empty %}
+{% set has_middle = has_left or has_center or has_right %}
+{% set has_bottom = meta_markup|trim is not empty %}
+{% set alignments = {left: 'flex-start', center: 'center', right: 'flex-end'} %}
+{% set top_align = top_alignment in ['left', 'center', 'right'] ? top_alignment : 'left' %}
+{% set left_align = left_alignment in ['left', 'center', 'right'] ? left_alignment : 'left' %}
+{% set center_align = center_alignment in ['left', 'center', 'right'] ? center_alignment : 'left' %}
+{% set right_align = right_alignment in ['left', 'center', 'right'] ? right_alignment : 'left' %}
+{% set bottom_align = bottom_alignment in ['left', 'center', 'right'] ? bottom_alignment : 'left' %}
+{% set footer_tag_columns = max(1, min((tag_columns ?? 8)|round(0, 'floor'), 12)) %}
+{% if has_top or has_middle or has_bottom or preview %}
+<footer{{ attributes.addClass('site-footer').setAttribute('style', attributes.style|default('') ~ '; --footer-tag-columns: ' ~ footer_tag_columns) }}>
+  <div class="site-footer__inner l-container">
+    {% if has_top or preview %}
+      <div class="site-footer__content site-footer__cell" data-alignment="{{ top_align }}" style="--footer-items-align: {{ alignments[top_align] }}; --footer-text-align: {{ top_align }}">{{ footer_markup }}</div>
+    {% endif %}
+    {% if has_middle or preview %}
+      <div class="site-footer__grid">
+        {% if has_left or preview %}
+          <div class="site-footer__cell site-footer__left" data-alignment="{{ left_align }}" style="--footer-items-align: {{ alignments[left_align] }}; --footer-text-align: {{ left_align }}">{{ left_markup }}</div>
+        {% endif %}
+        {% if has_center or preview %}
+          <div class="site-footer__cell site-footer__center" data-alignment="{{ center_align }}" style="--footer-items-align: {{ alignments[center_align] }}; --footer-text-align: {{ center_align }}">{{ center_markup }}</div>
+        {% endif %}
+        {% if has_right or preview %}
+          <div class="site-footer__cell site-footer__right" data-alignment="{{ right_align }}" style="--footer-items-align: {{ alignments[right_align] }}; --footer-text-align: {{ right_align }}">{{ right_markup }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if has_bottom or preview %}
+      <div class="site-footer__meta site-footer__cell" data-alignment="{{ bottom_align }}" style="--footer-items-align: {{ alignments[bottom_align] }}; --footer-text-align: {{ bottom_align }}">{{ meta_markup }}</div>
+    {% endif %}
+  </div>
+</footer>
+{% endif %}

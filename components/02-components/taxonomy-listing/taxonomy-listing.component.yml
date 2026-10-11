@@ -1,0 +1,34 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: 分類・タグの一覧
+group: 記事一覧・外部情報
+description: 現在の分類名を見出しに表示します。分類・タグ用のページテンプレートでは、記事一覧を表示する Page content を内側に配置します。
+status: stable
+props:
+  type: object
+  properties:
+    show_title:
+      type: boolean
+      title: 分類名を表示
+      default: true
+      examples: [true]
+    title_alignment:
+      type: string
+      title: タイトルの表示位置
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    title_size:
+      type: integer
+      title: タイトルの文字サイズ（px）
+      minimum: 12
+      maximum: 72
+      default: 32
+      examples: [32]
+slots:
+  content:
+    title: 分類に属する記事一覧
+    description: Page content を配置すると、クリックした分類・タグの記事一覧が自動表示されます。テンプレート編集中は表示位置の目印になります。

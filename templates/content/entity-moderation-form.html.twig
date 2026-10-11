@@ -1,0 +1,8 @@
+{# Keep Drupal's fields and hidden form metadata intact. #}
+{% embed 'clear_layers:moderation-panel' %}
+  {% block current_state %}{{ form.current }}{% endblock %}
+  {% block new_state %}{{ form.new_state }}{% endblock %}
+  {% block revision_log %}{{ form.revision_log }}{% endblock %}
+  {% block actions %}{{ form.submit }}{% endblock %}
+{% endembed %}
+{{ form|without('current', 'new_state', 'revision_log', 'submit') }}

@@ -1,0 +1,89 @@
+$schema: 'https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json'
+name: 記事カード
+group: 本文コンテンツ
+props:
+  type: object
+  required:
+    - heading_text
+    - orientation
+    - style
+  properties:
+    background:
+      type: string
+      title: Background
+      enum:
+        - default
+        - accent
+        - primary
+        - inverted
+      'meta:enum':
+        default: Default
+        accent: Accent
+        primary: Primary
+        inverted: Inverted
+      examples:
+        - default
+    style:
+      type: string
+      title: Style
+      enum:
+        - framed
+        - full
+      'meta:enum':
+        framed: Framed
+        full: 'Full width'
+      examples:
+        - framed
+    orientation:
+      type: string
+      title: Orientation
+      enum:
+        - vertical
+        - horizontal
+      'meta:enum':
+        vertical: Vertical
+        horizontal: Horizontal
+      examples:
+        - vertical
+    heading_text:
+      type: string
+      title: Heading
+      examples:
+        - 'This is your card title'
+    level:
+      type: number
+      title: 'Heading level'
+      enum:
+        - 2
+        - 3
+        - 4
+      default: 3
+      examples:
+        - 3
+    url:
+      type: string
+      title: Link
+      format: uri-reference
+    media:
+      $ref: 'json-schema-definitions://canvas.module/image'
+      title: Image
+      type: object
+    text:
+      type: string
+      title: Description
+      pattern: '(.|\r?\n)*'
+      examples:
+        - 'Quaerat laborum rerum dolores dolores dolor qui.'
+    date:
+      type: integer
+      title: 投稿日時
+      description: 記事の作成日時を参照します。未設定の場合は表示しません。
+      examples:
+        - 1770856866
+    is_text_centered:
+      type: boolean
+      title: 'Center text'
+      examples:
+        - false
+description: 'Linked article summary with optional image and publication timestamp.'
+status: stable

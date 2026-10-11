@@ -1,0 +1,11 @@
+<figure{{ attributes.addClass('c-content-image').setAttribute('data-radius', radius|default('none')).setAttribute('data-size', size|default('original')) }}>
+  {% if media.src %}
+    {% if url and url != 'No URL' %}<a href="{{ url }}">{% endif %}
+    {{ include('canvas:image', {
+      src: media.src, alt: media.alt|default(''), width: media.width, height: media.height,
+      class: 'c-content-image__image', loading: 'lazy',
+    }, with_context = false) }}
+    {% if url and url != 'No URL' %}</a>{% endif %}
+  {% endif %}
+  {% if caption %}<figcaption class="c-content-image__caption">{{ caption }}</figcaption>{% endif %}
+</figure>

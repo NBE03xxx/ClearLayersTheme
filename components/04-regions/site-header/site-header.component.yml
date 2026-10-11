@@ -1,0 +1,45 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: ヘッダー
+group: サイト共通
+description: Branding and optional actions with configurable column widths and alignment in each area. Use once per page.
+status: stable
+props:
+  type: object
+  properties:
+    branding_width:
+      type: integer
+      title: ブランディングの幅（%）
+      description: 左右の内側余白と列間の余白を除いた幅に対する割合です。残りをアクションに割り当てます。狭い画面では比率を使わず、ブランディングと操作ボタンをコンパクトに横並びにします。
+      minimum: 1
+      maximum: 99
+      default: 25
+      examples: [25]
+    branding_alignment:
+      type: string
+      title: ブランディングの表示位置
+      description: ブランディングの枠内での表示位置です。
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+    actions_alignment:
+      type: string
+      title: アクションの表示位置
+      description: アクションの枠内で、複数の部品を横並びのまま左・中央・右に配置します。
+      enum: [left, center, right]
+      meta:enum:
+        left: 左
+        center: 中央
+        right: 右
+      default: left
+      examples: [left]
+slots:
+  branding:
+    title: Branding
+    description: Site logo, name, and slogan or a Drupal branding region.
+  actions:
+    title: Header actions
+    description: Optional controls placed from the Library, such as the appearance selector, search, or account links. Empty by default.

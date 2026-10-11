@@ -1,0 +1,17 @@
+{% set heading_level = level in [2, 3, 4] ? level : 3 %}
+<article{{ attributes.addClass('c-article-card').setAttribute('data-orientation', orientation|default('vertical')).setAttribute('data-style', style|default('framed')).setAttribute('data-tone', background|default('default')).setAttribute('data-centered', is_text_centered ? 'true' : 'false') }}>
+  {% if media.src %}
+    <div class="c-article-card__media">
+      {{ include('canvas:image', {src: media.src, alt: media.alt|default(''), width: media.width, height: media.height, loading: 'lazy'}, with_context = false) }}
+    </div>
+  {% endif %}
+  <div class="c-article-card__body">
+    <h{{ heading_level }} class="c-article-card__title">
+      {% if url and url != 'No URL' %}<a class="c-article-card__link" href="{{ url }}">{{ heading_text }}</a>{% else %}{{ heading_text }}{% endif %}
+    </h{{ heading_level }}>
+    {% if date is defined and date is not null %}
+      <p class="c-article-card__date"><span>投稿</span> <time datetime="{{ date|format_date('custom', 'c') }}">{{ date|format_date('custom', 'Y/m/d H:i') }}</time></p>
+    {% endif %}
+    {% if text %}<p class="c-article-card__summary">{{ text }}</p>{% endif %}
+  </div>
+</article>

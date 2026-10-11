@@ -1,0 +1,40 @@
+/* stylelint-disable no-invalid-position-declaration */
+.c-menu-tabs > ul {
+  display: flex;
+  margin: 1rem;
+  border-bottom: 1px solid var(--lg-color-light);
+  margin: 0;
+  padding: 0;
+}
+.c-menu-tabs > ul > li {
+  list-style: none;
+}
+.c-menu-tabs .c-menu-tabs__item {
+  display: block;
+  list-style: none;
+  margin-bottom: -1px;
+  margin-top: 0;
+  padding-left: 0;
+}
+.c-menu-tabs .c-menu-tabs__item a {
+  background-color: var(--lg-color-light);
+  border: 1px solid var(--lg-color-dark);
+  border-bottom-color: var(--lg-color-light);
+  border-radius: 3px 3px 0 0;
+  color: var(--lg-color-black);
+  display: block;
+  margin-right: -1px;
+  padding: 0.5rem 1rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+.c-menu-tabs .c-menu-tabs__item a:hover {
+  background-color: var(--lg-color-dark);
+  color: var(--lg-color-white);
+}
+.c-menu-tabs .c-menu-tabs__item.is-active > a, .c-menu-tabs .c-menu-tabs__item.is-active > a:hover {
+  background-color: #fff;
+  border: 1px solid var(--lg-color-light);
+  border-bottom-color: transparent;
+  color: var(--lg-color-black);
+}
