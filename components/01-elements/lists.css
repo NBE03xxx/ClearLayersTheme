@@ -2,7 +2,16 @@ ul:not([class]),
 ol:not([class]) {
   font-size: inherit;
   line-height: inherit;
-  list-style-position: inside;
+  list-style-position: outside;
+  padding-inline-start: 1.5em;
+}
+
+ul:not([class]) {
+  list-style-type: disc;
+}
+
+ol:not([class]) {
+  list-style-type: decimal;
 }
 
 ul:not([class]):not(:first-child),

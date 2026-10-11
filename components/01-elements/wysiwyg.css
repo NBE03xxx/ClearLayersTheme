@@ -432,7 +432,16 @@
 .ck-content ul:not([class]), .ck-content ol:not([class]) {
   font-size: inherit;
   line-height: inherit;
-  list-style-position: inside;
+  list-style-position: outside;
+  padding-inline-start: 1.5em;
+}
+
+.ck-content ul:not([class]) {
+  list-style-type: disc;
+}
+
+.ck-content ol:not([class]) {
+  list-style-type: decimal;
 }
 
 .ck-content ul:not([class]):not(:first-child), .ck-content ol:not([class]):not(:first-child) {
