@@ -32,6 +32,13 @@ function clear_layers_element_info_alter(array &$info): void {
 }
 
 /**
+ * Implements hook_preprocess_canvas_page_variant().
+ */
+function clear_layers_preprocess_canvas_page_variant(array &$variables): void {
+  $variables = \Drupal\clear_layers\Render\PatternPreview::prepare($variables);
+}
+
+/**
  * Implements hook_preprocess_html().
  */
 function clear_layers_preprocess_html(array &$variables): void {
