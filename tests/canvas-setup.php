@@ -88,7 +88,7 @@ if ($mode === 'verify-existing') {
   foreach (CanvasSetup::COMPONENTS as $id) {
     $check(Component::load($id)->status(), 'verify-existing requires the necessary components to be enabled.');
   }
-  $check(\Drupal::moduleHandler()->moduleExists('clear_layers_canvas_taxonomy') || \Drupal::moduleHandler()->moduleExists('liquidglass_canvas_taxonomy'), 'verify-existing requires the routing helper to be enabled.');
+  $check(\Drupal::moduleHandler()->moduleExists('clear_layers_canvas_taxonomy'), 'verify-existing requires the bundled helper to be enabled.');
   $check(CanvasSetup::blockers() === [], 'Resolve setup prerequisites before checking idempotence.');
   $switcher = \Drupal::service('account_switcher');
   $switcher->switchTo(\Drupal\user\Entity\User::load(1));

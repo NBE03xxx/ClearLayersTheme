@@ -206,18 +206,18 @@ if ($mode === 'export') {
       }
     }
   }
-  $moduleSource = DRUPAL_ROOT . '/modules/custom/clear_layers_canvas_taxonomy';
-  if (!is_dir($moduleSource)) {
-    // A renamed theme can still be running with the originating site's helper
-    // module. Package the maintained Clear Layers helper for the new site.
-    $moduleSource = $themePath . '/starter-kit/modules/clear_layers_canvas_taxonomy';
-  }
-  foreach (['clear_layers_canvas_taxonomy.info.yml', 'clear_layers_canvas_taxonomy.services.yml', 'README.md', 'src/EventSubscriber/TaxonomyPageVariantSubscriber.php'] as $relative) {
+  // Ship the maintained helper, including safe defaults for Canvas menu forms.
+  $moduleSource = $themePath . '/starter-kit/modules/clear_layers_canvas_taxonomy';
+  foreach (['clear_layers_canvas_taxonomy.info.yml', 'clear_layers_canvas_taxonomy.services.yml', 'README.md', 'src/EventSubscriber/TaxonomyPageVariantSubscriber.php', 'src/Hook/MenuHooks.php', 'src/Plugin/Block/FooterMenuBlock.php'] as $relative) {
+    if (!is_file($moduleSource . '/' . $relative)) {
+      throw new RuntimeException('Missing maintained Canvas helper file: ' . $relative);
+    }
     $target = $destination . '/modules/clear_layers_canvas_taxonomy/' . $relative;
     if (!is_dir(dirname($target))) {
       mkdir(dirname($target), 0775, TRUE);
     }
-    if (!copy($moduleSource . '/' . $relative, $target)) {
+    if (realpath($moduleSource . '/' . $relative) !== realpath($target)
+      && !copy($moduleSource . '/' . $relative, $target)) {
       throw new RuntimeException('Cannot copy taxonomy helper.');
     }
   }

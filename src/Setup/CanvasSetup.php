@@ -25,9 +25,11 @@ final class CanvasSetup {
     'sdc.clear_layers.site-navigation',
     'sdc.clear_layers.site-header',
     'sdc.clear_layers.site-footer',
+    'sdc.clear_layers.footer-menu',
     'sdc.clear_layers.color-scheme',
     'sdc.clear_layers.account-menu',
     'block.system_branding_block',
+    'block.system_menu_block.footer',
     'marker.page_content',
   ];
 
@@ -115,6 +117,7 @@ final class CanvasSetup {
     };
     $header = $node('sdc.clear_layers.site-header', ['branding_width' => 60, 'branding_alignment' => 'left', 'actions_alignment' => 'right']);
     $footer = $node('sdc.clear_layers.site-footer', ['tag_columns' => 8, 'top_alignment' => 'left', 'left_alignment' => 'left', 'center_alignment' => 'left', 'right_alignment' => 'right', 'bottom_alignment' => 'left']);
+    $footerMenu = $node('sdc.clear_layers.footer-menu', ['show_title' => FALSE, 'title_alignment' => 'left'], $footer['uuid'], 'footer_left');
     $common = static fn (string $section): array => $node('sdc.clear_layers.shared-site-section', ['section' => $section]);
     $taxonomy = $node('sdc.clear_layers.taxonomy-listing', ['show_title' => TRUE, 'title_alignment' => 'left', 'title_size' => 32]);
     return [
@@ -132,6 +135,8 @@ final class CanvasSetup {
           'id' => 'site_footer', 'label' => 'サイト共通フッター', 'status' => TRUE,
           'component_tree' => [
             $footer,
+            $footerMenu,
+            $node('block.system_menu_block.footer', ['label' => 'フッター', 'label_display' => '0', 'level' => 1, 'depth' => 1, 'expand_all_items' => FALSE], $footerMenu['uuid'], 'content'),
             $node('sdc.clear_layers.account-menu', ['show_title' => FALSE, 'title_alignment' => 'right', 'show_account_link' => FALSE], $footer['uuid'], 'footer_right'),
           ],
         ],
@@ -170,8 +175,7 @@ final class CanvasSetup {
       $moduleList = \Drupal::service('extension.list.module');
       $moduleList->reset();
       $modules = $moduleList->getList();
-      $legacy = \Drupal::moduleHandler()->moduleExists('liquidglass_canvas_taxonomy');
-      if (!$legacy && !isset($modules['clear_layers_canvas_taxonomy'])) {
+      if (!isset($modules['clear_layers_canvas_taxonomy'])) {
         throw new \RuntimeException('同梱の Clear Layers Canvas Taxonomy が見つかりません。テーマ一式を配置し、キャッシュを再構築してください。');
       }
       // Generate only missing components; saved component versions are retained.
@@ -185,8 +189,14 @@ final class CanvasSetup {
       if ($sdc) {
         $manager->generateComponents('sdc', $sdc);
       }
-      if (!Component::load('block.system_branding_block')) {
-        $manager->generateComponents('block', ['system_branding_block']);
+      $blocks = [];
+      foreach (['block.system_branding_block' => 'system_branding_block', 'block.system_menu_block.footer' => 'system_menu_block:footer'] as $id => $plugin) {
+        if (!Component::load($id)) {
+          $blocks[] = $plugin;
+        }
+      }
+      if ($blocks) {
+        $manager->generateComponents('block', $blocks);
       }
       PageVariantMigration::ensurePageContentMarker();
       $versions = [];
@@ -229,7 +239,7 @@ final class CanvasSetup {
         $entity->save();
         $result['created'][] = $id;
       }
-      if (!$legacy && !\Drupal::moduleHandler()->moduleExists('clear_layers_canvas_taxonomy')) {
+      if (!\Drupal::moduleHandler()->moduleExists('clear_layers_canvas_taxonomy')) {
         \Drupal::service('module_installer')->install(['clear_layers_canvas_taxonomy']);
       }
       if ($makeDefault) {
