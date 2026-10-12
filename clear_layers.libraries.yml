@@ -1,3 +1,7 @@
+background-settings:
+  css:
+    component:
+      css/background-settings.css: { }
 base:
   version: VERSION
   css:

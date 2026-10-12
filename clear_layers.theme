@@ -52,7 +52,11 @@ function clear_layers_preprocess_html(array &$variables): void {
   $style .= '; --lg-glass-tint: ' . (100 - clear_layers_glass_value('glass_transparency', $config->get('glass_transparency'))) . '%';
   $style .= '; --lg-glass-blur: ' . clear_layers_glass_value('glass_blur', $config->get('glass_blur')) . 'px';
   $cacheability = CacheableMetadata::createFromObject($config);
-  if (\Drupal::moduleHandler()->moduleExists('media') && ($uuid = $config->get('background_media_uuid'))) {
+  $background_uri = NULL;
+  if ($config->get('background_image')) {
+    $background_uri = clear_layers_background_image_uri($config->get('background_image'));
+  }
+  elseif (\Drupal::moduleHandler()->moduleExists('media') && ($uuid = $config->get('background_media_uuid'))) {
     // The list tag also handles a configured item being deleted/restored.
     $cacheability->addCacheTags(\Drupal::entityTypeManager()->getDefinition('media')->getListCacheTags());
     if ($media = clear_layers_background_media($uuid)) {
@@ -65,11 +69,12 @@ function clear_layers_preprocess_html(array &$variables): void {
         }
       }
       if ($file = clear_layers_background_file($media)) {
-        $url = \Drupal::service('file_url_generator')->generateString($file->getFileUri());
-        $style .= '; --lg-page-background-image: ' . clear_layers_background_css_url($url);
+        $background_uri = $file->getFileUri();
       }
     }
   }
+  $url = \Drupal::service('file_url_generator')->generateString($background_uri ?? clear_layers_background_default_uri());
+  $style .= '; --lg-page-background-image: ' . clear_layers_background_css_url($url);
   $attributes->setAttribute('style', ltrim($style, '; '));
   // Rendering this tag also bubbles the setting's cache dependency into HTML.
   $variables['clear_layers_meta'] = [

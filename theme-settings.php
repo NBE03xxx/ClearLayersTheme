@@ -6,12 +6,12 @@
  */
 
 use Drupal\Core\Extension\ThemeSettingsProvider;
-use Drupal\Core\Entity\Element\EntityAutocomplete;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 require_once __DIR__ . '/includes/palettes.inc';
 require_once __DIR__ . '/includes/background.inc';
+require_once __DIR__ . '/includes/background-settings.inc';
 require_once __DIR__ . '/includes/spacing.inc';
 require_once __DIR__ . '/includes/glass.inc';
 
@@ -83,7 +83,7 @@ function clear_layers_form_system_theme_settings_alter(&$form, FormStateInterfac
     '#title' => t('サイト全体の配色'),
     '#options' => $options,
     '#default_value' => clear_layers_resolve_palette($provider->getSetting('color_palette', 'clear_layers')),
-    '#description' => t('Clear Layers の背景・パネル・文字・リンク・フォームに共通の配色です。保存すると、すべての訪問者に適用します。ライト／ダークはそれぞれの配色で自動調整されます。'),
+    '#description' => t('青・緑・赤・琥珀色・モノクロをもとにした配色です。パネル・文字・リンク・フォームなどに共通で適用します。背景画像は「ページの背景画像」で選択してください。保存すると、すべての訪問者に適用します。ライト／ダークはそれぞれの配色で自動調整されます。'),
     '#weight' => -10,
   ];
 
@@ -148,56 +148,13 @@ function clear_layers_form_system_theme_settings_alter(&$form, FormStateInterfac
   $form['clear_layers_settings']['spacing']['page_gutter']['#description'] = t('Canvas ページの表示領域の左右から取る余白です。初期値は24pxで、0〜64pxで指定できます。狭い画面では指定値の約3分の2になります。管理ツールバーや、各ブロックの内部余白には適用しません。');
   $form['#submit'] = array_merge(['clear_layers_spacing_submit'], $form['#submit'] ?? []);
 
-  if (\Drupal::moduleHandler()->moduleExists('media')) {
-    $bundles = [];
-    foreach (\Drupal::entityTypeManager()->getStorage('media_type')->loadMultiple() as $type) {
-      if ($type->getSource()->getPluginId() === 'image') {
-        $bundles[$type->id()] = $type->id();
-      }
-    }
-    $selected = clear_layers_background_media($provider->getSetting('background_media_uuid', 'clear_layers'));
-    $background = &$form['clear_layers_settings']['background'];
-    $background = [
-      '#type' => 'container',
-      '#weight' => -9,
-    ];
-    $background['background_media_uuid'] = [
-      '#type' => 'entity_autocomplete',
-      '#title' => t('ページの背景画像'),
-      '#target_type' => 'media',
-      '#selection_handler' => 'default:media',
-      '#selection_settings' => ['target_bundles' => $bundles],
-      '#default_value' => $selected,
-      '#disabled' => !$bundles,
-      '#description' => t('メディアにアップロード済みの画像を、画像名で検索して候補から選んでください。公開済みの公開ファイルを使用できます。空にして保存すると、テーマ標準の青い背景に戻ります。保存後、サイト全体に適用されます。'),
-      '#ajax' => [
-        'callback' => 'clear_layers_background_preview_ajax',
-        'event' => 'change',
-        'wrapper' => 'clear_layers-background-preview',
-      ],
-    ];
-    // AJAX preview follows the current input, including clearing the field.
-    $input = $form_state->getUserInput();
-    if (array_key_exists('background_media_uuid', $input)) {
-      $id = EntityAutocomplete::extractEntityIdFromAutocompleteInput((string) $input['background_media_uuid']);
-      $selected = $id ? \Drupal::entityTypeManager()->getStorage('media')->load($id) : NULL;
-    }
-    $background['preview'] = [
-      '#type' => 'container',
-      '#attributes' => ['id' => 'clear_layers-background-preview', 'aria-live' => 'polite'],
-    ];
-    $file = $selected && $selected->access('view') ? clear_layers_background_file($selected) : NULL;
-    $preview_uri = $file ? $file->getFileUri() : \Drupal::service('extension.list.theme')->getPath('clear_layers') . '/images/backgrounds/waves-blue.png';
-    $background['preview']['image'] = [
-      '#theme' => 'image',
-      '#uri' => $preview_uri,
-      '#alt' => t('背景画像のプレビュー'),
-      '#attributes' => ['style' => 'max-width: 360px; width: 100%; height: auto;'],
-    ];
-    $form['#validate'][] = 'clear_layers_background_validate';
-    // Normalize the selection before Drupal saves the theme settings.
-    $form['#submit'] = array_merge(['clear_layers_background_submit'], $form['#submit'] ?? []);
-  }
+  $form['clear_layers_settings']['background'] = clear_layers_background_settings(
+    $provider->getSetting('background_image', 'clear_layers'),
+    $provider->getSetting('background_media_uuid', 'clear_layers'),
+    $form_state,
+  );
+  $form['#validate'][] = 'clear_layers_background_validate';
+  $form['#submit'] = array_merge(['clear_layers_background_submit'], $form['#submit'] ?? []);
 
 }
 
@@ -221,30 +178,31 @@ function clear_layers_spacing_submit(array &$form, FormStateInterface $form_stat
 }
 
 /**
- * Returns the preview without submitting the settings form.
+ * Returns the selection preview and picker without saving theme settings.
  */
 function clear_layers_background_preview_ajax(array &$form, FormStateInterface $form_state): array {
-  return $form['clear_layers_settings']['background']['preview'];
+  return $form['clear_layers_settings']['background'];
 }
 
 /**
- * Rejects media that cannot serve a public, site-wide image.
+ * Rejects filenames outside the theme background image list.
  */
 function clear_layers_background_validate(array &$form, FormStateInterface $form_state): void {
-  $id = $form_state->getValue('background_media_uuid');
-  if ($id) {
-    $media = \Drupal::entityTypeManager()->getStorage('media')->load($id);
-    if (!$media || !$media->access('view') || !clear_layers_background_file($media)) {
-      $form_state->setErrorByName('background_media_uuid', t('公開済みの画像メディアを選択してください。画像ファイルは公開ファイル領域に保存されている必要があります。'));
-    }
+  $filename = $form_state->getValue('background_image');
+  if ($filename !== '' && !clear_layers_background_image_uri($filename)
+    && !($filename === '__legacy_media__' && $form_state->getValue('background_media_uuid'))) {
+    $form_state->setErrorByName('background_image', t('テーマに同梱された背景画像を選択してください。'));
   }
 }
 
 /**
- * Stores the media UUID through the standard theme settings submit handler.
+ * Saves the filename and retires the previous media setting on selection.
  */
 function clear_layers_background_submit(array &$form, FormStateInterface $form_state): void {
-  $id = $form_state->getValue('background_media_uuid');
-  $media = $id ? \Drupal::entityTypeManager()->getStorage('media')->load($id) : NULL;
-  $form_state->setValue('background_media_uuid', $media ? $media->uuid() : '');
+  if ($form_state->getValue('background_image') === '__legacy_media__') {
+    $form_state->setValue('background_image', '');
+  }
+  else {
+    $form_state->setValue('background_media_uuid', '');
+  }
 }

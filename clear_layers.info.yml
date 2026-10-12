@@ -1,8 +1,8 @@
 name: 'Clear Layers'
 type: theme
 'base theme': false
-version: 1.0.3
-screenshot: images/backgrounds/waves-blue.png
+version: 1.1.0
+screenshot: background/blue-glowing-waves.png
 libraries:
   - clear_layers/base
   - clear_layers/messages

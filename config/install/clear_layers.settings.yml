@@ -13,6 +13,7 @@ glass_transparency: 40
 glass_blur: 12
 block_spacing: 24
 page_gutter: 12
+background_image: blue-glowing-waves.png
 background_media_uuid: ''
 color_palette: ocean
 display_back_to_top: true

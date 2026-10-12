@@ -36,14 +36,17 @@ clear_layers.settings:
         Range:
           min: 0
           max: 64
+    background_image:
+      type: string
+      label: 'Bundled page background image filename (empty uses theme default)'
     background_media_uuid:
       type: string
-      label: 'Page background image media UUID (empty uses theme default)'
+      label: 'Previously saved background media UUID (retained until a bundled image is selected)'
     color_palette:
       type: string
       label: 'Site-wide Clear Layers color palette'
       constraints:
-        Choice: [ocean, arctic, indigo, lagoon]
+        Choice: [ocean, arctic, indigo, lagoon, green_mint, green_teal, red_rose, red_coral, amber_gold, amber_orange, monochrome_silver, monochrome_charcoal]
     display_back_to_top:
       type: boolean
       label: 'Display a back to top button on the site'
