@@ -14,6 +14,7 @@ require_once __DIR__ . '/includes/background.inc';
 require_once __DIR__ . '/includes/background-settings.inc';
 require_once __DIR__ . '/includes/spacing.inc';
 require_once __DIR__ . '/includes/glass.inc';
+require_once __DIR__ . '/includes/canvas-setup.inc';
 
 /**
  * Implements hook_form_FORM_ID_alter() for system_theme_settings.
@@ -155,6 +156,8 @@ function clear_layers_form_system_theme_settings_alter(&$form, FormStateInterfac
   );
   $form['#validate'][] = 'clear_layers_background_validate';
   $form['#submit'] = array_merge(['clear_layers_background_submit'], $form['#submit'] ?? []);
+
+  clear_layers_canvas_setup_form($form);
 
 }
 

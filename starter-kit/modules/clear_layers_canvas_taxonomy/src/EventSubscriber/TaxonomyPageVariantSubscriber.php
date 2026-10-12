@@ -4,6 +4,7 @@ namespace Drupal\clear_layers_canvas_taxonomy\EventSubscriber;
 
 use Drupal\canvas\Entity\PageVariant;
 use Drupal\canvas\Plugin\DisplayVariant\CanvasPageVariant;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\PageDisplayVariantSelectionEvent;
 use Drupal\Core\Render\RenderEvents;
@@ -16,10 +17,18 @@ final class TaxonomyPageVariantSubscriber implements EventSubscriberInterface {
 
   public const VARIANT_ID = 'taxonomy_listing';
 
-  public function __construct(private readonly EntityTypeManagerInterface $entityTypeManager) {}
+  public function __construct(
+    private readonly EntityTypeManagerInterface $entityTypeManager,
+    private readonly ConfigFactoryInterface $configFactory,
+  ) {}
 
   public function onSelect(PageDisplayVariantSelectionEvent $event): void {
     if ($event->getRouteMatch()->getRouteName() !== 'entity.taxonomy_term.canonical') {
+      return;
+    }
+    $theme = $this->configFactory->get('system.theme');
+    $event->addCacheableDependency($theme);
+    if ($theme->get('default') !== 'clear_layers') {
       return;
     }
     // Missing or disabled templates fall back to Canvas' normal selection.
