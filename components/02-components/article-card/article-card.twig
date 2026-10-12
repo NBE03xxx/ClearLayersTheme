@@ -10,7 +10,7 @@
       {% if url and url != 'No URL' %}<a class="c-article-card__link" href="{{ url }}">{{ heading_text }}</a>{% else %}{{ heading_text }}{% endif %}
     </h{{ heading_level }}>
     {% if date is defined and date is not null %}
-      <p class="c-article-card__date"><span>投稿</span> <time datetime="{{ date|format_date('custom', 'c') }}">{{ date|format_date('custom', 'Y/m/d H:i') }}</time></p>
+      <p class="c-article-card__date"><span>投稿</span> <time datetime="{{ date|format_date('custom', 'c') }}">{{ date|format_date('custom', 'Y-m-d') }}</time></p>
     {% endif %}
     {% if text %}<p class="c-article-card__summary">{{ text }}</p>{% endif %}
   </div>
