@@ -50,6 +50,11 @@ clear_layers.settings:
     display_back_to_top:
       type: boolean
       label: 'Display a back to top button on the site'
+    branding_text_position:
+      type: string
+      label: 'Site name and slogan position relative to the logo'
+      constraints:
+        Choice: [right, below]
     mobile_menu_direction:
       type: string
       label: 'Mobile menu direction'

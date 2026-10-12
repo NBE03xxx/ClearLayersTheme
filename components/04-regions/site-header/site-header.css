@@ -79,7 +79,7 @@
     gap: 0.5rem;
   }
   .site-header__branding .site-branding__logo {
-    flex-basis: 7rem;
+    max-width: min(100%, 7rem);
   }
   .site-header__branding .site-branding__logo img {
     max-height: 2.5rem;

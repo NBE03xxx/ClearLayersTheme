@@ -16,5 +16,6 @@ page_gutter: 12
 background_image: blue-glowing-waves.png
 background_media_uuid: ''
 color_palette: ocean
+branding_text_position: right
 display_back_to_top: true
 mobile_menu_direction: mobile-menu-slideout-right

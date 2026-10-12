@@ -48,6 +48,7 @@ function clear_layers_preprocess_html(array &$variables): void {
   $attributes = $variables['html_attributes'];
   $attributes->setAttribute('data-site-palette', $palette_id);
   $attributes->setAttribute('data-glass-depth', clear_layers_glass_depth($config->get('glass_depth')));
+  $attributes->setAttribute('data-branding-text-position', $config->get('branding_text_position') === 'below' ? 'below' : 'right');
   $style = (string) ($attributes['style'] ?? '');
   foreach (['light', 'dark'] as $mode) {
     foreach ($palette[$mode] as $token => $color) {

@@ -1,6 +1,6 @@
 .site-branding {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 1rem 1.5rem;
   min-width: 0;
@@ -8,7 +8,9 @@
 
 .site-branding__logo {
   display: block;
-  flex: 0 1 10rem;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: min(100%, 10rem);
 }
 
 .site-branding__logo img {
@@ -19,7 +21,22 @@
 }
 
 .site-branding__text {
+  flex: 1 1 auto;
   min-width: 0;
+}
+
+:root[data-branding-text-position='below'] .site-branding {
+  flex-direction: column;
+  align-items: var(--header-branding-align, flex-start);
+}
+
+:root[data-branding-text-position='below'] .site-branding__logo,
+:root[data-branding-text-position='below'] .site-branding__text {
+  flex: none;
+}
+
+:root[data-branding-text-position='below'] .site-branding__text {
+  max-width: 100%;
 }
 
 // Keep the navy Jisaba wordmark legible against the dark site background.

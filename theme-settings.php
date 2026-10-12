@@ -74,6 +74,17 @@ function clear_layers_form_system_theme_settings_alter(&$form, FormStateInterfac
     '#default_value' => $provider->getSetting('display_back_to_top'),
     '#description' => t('Display a back to top button on the site.'),
   ];
+  $form['clear_layers_settings']['branding_text_position'] = [
+    '#type' => 'select',
+    '#title' => t('ロゴと文字の配置'),
+    '#options' => [
+      'right' => t('ロゴの右に文字を表示'),
+      'below' => t('ロゴの下に文字を表示'),
+    ],
+    '#default_value' => $provider->getSetting('branding_text_position', 'clear_layers') === 'below' ? 'below' : 'right',
+    '#description' => t('サイト名とスローガンの位置を選択します。初期値は「右」です。Canvas の共通ヘッダーにも適用します。「右」では狭い画面でも横並びを保ち、長い文字は文字の領域内で折り返します。ロゴやサイト名を表示するかどうかは、ブランディングブロックで設定してください。'),
+    '#weight' => -7,
+  ];
 
   $options = [];
   foreach (clear_layers_color_palettes() as $id => $palette) {

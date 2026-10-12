@@ -1,7 +1,7 @@
 name: 'Clear Layers'
 type: theme
 'base theme': false
-version: 1.1.1
+version: 1.1.2
 screenshot: background/blue-glowing-waves.png
 libraries:
   - clear_layers/base
