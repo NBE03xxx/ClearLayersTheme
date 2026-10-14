@@ -1,3 +1,7 @@
+logo-settings:
+  css:
+    component:
+      css/logo-settings.css: { }
 background-settings:
   css:
     component:

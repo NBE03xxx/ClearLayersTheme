@@ -12,6 +12,8 @@ use Drupal\Core\Url;
 require_once __DIR__ . '/includes/palettes.inc';
 require_once __DIR__ . '/includes/background.inc';
 require_once __DIR__ . '/includes/background-settings.inc';
+require_once __DIR__ . '/includes/logo.inc';
+require_once __DIR__ . '/includes/logo-settings.inc';
 require_once __DIR__ . '/includes/spacing.inc';
 require_once __DIR__ . '/includes/glass.inc';
 require_once __DIR__ . '/includes/canvas-setup.inc';
@@ -28,6 +30,12 @@ function clear_layers_form_system_theme_settings_alter(&$form, FormStateInterfac
   $form['#clear_layers_settings_processed'] = TRUE;
   /** @var \Drupal\Core\Extension\ThemeSettingsProvider $provider */
   $provider = \Drupal::service(ThemeSettingsProvider::class);
+
+  if (isset($form['logo'])) {
+    $form['logo']['#title'] = t('サイトロゴ');
+    $form['logo']['default_logo']['#title'] = t('テーマ標準のロゴを使用する');
+    $form['logo']['logo_color'] = clear_layers_logo_settings($provider->getSetting('logo_color', 'clear_layers'));
+  }
 
   $front_url = Url::fromRoute('<front>');
   $form['clear_layers_preview'] = [

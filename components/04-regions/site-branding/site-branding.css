@@ -40,9 +40,16 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  :root:not([data-color-scheme=light]) .site-branding__logo img[src*="/clear_layers/images/branding/logo-"][src$=".svg"] {
+    filter: brightness(1.6) saturate(0.8);
+  }
   :root:not([data-color-scheme=light]) .site-branding__logo img[src$="/jisaba-life-logo-v2.png"] {
     filter: brightness(0) invert(1);
   }
+}
+
+:root[data-color-scheme=dark] .site-branding__logo img[src*="/clear_layers/images/branding/logo-"][src$=".svg"] {
+  filter: brightness(1.6) saturate(0.8);
 }
 
 :root[data-color-scheme=dark] .site-branding__logo img[src$="/jisaba-life-logo-v2.png"] {

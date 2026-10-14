@@ -42,6 +42,7 @@ try {
     $state = (new FormState())->setRequestMethod('POST')->setValues([
       'background_image' => '',
       'page_gutter' => '31',
+      'logo_color' => 'amber',
       $button['#name'] => $button['#value'],
     ])->setTriggeringElement($button);
     $builder->submitForm(ThemeSettingsForm::class, $state, 'clear_layers');
@@ -51,6 +52,7 @@ try {
     $check($selection['background_image']['#value'] === $filename, 'Selection was lost in form rebuild.');
     $check($selection['preview']['image']['#uri'] === $image['uri'], 'Preview did not follow selection.');
     $check($rebuilt['clear_layers_settings']['spacing']['page_gutter']['#value'] === '31', 'Unsaved spacing was lost.');
+    $check($rebuilt['logo']['logo_color']['#value'] === 'amber', 'Unsaved logo color was lost.');
     $check(!$selection['picker']['#open'], 'Picker did not close after selection.');
 
     $normalization = (new FormState())->setValues(['background_image' => $filename, 'background_media_uuid' => 'old-media-uuid']);

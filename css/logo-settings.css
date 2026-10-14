@@ -1,0 +1,47 @@
+.clear-layers-logo-colors .form-radios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 16px;
+}
+
+.clear-layers-logo-colors .form-item {
+  margin: 0;
+}
+
+.clear-layers-logo-option {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.clear-layers-logo-samples {
+  display: flex;
+  gap: 4px;
+}
+
+.clear-layers-logo-sample {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  color: #172b46;
+  background: #f4f8fc;
+  font-size: 12px;
+}
+
+.clear-layers-logo-sample img {
+  display: block;
+  width: 64px;
+  height: 64px;
+}
+
+.clear-layers-logo-sample--dark {
+  color: #edf5ff;
+  background: #142132;
+}
+
+.clear-layers-logo-sample--dark img {
+  filter: brightness(1.6) saturate(0.8);
+}

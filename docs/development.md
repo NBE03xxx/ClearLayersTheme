@@ -39,4 +39,10 @@ vendor/bin/drush php:script web/themes/custom/clear_layers/tests/theme-integrity
 vendor/bin/drush php:script web/themes/custom/clear_layers/tests/background-picker.php
 ```
 
+標準ロゴの５色・背景との自動連動・手動選択・独自ロゴの優先・Canvas 表示・キャッシュ依存の検証（サイトの設定は保存しません）:
+
+```sh
+vendor/bin/drush php:script web/themes/custom/clear_layers/tests/logo-colors.php
+```
+
 Core からコピーした標準テンプレートは Core 更新時に自動更新されません。`.info.yml` の `generator` を参照し、関連する Core の変更を確認して取り込んでください。公開済みの SDC の props／slots を変更する際は、Canvas の保存済みバージョンとの互換性を確認してください。

@@ -7,7 +7,8 @@ features:
   node_user_picture: true
 logo:
   path: ''
-  use_default: false
+  use_default: true
+logo_color: auto
 glass_depth: standard
 glass_transparency: 40
 glass_blur: 12

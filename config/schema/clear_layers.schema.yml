@@ -3,6 +3,11 @@ clear_layers.settings:
   type: theme_settings
   label: 'clear_layers settings'
   mapping:
+    logo_color:
+      type: string
+      label: 'Default site logo color (auto follows the bundled background)'
+      constraints:
+        Choice: [auto, blue, green, red, amber, monochrome]
     glass_depth:
       type: string
       label: 'Glass surface elevation preset'

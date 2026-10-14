@@ -16,6 +16,7 @@ use Drupal\views\ViewExecutable;
 
 require_once __DIR__ . '/includes/palettes.inc';
 require_once __DIR__ . '/includes/background.inc';
+require_once __DIR__ . '/includes/logo.inc';
 require_once __DIR__ . '/includes/spacing.inc';
 require_once __DIR__ . '/includes/glass.inc';
 
@@ -405,6 +406,18 @@ function clear_layers_theme_suggestions_block_alter(array &$suggestions, array $
  * Implements hook_preprocess_block().
  */
 function clear_layers_preprocess_block(array &$variables): void {
+  if (($variables['base_plugin_id'] ?? '') === 'system_branding_block') {
+    // Respect each block's logo visibility, including saved Canvas instances.
+    if (!empty($variables['content']['site_logo']['#access']) && ($url = clear_layers_default_logo_url())) {
+      $variables['site_logo'] = $url;
+    }
+    // The SDC wrapper does not render content, so bubble these dependencies
+    // explicitly for cached Block layout and Canvas branding output.
+    $variables['clear_layers_logo_cache'] = [
+      '#markup' => '',
+      '#cache' => ['tags' => ['config:clear_layers.settings', 'config:system.theme.global']],
+    ];
+  }
   $footer_menu = !empty($variables['elements']['#clear_layers_footer_menu']);
   if (($variables['base_plugin_id'] ?? '') === 'system_menu_block' && (($variables['derivative_plugin_id'] ?? '') === 'footer' || $footer_menu)) {
     $variables['attributes']['class'][] = 'lg-footer-menu-block';
