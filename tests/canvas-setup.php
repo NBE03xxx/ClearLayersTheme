@@ -33,6 +33,11 @@ $snapshot = static function () use ($active): array {
   return $result;
 };
 $before = $snapshot();
+$moduleList = \Drupal::service('extension.list.module');
+$moduleList->reset();
+foreach (CanvasSetup::HELPER_MODULES as $module => $label) {
+  $check(isset($moduleList->getList()[$module]), 'The bundled helper must be discoverable: ' . $label);
+}
 $versions = [];
 foreach (CanvasSetup::COMPONENTS as $id) {
   $component = Component::load($id);
@@ -88,7 +93,9 @@ if ($mode === 'verify-existing') {
   foreach (CanvasSetup::COMPONENTS as $id) {
     $check(Component::load($id)->status(), 'verify-existing requires the necessary components to be enabled.');
   }
-  $check(\Drupal::moduleHandler()->moduleExists('clear_layers_canvas_taxonomy'), 'verify-existing requires the bundled helper to be enabled.');
+  foreach (CanvasSetup::HELPER_MODULES as $module => $label) {
+    $check(\Drupal::moduleHandler()->moduleExists($module), 'verify-existing requires the bundled helper to be enabled: ' . $label);
+  }
   $check(CanvasSetup::blockers() === [], 'Resolve setup prerequisites before checking idempotence.');
   $switcher = \Drupal::service('account_switcher');
   $switcher->switchTo(\Drupal\user\Entity\User::load(1));
@@ -97,7 +104,11 @@ if ($mode === 'verify-existing') {
     $check($result['created'] === [] && count($result['retained']) === 4 && !$result['default_changed'], 'Repeated setup must retain existing content and the site default.');
     $form = \Drupal::formBuilder()->getForm(\Drupal\system\Form\ThemeSettingsForm::class, 'clear_layers');
     $button = $form['clear_layers_canvas_setup']['create'];
-    $check($button['#submit'] === ['clear_layers_canvas_setup_submit'], 'The setup button must not run appearance-save handlers.');
+    $check(in_array('clear_layers_canvas_setup_submit', $button['#submit'], TRUE), 'The setup button must run the Canvas setup handler.');
+    // Other modules may append submit observers, such as ECA Form's listener.
+    foreach (['::submitForm', 'clear_layers_glass_submit', 'clear_layers_spacing_submit', 'clear_layers_background_submit'] as $handler) {
+      $check(!in_array($handler, $button['#submit'], TRUE), 'The setup button must not run appearance-save handlers: ' . $handler);
+    }
     $check($button['#disabled'] === FALSE, 'The setup button is unexpectedly disabled.');
     $state = (new FormState())->setValue('clear_layers_setup_default', TRUE);
     clear_layers_canvas_setup_cleanup($form, $state);

@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Customizes the Canvas component library display.
+ */
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function canvas_library_display_library_info_alter(array &$libraries, string $extension): void {
+  if ($extension === 'canvas' && isset($libraries['canvas-ui'])) {
+    $libraries['canvas-ui']['dependencies'][] = 'canvas_library_display/library';
+  }
+}

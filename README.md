@@ -86,6 +86,7 @@ vendor/bin/drush en canvas taxonomy views -y
 | 共通パターン | サイト共通ヘッダー `site_header`、サイト共通フッター `site_footer` |
 | ページテンプレート | サイト共通レイアウト `site_layout`、分類・タグの一覧 `taxonomy_listing` |
 | 補助モジュール | 同梱の Clear Layers Canvas Taxonomy を有効化。分類ページのテンプレート割り当てと新規フッターメニューの表示階層の初期値を設定 |
+| 補助モジュール | 同梱の Canvas Library Display を有効化。Library の Components タブで配置できる部品が0件のフォルダーを非表示にする |
 
 ボタンはその場で公開済みの設定を作成し、既存の同じ ID の構成は上書きしません。共通構成以外のページ・コンテンツタイプ・フィールド・記事・メニュー項目・分類・Views・画像は利用者が用意します。対象に未公開の変更や検証エラーがある場合は、Canvas で整理してから実行してください。
 

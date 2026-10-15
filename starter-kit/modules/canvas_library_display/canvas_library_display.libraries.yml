@@ -1,0 +1,6 @@
+library:
+  js:
+    js/library.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

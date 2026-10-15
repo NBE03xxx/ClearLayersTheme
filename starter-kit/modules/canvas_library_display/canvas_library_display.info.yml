@@ -1,0 +1,7 @@
+name: Canvas Library Display
+type: module
+description: Hides folders with no available components in the Canvas Library.
+package: Custom
+core_version_requirement: ^11
+dependencies:
+  - canvas:canvas

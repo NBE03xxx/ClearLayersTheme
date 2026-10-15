@@ -10,18 +10,19 @@ v1.1.0 では、12種類の配色と5色の同梱背景をテーマ設定から�
 
 Canvas のページやメニュー、レイアウト、コンテンツタイプは、テーマだけでは作成されません。
 
-**新規サイトで Canvas の共通構成を作る場合は、[README の Canvas 初期構成](../README.md#新規サイトの-canvas-初期構成)を使ってください。** テーマ設定のボタンで、汎用的な共通ヘッダー・フッターとページテンプレートを作成し、分類ページ用補助モジュールを有効化します。下記のサイトデータの書き出しや Recipe は不要です。
+**新規サイトで Canvas の共通構成を作る場合は、[README の Canvas 初期構成](../README.md#新規サイトの-canvas-初期構成)を使ってください。** テーマ設定のボタンで、汎用的な共通ヘッダー・フッターとページテンプレートを作成し、分類ページ用補助モジュールと Canvas Library Display を有効化します。下記のサイトデータの書き出しや Recipe は不要です。
 
 ## 公開リポジトリに含めるもの
 
 - テーマ本体と、一般的なテーマ初期設定。
 - 書き出し・適用スクリプト `scripts/export-starter-kit.php` と `scripts/apply-starter-kit.php`。
 - 分類一覧の PageVariant 割り当て用補助モジュール `modules/clear_layers_canvas_taxonomy`。
+- Library の配置可能な部品が0件のフォルダーを非表示にする `modules/canvas_library_display`。
 - Canvas コンポーネントの保存済み版を復元する導入用補助モジュール `modules/clear_layers_starter_kit`。保守元は `starter-kit-module/` です。
 
 **実サイトの `recipe/` と `manifest.yml` は Git に含めません。** 書き出しにはページ本文、メニュー、分類、画像、Views、フィールド、Canvas のテンプレートなどが含まれます。サイト固有の説明・構成図・設定が公開されることを避けるため、ローカルの導入用データとして管理します。GitHub からテーマを取得しても、5ページやサイトのレイアウトが自動で付属するわけではありません。
 
-補助モジュールは、Canvas を使わずテーマだけを導入する場合にはインストール不要です。新規 Canvas 初期構成では、テーマ内の `clear_layers_canvas_taxonomy` をボタンから有効化します。Drupal はテーマ配下でもモジュールを検出するため、コピーは不要です。サイトデータの復元用 `clear_layers_starter_kit` は、下記の Recipe を利用する場合にのみ必要です。
+補助モジュールは、Canvas を使わずテーマだけを導入する場合にはインストール不要です。新規 Canvas 初期構成では、テーマ内の `clear_layers_canvas_taxonomy` と `canvas_library_display` をボタンから有効化します。Drupal はテーマ配下でもモジュールを検出するため、コピーは不要です。サイトデータの復元用 `clear_layers_starter_kit` は、下記の Recipe を利用する場合にのみ必要です。
 
 ## サイトの公開済み状態を保存する場合
 
@@ -49,7 +50,7 @@ vendor/bin/drush php:script web/themes/custom/clear_layers/scripts/export-starte
 
 1. 導入先へテーマと、確認済みの `starter-kit/recipe/`・`manifest.yml` を配置します。
 2. `manifest.yml` の `composer_packages` に示す拡張を用意します。検証済みの書き出し形式は Drupal 11.4.9／Canvas 1.12.0 が基準です。
-3. `starter-kit/modules/` の補助モジュール2件をテーマと一緒に配置します。Drupal がテーマ内から検出するため、`web/modules/custom/` へのコピーは不要です。同名モジュールがテーマ外にもある場合は、Drupal が検出しているパスと内容を確認してください。
+3. `starter-kit/modules/` の補助モジュールをテーマと一緒に配置します。Recipe に必要なのは `clear_layers_canvas_taxonomy` と `clear_layers_starter_kit` です。`canvas_library_display` は初期構成ボタンで有効化する表示調整用です。Drupal がテーマ内から検出するため、`web/modules/custom/` へのコピーは不要です。同名モジュールがテーマ外にもある場合は、Drupal が検出しているパスと内容を確認してください。
 4. 適用前の計画を確認します。
 
 ```sh

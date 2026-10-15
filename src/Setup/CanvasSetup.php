@@ -19,6 +19,11 @@ final class CanvasSetup {
     'page_variant' => ['site_layout', 'taxonomy_listing'],
   ];
 
+  public const HELPER_MODULES = [
+    'clear_layers_canvas_taxonomy' => 'Clear Layers Canvas Taxonomy',
+    'canvas_library_display' => 'Canvas Library Display',
+  ];
+
   public const COMPONENTS = [
     'sdc.clear_layers.shared-site-section',
     'sdc.clear_layers.taxonomy-listing',
@@ -157,7 +162,7 @@ final class CanvasSetup {
   }
 
   /**
-   * Creates missing configuration and enables the bundled routing helper.
+   * Creates missing configuration and enables the bundled Canvas helpers.
    */
   public static function create(bool $makeDefault = FALSE): array {
     if (!self::hasAccess(\Drupal::currentUser())) {
@@ -171,12 +176,18 @@ final class CanvasSetup {
       if ($blockers = self::blockers()) {
         throw new \RuntimeException(implode(' ', $blockers));
       }
-      // Drupal discovers the helper in the theme directory; no file copying.
+      // Drupal discovers the helpers in the theme directory; no file copying.
       $moduleList = \Drupal::service('extension.list.module');
       $moduleList->reset();
       $modules = $moduleList->getList();
-      if (!isset($modules['clear_layers_canvas_taxonomy'])) {
-        throw new \RuntimeException('同梱の Clear Layers Canvas Taxonomy が見つかりません。テーマ一式を配置し、キャッシュを再構築してください。');
+      $missingModules = [];
+      foreach (self::HELPER_MODULES as $module => $label) {
+        if (!isset($modules[$module])) {
+          throw new \RuntimeException('同梱の ' . $label . ' が見つかりません。テーマ一式を配置し、キャッシュを再構築してください。');
+        }
+        if (!\Drupal::moduleHandler()->moduleExists($module)) {
+          $missingModules[] = $module;
+        }
       }
       // Generate only missing components; saved component versions are retained.
       $manager = \Drupal::service(ComponentSourceManager::class);
@@ -239,8 +250,8 @@ final class CanvasSetup {
         $entity->save();
         $result['created'][] = $id;
       }
-      if (!\Drupal::moduleHandler()->moduleExists('clear_layers_canvas_taxonomy')) {
-        \Drupal::service('module_installer')->install(['clear_layers_canvas_taxonomy']);
+      if ($missingModules) {
+        \Drupal::service('module_installer')->install($missingModules);
       }
       if ($makeDefault) {
         $settings = \Drupal::configFactory()->getEditable('canvas.settings');
