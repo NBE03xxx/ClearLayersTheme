@@ -1,4 +1,6 @@
 .c-information-page {
+  box-sizing: border-box;
+  width: 100%;
   min-width: 0;
   margin-inline: auto;
   padding: clamp(1.25rem, 4vw, 3rem);

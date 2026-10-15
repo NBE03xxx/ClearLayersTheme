@@ -1,4 +1,7 @@
 .c-information-page {
+  // Constrain the panel so long code scrolls inside it on narrow screens.
+  box-sizing: border-box;
+  width: 100%;
   min-width: 0;
   margin-inline: auto;
   padding: clamp(1.25rem, 4vw, 3rem);
