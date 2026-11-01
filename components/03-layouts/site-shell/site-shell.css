@@ -38,6 +38,8 @@
   --lg-color-gray-700: color-mix(in srgb, var(--lg-shell-ink), var(--lg-shell-paper) 20%);
   --lg-color-gray-800: color-mix(in srgb, var(--lg-shell-ink), var(--lg-shell-paper) 10%);
   --lg-color-gray-900: var(--lg-shell-ink);
+  --lg-selection-background: var(--lg-shell-accent);
+  --lg-selection-color: var(--lg-shell-paper);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -126,6 +128,24 @@ body {
   background: var(--lg-shell-backdrop);
 }
 
+::-moz-selection {
+  color: var(--lg-selection-color);
+  background-color: var(--lg-selection-background);
+  text-shadow: none;
+}
+
+::selection {
+  color: var(--lg-selection-color);
+  background-color: var(--lg-selection-background);
+  text-shadow: none;
+}
+
+@media (forced-colors: active) {
+  :root {
+    --lg-selection-background: Highlight;
+    --lg-selection-color: HighlightText;
+  }
+}
 body::before {
   position: fixed;
   z-index: -1;
