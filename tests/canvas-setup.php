@@ -8,11 +8,7 @@
 
 use Drupal\canvas\Entity\Component;
 use Drupal\clear_layers\Setup\CanvasSetup;
-use Drupal\Core\Config\ConfigFactory;
-use Drupal\Core\Config\MemoryStorage;
 use Drupal\Core\Form\FormState;
-use Drupal\Core\Render\PageDisplayVariantSelectionEvent;
-use Drupal\Core\Routing\RouteMatch;
 use Drupal\Core\Session\AnonymousUserSession;
 
 if (PHP_SAPI !== 'cli') {
@@ -45,7 +41,16 @@ foreach (CanvasSetup::COMPONENTS as $id) {
   $versions[$id] = $component->getActiveVersion();
 }
 $validated = [];
-foreach (CanvasSetup::definitions($versions) as $type => $definitions) {
+$definitionsByType = CanvasSetup::definitions($versions);
+$check(array_keys($definitionsByType) === ['page_variant'], 'Setup must not create separate shared patterns.');
+$check(array_keys($definitionsByType['page_variant']) === ['site_layout'], 'Normal pages must share one outer template.');
+$tree = $definitionsByType['page_variant']['site_layout']['component_tree'];
+$ids = array_column($tree, 'component_id');
+$check(count(array_keys($ids, 'marker.page_content', TRUE)) === 1, 'There must be exactly one page content marker.');
+$check(array_search('sdc.clear_layers.site-header', $ids, TRUE) < array_search('marker.page_content', $ids, TRUE)
+  && array_search('marker.page_content', $ids, TRUE) < array_search('sdc.clear_layers.site-footer', $ids, TRUE), 'The editable header and footer must surround page content.');
+$check(!in_array('sdc.clear_layers.shared-site-section', $ids, TRUE), 'The page template must own editable components.');
+foreach ($definitionsByType as $type => $definitions) {
   foreach ($definitions as $id => $values) {
     // Use a new ID so validation also covers entities not saved on this site.
     $values['id'] = 'clear_layers_setup_test_' . $id;
@@ -60,34 +65,13 @@ foreach (CanvasSetup::definitions($versions) as $type => $definitions) {
 }
 $check(!CanvasSetup::hasAccess(new AnonymousUserSession()), 'An anonymous visitor must not have setup access.');
 
-// Check the bundled subscriber without enabling it or changing the real theme.
-if (!class_exists(\Drupal\clear_layers_canvas_taxonomy\EventSubscriber\TaxonomyPageVariantSubscriber::class, FALSE)) {
-  require_once dirname(__DIR__) . '/starter-kit/modules/clear_layers_canvas_taxonomy/src/EventSubscriber/TaxonomyPageVariantSubscriber.php';
-}
-$memory = new MemoryStorage();
-$memory->write('system.theme', ['default' => 'clear_layers']);
-$factory = new ConfigFactory($memory, \Drupal::service('event_dispatcher'), \Drupal::service('config.typed'));
-$subscriber = new \Drupal\clear_layers_canvas_taxonomy\EventSubscriber\TaxonomyPageVariantSubscriber(\Drupal::entityTypeManager(), $factory);
-$route = new RouteMatch('entity.taxonomy_term.canonical', new \Symfony\Component\Routing\Route('/taxonomy/term/{taxonomy_term}'));
-$event = new PageDisplayVariantSelectionEvent('block_page', $route);
-$subscriber->onSelect($event);
-if (\Drupal::entityTypeManager()->getStorage('page_variant')->load('taxonomy_listing')?->status()) {
-  $check(($event->getPluginConfiguration()['page_variant'] ?? NULL) === 'taxonomy_listing', 'A term page did not select the dedicated template.');
-}
-$memory->write('system.theme', ['default' => 'other_theme']);
-$factory->reset('system.theme');
-$event = new PageDisplayVariantSelectionEvent('block_page', $route);
-$subscriber->onSelect($event);
-$check($event->getPluginId() === 'block_page', 'The helper must stop selecting Clear Layers templates after switching themes.');
-$check(in_array('config:system.theme', $event->getCacheTags(), TRUE), 'Theme switches must invalidate the helper selection.');
-
 $mode = $extra[0] ?? 'validate';
 $check(in_array($mode, ['validate', 'verify-existing'], TRUE), 'Use validate or verify-existing.');
 if ($mode === 'verify-existing') {
   // This branch is safe only when setup can retain all existing configuration.
   foreach (CanvasSetup::TARGETS as $type => $ids) {
     foreach ($ids as $id) {
-      $check(\Drupal::entityTypeManager()->getStorage($type)->load($id) !== NULL, 'verify-existing requires the four targets to exist.');
+      $check(\Drupal::entityTypeManager()->getStorage($type)->load($id) !== NULL, 'verify-existing requires the common layout to exist.');
     }
   }
   foreach (CanvasSetup::COMPONENTS as $id) {
@@ -101,7 +85,7 @@ if ($mode === 'verify-existing') {
   $switcher->switchTo(\Drupal\user\Entity\User::load(1));
   try {
     $result = CanvasSetup::create(FALSE);
-    $check($result['created'] === [] && count($result['retained']) === 4 && !$result['default_changed'], 'Repeated setup must retain existing content and the site default.');
+    $check($result['created'] === [] && $result['retained'] === ['site_layout'] && !$result['default_changed'], 'Repeated setup must retain existing content and the site default.');
     $form = \Drupal::formBuilder()->getForm(\Drupal\system\Form\ThemeSettingsForm::class, 'clear_layers');
     $button = $form['clear_layers_canvas_setup']['create'];
     $check(in_array('clear_layers_canvas_setup_submit', $button['#submit'], TRUE), 'The setup button must run the Canvas setup handler.');
@@ -124,4 +108,4 @@ if ($mode === 'verify-existing') {
   }
 }
 $check($before === $snapshot(), 'Validation or repeated setup changed active configuration.');
-print json_encode(['validated_new_definitions' => $validated, 'routing_and_access' => 'passed', 'existing_configuration' => $mode === 'verify-existing' ? 'retained' : 'unchanged'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;
+print json_encode(['validated_new_definitions' => $validated, 'layout_and_access' => 'passed', 'existing_configuration' => $mode === 'verify-existing' ? 'retained' : 'unchanged'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL;

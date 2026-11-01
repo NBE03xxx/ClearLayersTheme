@@ -1,0 +1,13 @@
+{# The listing owns its panel; the site's page template owns header/footer. #}
+{% set listing %}
+  {% include '@clear_layers/views/views-view.html.twig' %}
+{% endset %}
+{% embed 'clear_layers:taxonomy-listing' with {
+  attributes: create_attribute(),
+  taxonomy_title: view.getTitle(),
+  show_title: true,
+  title_alignment: 'left',
+  title_size: 32,
+} %}
+  {% block content %}{{ listing }}{% endblock %}
+{% endembed %}

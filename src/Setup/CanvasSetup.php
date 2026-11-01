@@ -15,8 +15,7 @@ use Drupal\Core\Session\AccountInterface;
 final class CanvasSetup {
 
   public const TARGETS = [
-    'pattern' => ['site_header', 'site_footer'],
-    'page_variant' => ['site_layout', 'taxonomy_listing'],
+    'page_variant' => ['site_layout'],
   ];
 
   public const HELPER_MODULES = [
@@ -25,8 +24,6 @@ final class CanvasSetup {
   ];
 
   public const COMPONENTS = [
-    'sdc.clear_layers.shared-site-section',
-    'sdc.clear_layers.taxonomy-listing',
     'sdc.clear_layers.site-navigation',
     'sdc.clear_layers.site-header',
     'sdc.clear_layers.site-footer',
@@ -39,7 +36,7 @@ final class CanvasSetup {
   ];
 
   public static function hasAccess(AccountInterface $account): bool {
-    foreach (['administer themes', 'administer modules', 'administer page template', 'administer patterns', 'administer components'] as $permission) {
+    foreach (['administer themes', 'administer modules', 'administer page template', 'administer components'] as $permission) {
       if (!$account->hasPermission($permission)) {
         return FALSE;
       }
@@ -71,13 +68,6 @@ final class CanvasSetup {
         if (!$entity->status() || count($entity->getTypedData()->validate())) {
           $blockers[] = $entity->label() . ' が無効または検証エラーのある状態です。Canvas で修正・公開してから実行してください。';
         }
-        if ($type === 'pattern') {
-          foreach ($entity->getComponentTree() as $item) {
-            if ($item->component_id === 'sdc.clear_layers.shared-site-section') {
-              $blockers[] = $entity->label() . ' に共通パターンの循環参照があります。';
-            }
-          }
-        }
       }
     }
     // Read raw entries so staged translation drafts are checked as well.
@@ -93,7 +83,7 @@ final class CanvasSetup {
         }
       }
       if ($affected) {
-        $blockers[] = '共通パターンまたはテンプレートに未公開の変更があります。Canvas で公開または破棄してから実行してください。';
+        $blockers[] = 'サイト共通レイアウトに未公開の変更があります。Canvas で公開または破棄してから実行してください。';
         break;
       }
     }
@@ -123,39 +113,22 @@ final class CanvasSetup {
     $header = $node('sdc.clear_layers.site-header', ['branding_width' => 60, 'branding_alignment' => 'left', 'actions_alignment' => 'right']);
     $footer = $node('sdc.clear_layers.site-footer', ['tag_columns' => 8, 'top_alignment' => 'left', 'left_alignment' => 'left', 'center_alignment' => 'left', 'right_alignment' => 'right', 'bottom_alignment' => 'left']);
     $footerMenu = $node('sdc.clear_layers.footer-menu', ['show_title' => FALSE, 'title_alignment' => 'left'], $footer['uuid'], 'footer_left');
-    $common = static fn (string $section): array => $node('sdc.clear_layers.shared-site-section', ['section' => $section]);
-    $taxonomy = $node('sdc.clear_layers.taxonomy-listing', ['show_title' => TRUE, 'title_alignment' => 'left', 'title_size' => 32]);
     return [
-      'pattern' => [
-        'site_header' => [
-          'id' => 'site_header', 'label' => 'サイト共通ヘッダー', 'status' => TRUE,
+      'page_variant' => [
+        'site_layout' => [
+          'id' => 'site_layout', 'label' => 'サイト共通レイアウト', 'status' => TRUE,
+          'description' => 'ヘッダー・フッターをここで直接編集します。Page content には各ページの本文や一覧を表示します。',
           'component_tree' => [
             $header,
             $node('block.system_branding_block', ['label' => 'サイトブランディング', 'label_display' => '0', 'use_site_logo' => TRUE, 'use_site_name' => TRUE, 'use_site_slogan' => FALSE], $header['uuid'], 'branding'),
             $node('sdc.clear_layers.color-scheme', ['label' => '表示', 'system_label' => '自動', 'light_label' => 'ライト', 'dark_label' => 'ダーク'], $header['uuid'], 'actions'),
             $node('sdc.clear_layers.site-navigation', ['alignment' => 'left', 'left_spacing' => 0, 'right_spacing' => 0, 'menu_name' => 'main', 'toggle_label' => 'メニュー']),
-          ],
-        ],
-        'site_footer' => [
-          'id' => 'site_footer', 'label' => 'サイト共通フッター', 'status' => TRUE,
-          'component_tree' => [
+            $node('marker.page_content'),
             $footer,
             $footerMenu,
             $node('block.system_menu_block.footer', ['label' => 'フッター', 'label_display' => '0', 'level' => 1, 'depth' => 1, 'expand_all_items' => FALSE], $footerMenu['uuid'], 'content'),
             $node('sdc.clear_layers.account-menu', ['show_title' => FALSE, 'title_alignment' => 'right', 'show_account_link' => FALSE], $footer['uuid'], 'footer_right'),
           ],
-        ],
-      ],
-      'page_variant' => [
-        'site_layout' => [
-          'id' => 'site_layout', 'label' => 'サイト共通レイアウト', 'status' => TRUE,
-          'description' => 'サイト共通ヘッダーとフッターの間にページの内容を表示します。',
-          'component_tree' => [$common('header'), $node('marker.page_content'), $common('footer')],
-        ],
-        'taxonomy_listing' => [
-          'id' => 'taxonomy_listing', 'label' => '分類・タグの一覧', 'status' => TRUE,
-          'description' => '分類名と記事一覧をガラス調のパネルで表示します。',
-          'component_tree' => [$common('header'), $taxonomy, $node('marker.page_content', [], $taxonomy['uuid'], 'content'), $common('footer')],
         ],
       ],
     ];
@@ -166,7 +139,7 @@ final class CanvasSetup {
    */
   public static function create(bool $makeDefault = FALSE): array {
     if (!self::hasAccess(\Drupal::currentUser())) {
-      throw new \RuntimeException('テーマ・モジュール・Canvas の部品・パターン・テンプレートを管理する権限が必要です。');
+      throw new \RuntimeException('テーマ・モジュール・Canvas の部品・テンプレートを管理する権限が必要です。');
     }
     $lock = \Drupal::lock();
     if (!$lock->acquire('clear_layers.canvas_setup', 120)) {

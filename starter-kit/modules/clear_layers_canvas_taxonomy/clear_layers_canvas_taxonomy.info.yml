@@ -1,6 +1,6 @@
 name: Clear Layers Canvas Taxonomy
 type: module
-description: Applies a Canvas template to taxonomy listing pages and provides one-level footer menu defaults in Clear Layers.
+description: Provides one-level footer menu defaults for Canvas in Clear Layers. Listing pages use the site's default page template.
 package: Custom
 core_version_requirement: ^11
 dependencies:

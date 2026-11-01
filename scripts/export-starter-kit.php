@@ -32,9 +32,7 @@ $manager = \Drupal::entityTypeManager();
 $configs = [];
 $entities = [];
 $queue = [
-  'canvas.pattern.site_header', 'canvas.pattern.site_footer',
-  'canvas.page_variant.jisaba', 'canvas.page_variant.site_layout',
-  'canvas.page_variant.taxonomy_listing',
+  'canvas.page_variant.site_layout',
   'canvas.content_template.node.blog.full', 'canvas.content_template.node.blog.card',
   'canvas.content_template.node.page.full',
   'views.view.taxonomy_term',
@@ -168,7 +166,7 @@ if ($mode === 'export') {
     'clear_layers.settings' => ['simpleConfigUpdate' => $settings],
     'system.theme' => ['simpleConfigUpdate' => ['default' => 'clear_layers']],
     'system.site' => ['simpleConfigUpdate' => ['page.front' => '/home', 'page.404' => '/404']],
-    'canvas.settings' => ['simpleConfigUpdate' => ['default_page_variant' => 'jisaba']],
+    'canvas.settings' => ['simpleConfigUpdate' => ['default_page_variant' => 'site_layout']],
     'system.date' => ['simpleConfigUpdate' => ['timezone.default' => \Drupal::config('system.date')->get('timezone.default')]],
     'user.role.anonymous' => ['grantPermissions' => ['access content', 'view media']],
     'user.role.authenticated' => ['grantPermissions' => ['access content', 'view media']],
@@ -208,7 +206,7 @@ if ($mode === 'export') {
   }
   // Ship the maintained helper, including safe defaults for Canvas menu forms.
   $moduleSource = $themePath . '/starter-kit/modules/clear_layers_canvas_taxonomy';
-  foreach (['clear_layers_canvas_taxonomy.info.yml', 'clear_layers_canvas_taxonomy.services.yml', 'README.md', 'src/EventSubscriber/TaxonomyPageVariantSubscriber.php', 'src/Hook/MenuHooks.php', 'src/Plugin/Block/FooterMenuBlock.php'] as $relative) {
+  foreach (['clear_layers_canvas_taxonomy.info.yml', 'README.md', 'src/Hook/MenuHooks.php', 'src/Plugin/Block/FooterMenuBlock.php'] as $relative) {
     if (!is_file($moduleSource . '/' . $relative)) {
       throw new RuntimeException('Missing maintained Canvas helper file: ' . $relative);
     }

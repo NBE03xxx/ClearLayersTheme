@@ -33,6 +33,19 @@ vendor/bin/drush php:script web/themes/custom/clear_layers/tests/canvas-health.p
 vendor/bin/drush php:script web/themes/custom/clear_layers/tests/theme-integrity.php
 ```
 
+Canvas の初期構成と、移行済みの共通レイアウトの検証:
+
+```sh
+vendor/bin/drush php:script web/themes/custom/clear_layers/tests/canvas-setup.php
+vendor/bin/drush php:script web/themes/custom/clear_layers/tests/site-layout.php
+```
+
+`canvas-setup.php` は、生成する外枠が `site_layout` 1つであること、ヘッダー・フッターを直接編集できること、Page content が1つであること、Canvas の schema と権限を検証します。必要なコンポーネントが登録済みのサイトで実行してください。
+
+`site-layout.php` は、[v1.1.5以前の旧バージョンからの移行](upgrade-from-v1.1.5.md)が完了し、Canvas に未公開の変更がないサイトで実行します。移行の再実行で変更が発生しないこと、部品の入力値・親子関係の保持、重複 UUID・独自設定の検出、編集プレビューの部品選択情報、代表ページの共通部分とタグ一覧・RSS を確認します。保存済み設定・下書きは変更しません。実際のブラウザーでのクリック・保存・公開と画面幅ごとの表示は別途確認します。
+
+Clear Layers の v1.1.5以前の旧バージョン由来の `theme_clear_layers` の削除と PageRegion の無効化は、[更新手順の整理操作](upgrade-from-v1.1.5.md#3-不要なテーマテンプレートを整理する)に従って行います。移行スクリプトの自動バックアップ、整理前の追加バックアップ、検証後の削除も同じ更新手順で説明しています。
+
 同梱背景画像の選択・プレビュー・保存値の検証（サイトの設定は保存しません）:
 
 ```sh

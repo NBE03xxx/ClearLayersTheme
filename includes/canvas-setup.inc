@@ -18,7 +18,7 @@ function clear_layers_canvas_setup_form(array &$form): void {
   $section = &$form['clear_layers_canvas_setup'];
   $section['description'] = [
     '#type' => 'html_tag', '#tag' => 'p',
-    '#value' => t('Blank などから新しくサイトを構成する場合に使います。「サイト共通ヘッダー」「サイト共通フッター」「サイト共通レイアウト」「分類・タグの一覧」を作成し、分類・タグのページに専用テンプレートを適用します。Library で配置できる部品が0件のフォルダーを非表示にします。既存の同名構成は保持します。ページ・記事・メニュー項目・分類・Views は作成しません。'),
+    '#value' => t('ヘッダー・Page content・フッターを含む「サイト共通レイアウト」を作成します。共通部分はこのテンプレートで直接編集し、記事・固定ページの本文はコンテンツテンプレート、検索・分類一覧は一覧側で設定します。Library で配置できる部品が0件のフォルダーを非表示にします。既存の同名構成は保持します。ページ・記事・メニュー項目・分類・Views は作成しません。v1.1.5以前の構成の移行手順はテーマの docs/upgrade-from-v1.1.5.md を参照してください。'),
   ];
   $blockers = CanvasSetup::blockers();
   if ($blockers) {
@@ -67,7 +67,7 @@ function clear_layers_canvas_setup_submit(array &$form, FormStateInterface $form
     // submitted input; normal theme-setting handlers must not run here.
     $makeDefault = !empty($form_state->getUserInput()['clear_layers_setup_default']);
     $result = CanvasSetup::create($makeDefault);
-    \Drupal::messenger()->addStatus(t('Canvas の初期構成を用意しました。作成：@created、既存を保持：@retained。分類・タグの一覧への適用と、Library の0件フォルダーの非表示が有効です。', [
+    \Drupal::messenger()->addStatus(t('Canvas の初期構成を用意しました。作成：@created、既存を保持：@retained。共通ヘッダー・フッターは「サイト共通レイアウト」で編集してください。Library の0件フォルダーの非表示が有効です。', [
       '@created' => count($result['created']), '@retained' => count($result['retained']),
     ]));
     if ($result['default_changed']) {
