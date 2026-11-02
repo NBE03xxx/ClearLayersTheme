@@ -2,7 +2,7 @@
 
 [README に戻る](../README.md)
 
-この手順は、v1.2.0の Clear Layers を初めて適用し、Blank などから Canvas のページを新しく作る場合が対象です。Canvas を使わない場合は、[テーマのインストール](../README.md#インストール)だけで利用できます。v1.1.5以前の旧バージョンで作成済みの構成を更新する場合は、[更新専用の手順](upgrade-from-v1.1.5.md)を使用してください。
+この手順は、v1.2 系の Clear Layers を初めて適用し、Blank などから Canvas のページを新しく作る場合が対象です。Canvas を使わない場合は、[テーマのインストール](../README.md#インストール)だけで利用できます。v1.1.5以前の旧バージョンで作成済みの構成を更新する場合は、[更新専用の手順](upgrade-from-v1.1.5.md)を使用してください。
 
 ## 1. Canvas とテーマを導入する
 
@@ -43,7 +43,7 @@ Blank の初期ページを使う新規サイトでは、テーマのインス�
 | 種類 | 表示名 / ID | 初期内容・用途 |
 | --- | --- | --- |
 | ページテンプレート | サイト共通レイアウト / `site_layout` | 直接編集できるヘッダー・ナビゲーション → Page content → 直接編集できるフッター |
-| 補助モジュール | Clear Layers Canvas Taxonomy | 新規フッターメニューブロックの表示階層を1にする。分類ページもサイトの既定レイアウトを利用 |
+| 補助モジュール | Clear Layers Canvas Taxonomy | 新規フッターメニューブロックの表示階層を1にする。管理テーマ本来のレイアウトを保持し、公開側の分類ページはサイトの既定レイアウトを利用 |
 | 補助モジュール | Canvas Library Display | Library の Components タブで、配置できる部品が0件のフォルダーを非表示にする |
 
 補助モジュールはテーマ内の `starter-kit/modules/clear_layers_canvas_taxonomy` と `starter-kit/modules/canvas_library_display` から Drupal が検出し、ボタンが一緒に有効化します。利用者によるファイルのコピーは不要です。Canvas 本体は、あらかじめ導入・有効化してください。既存のメニュー設定は保持します。

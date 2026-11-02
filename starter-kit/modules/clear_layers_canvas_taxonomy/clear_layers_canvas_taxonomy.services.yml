@@ -1,0 +1,6 @@
+services:
+  clear_layers_canvas_taxonomy.admin_theme_page_variant:
+    class: Drupal\clear_layers_canvas_taxonomy\EventSubscriber\AdminThemePageVariantSubscriber
+    arguments: ['@theme.manager', '@config.factory', '@module_handler']
+    tags:
+      - { name: event_subscriber }

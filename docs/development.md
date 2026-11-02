@@ -46,6 +46,16 @@ vendor/bin/drush php:script web/themes/custom/clear_layers/tests/site-layout.php
 
 Clear Layers の v1.1.5以前の旧バージョン由来の `theme_clear_layers` の削除と PageRegion の無効化は、[更新手順の整理操作](upgrade-from-v1.1.5.md#3-不要なテーマテンプレートを整理する)に従って行います。移行スクリプトの自動バックアップ、整理前の追加バックアップ、検証後の削除も同じ更新手順で説明しています。
 
+Gin Login と公開側の Canvas レイアウトの検証:
+
+```sh
+vendor/bin/drush --uri=https://example.com php:script web/themes/custom/clear_layers/tests/login-layout.php
+```
+
+`--uri` は検証サイトの URL に置き換えます。`login-layout.php` は、Clear Layers が既定テーマ、Gin が管理テーマで、Gin Login と Clear Layers Canvas Taxonomy が有効、Canvas の既定ページテンプレートが `site_layout`、Gin Login の背景画像が設定済みのサイトで実行します。ログイン・パスワード再設定のフォーム、見出し、スキップリンク、背景画像、公開ページのヘッダー・フッターとテーマ別のテンプレート選択を確認します。フォーム送信・認証・メール送信は行わず、保存済み設定・Canvas の下書きが変わらないことを確認します。PC・スマートフォン幅の表示、横はみ出し、パスワード表示切替はブラウザーで別途確認してください。
+
+管理テーマとの競合を防ぐ処理は、テーマ同梱補助モジュールの `AdminThemePageVariantSubscriber` にあります。Canvas がページ描画を選ぶ優先度 `-100` の後に、`-200` で必要な場合だけ Core の通常描画へ戻します。Core / Canvas / Gin Login の更新時には、このテストと共通レイアウトの検証を実行してください。
+
 同梱背景画像の選択・プレビュー・保存値の検証（サイトの設定は保存しません）:
 
 ```sh
