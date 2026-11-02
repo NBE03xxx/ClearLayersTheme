@@ -31,8 +31,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const webpack = require('webpack-stream');
 const webpackCompiler = require('webpack');
-const webpackConfig = require('./webpack.config.js');
+const webpackConfig = require('./webpack.config.cjs');
 const glob = require('glob');
+const postcssConfig = require('./postcss.config.cjs');
 
 /*------------------------------------*\
   02 - Paths
@@ -127,7 +128,7 @@ function componentStylesWatch(cb) {
     .pipe(dependents())
     .pipe(sass(sassOpts))
     .on('error', sass.logError)
-    .pipe(postcss()) // PostCSS will automatically grab any additional plugins and settings from postcss.config.js
+    .pipe(postcss(postcssConfig.plugins))
     .pipe(
       rename(function (file) {
         file.dirname = file.dirname.replace('/src', '');
@@ -144,7 +145,7 @@ function componentStylesBuild(cb) {
     .src(paths.component.styles.src)
     .pipe(sass(sassOpts))
     .on('error', sass.logError)
-    .pipe(postcss())
+    .pipe(postcss(postcssConfig.plugins))
     .pipe(
       rename(function (file) {
         file.dirname = file.dirname.replace('/src', '');
@@ -198,7 +199,7 @@ function componentScriptsBuild(cb) {
   processes for compiling files. The final production, "Build" process includes
   minified files.
 
-  The BrowserSync Proxy address is determined by creating a custom version of a .env file, from the .env-example file.
+  The BrowserSync Proxy address is determined by creating a custom version of a .env file, from the tools/.env-example file in the theme root.
   Here you will specify the exact local address of your website.
 \*------------------------------------*/
 

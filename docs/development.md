@@ -4,6 +4,25 @@
 
 SDC ごとの Twig・CSS・JavaScript と、SCSS／JavaScript のソースを `components/` 内で管理します。Drupal の標準テンプレートは `templates/`、設定フォームは `theme-settings.php`、テーマの処理は `clear_layers.theme` にあります。
 
+## ディレクトリ構成
+
+| 配置 | 内容 |
+| --- | --- |
+| テーマ直下 | Drupal が読み込む `clear_layers.*`、`theme-settings.php`、標準ロゴ、npm の定義・ロックファイル、ライセンスと案内 |
+| `components/` | SDC とコンポーネントごとのソース・ビルド済みファイル |
+| `templates/`・`src/`・`includes/` | Drupal のテンプレート、PHP クラス、テーマの共通処理 |
+| `config/` | テーマ同梱の初期設定・設定スキーマ |
+| `tools/` | Gulp・Webpack・Babel・PostCSS・ESLint・Stylelint の設定と開発環境の設定例 |
+| `scripts/`・`tests/` | 導入・移行スクリプトと検証コード |
+| `docs/`・`starter-kit/` | 利用・開発の手順、任意のサイトデータ導入用ツール |
+| `css/`・`partials/`・`images/`・`background/` | 共通 CSS、SCSS の共通部品、画像 |
+
+`tools/` 内の設定ファイルは npm スクリプトとビルド処理から明示的に読み込みます。Gulp の作業ディレクトリはテーマ直下に固定しているため、コンポーネントの出力先、SCSS の参照先、画像の参照先は従来どおりです。対応ブラウザーの指定は `package.json` の `browserslist` にまとめています。ESLint と Stylelint の設定は各1つです。
+
+Drupal が自動検出するテーマ定義・フック・設定フォーム・`logo.svg` や、npm・nvm・Git が標準で読むファイルはテーマ直下に置きます。既存の画像 URL の互換性を保つため、`logo.png` と旧 `screenshot.png` も保持しています。現在の外観一覧のプレビューには `clear_layers.info.yml` が指定する `images/theme-preview-five-colors.png` を使用します。
+
+## ビルドと lint
+
 ビルドする場合はテーマディレクトリで実行します。Node.js の指定は `.nvmrc` を参照してください。
 
 ```sh
@@ -11,7 +30,22 @@ npm ci
 npm run build
 ```
 
-`npm run watch` のブラウザー連携を使う場合は `.env-example` を `.env` にコピーし、プロキシ先を開発環境に合わせて設定します。`.env` は Git で管理しません。
+`npm run watch` のブラウザー連携を使う場合は、テーマ直下で次のように設定例をコピーし、`.env` のプロキシ先を開発環境に合わせて設定します。`.env` は Git で管理しません。
+
+```sh
+cp tools/.env-example .env
+npm run watch
+```
+
+lint もテーマ直下で実行します。`stylelint:fix` は SCSS を修正するため、実行後に差分を確認してください。
+
+```sh
+npm run lint:js
+npm run stylelint
+npm run stylelint:fix
+```
+
+ESLint をエディターから呼び出す場合は設定ファイルに `tools/eslint.config.mjs`、Stylelint は `tools/stylelint.config.mjs` を指定してください。
 
 ビルド済みの CSS・JavaScript は配布に必要なため Git に含めます。`node_modules`、ソースマップ、ログ、バックアップ、AGENTS.md、実サイトの導入用データと個別移行スクリプトは `.gitignore` で除外しています。
 

@@ -38,11 +38,12 @@
         "webpack-stream": "^7.0.0"
     },
     "scripts": {
-        "clean": "gulp clean",
-        "watch": "gulp watch",
-        "build": "gulp build",
-        "stylelint": "stylelint --ignore-path ./.stylelintignore ./**/*.scss",
-        "stylelint:fix": "stylelint --ignore-path ./.stylelintignore ./**/*.scss --fix"
+        "clean": "gulp --cwd . --gulpfile tools/gulpfile.cjs clean",
+        "watch": "gulp --cwd . --gulpfile tools/gulpfile.cjs watch",
+        "build": "gulp --cwd . --gulpfile tools/gulpfile.cjs build",
+        "lint:js": "eslint --config tools/eslint.config.mjs \"components/**/src/*.js\"",
+        "stylelint": "stylelint --config tools/stylelint.config.mjs --ignore-path tools/.stylelintignore \"**/*.scss\"",
+        "stylelint:fix": "npm run stylelint -- --fix"
     },
     "dependencies": {
         "@jldust/accessible-menu": "^1.1.0",
@@ -51,5 +52,10 @@
         "cssnano": "^7.0.5",
         "dotenv": "^16.4.5",
         "postcss-inline-svg": "^6.0.0"
-    }
+    },
+    "browserslist": [
+        "last 4 versions",
+        "> .5%",
+        "not dead"
+    ]
 }

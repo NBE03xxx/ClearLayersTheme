@@ -57,10 +57,7 @@ export default defineConfig([
   // Relax rules for build configuration files
   {
     files: [
-      'gulpfile.js',
-      'webpack.config.js',
-      'postcss.config.js',
-      '*.config.js',
+      'tools/**/*.cjs',
     ],
     rules: {
       'no-unused-vars': 'off', // Config files often import for types/plugins

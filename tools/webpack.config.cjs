@@ -16,7 +16,7 @@
 \*------------------------------------*/
 
 const ESLintPlugin = require('eslint-webpack-plugin');
-const webpack = require('webpack');
+const path = require('node:path');
 
 
 
@@ -43,7 +43,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader', // All Babel plugins and options will be loaded via the babel.config.js file
+          loader: 'babel-loader',
+          options: {
+            configFile: path.join(__dirname, 'babel.config.cjs'),
+          },
         },
       },
     ],
@@ -51,6 +54,7 @@ module.exports = {
   plugins: [
     new ESLintPlugin({
       configType: 'flat',
+      overrideConfigFile: path.join(__dirname, 'eslint.config.mjs'),
     }),
   ],
 };
