@@ -6,7 +6,8 @@ Drupal 11 用の、半透明のパネル・柔らかなぼかし・重なりに�
 
 - 機械名: `clear_layers`
 - バージョン: [v1.2.2](docs/releases/v1.2.2.md)
-- 検証環境: Drupal 11.4.11 / Canvas 1.12.0
+- 検証環境: Drupal 11.4.12 / Canvas 1.12.0
+  - 11.4.12 への更新時は、Starterkit の差分と `web/` 構成でのテーマ生成を確認しました。
 - 親テーマ: なし（`base theme: false`）
 
 ## 利用状況に合った手順
