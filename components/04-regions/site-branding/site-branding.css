@@ -39,6 +39,39 @@
   max-width: 100%;
 }
 
+:root[data-site-branding-alignment] .site-branding-block {
+  width: 100%;
+  min-width: 0;
+}
+
+:root[data-site-branding-alignment] .site-branding {
+  width: var(--site-branding-width, 100%);
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: auto;
+  justify-content: var(--site-branding-align, flex-start);
+  column-gap: min(1.5rem, 5%);
+  text-align: var(--site-branding-text-align, left);
+}
+
+:root[data-site-branding-alignment=center] .site-branding {
+  margin-left: auto;
+}
+
+:root[data-site-branding-alignment=right] .site-branding {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+:root[data-site-branding-alignment] .site-branding__text {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+:root[data-site-branding-alignment][data-branding-text-position=below] .site-branding {
+  align-items: var(--site-branding-align, flex-start);
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-color-scheme=light]) .site-branding__logo img[src*="/clear_layers/images/branding/logo-"][src$=".svg"] {
     filter: brightness(1.6) saturate(0.8);
@@ -65,6 +98,7 @@
   -webkit-text-decoration: none;
   text-decoration: none;
   word-wrap: anywhere;
+  overflow-wrap: anywhere;
 }
 
 .site-branding__name:hover {
@@ -79,4 +113,5 @@
   font-size: 0.875rem;
   line-height: 1.7;
   word-wrap: anywhere;
+  overflow-wrap: anywhere;
 }

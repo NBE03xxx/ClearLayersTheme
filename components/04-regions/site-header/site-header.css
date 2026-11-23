@@ -17,6 +17,10 @@
   padding-block: max(1.5rem, min(4vw, 3rem));
 }
 
+:root[data-site-branding-alignment] .site-header .site-header__inner.l-container {
+  grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
+}
+
 .site-header__branding {
   display: flex;
   flex-direction: column;

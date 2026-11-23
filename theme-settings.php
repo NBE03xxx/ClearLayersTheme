@@ -16,6 +16,7 @@ require_once __DIR__ . '/includes/logo.inc';
 require_once __DIR__ . '/includes/logo-settings.inc';
 require_once __DIR__ . '/includes/spacing.inc';
 require_once __DIR__ . '/includes/glass.inc';
+require_once __DIR__ . '/includes/branding.inc';
 require_once __DIR__ . '/includes/canvas-setup.inc';
 
 /**
@@ -93,6 +94,30 @@ function clear_layers_form_system_theme_settings_alter(&$form, FormStateInterfac
     '#description' => t('サイト名とスローガンの位置を選択します。初期値は「右」です。Canvas の共通ヘッダーにも適用します。「右」では狭い画面でも横並びを保ち、長い文字は文字の領域内で折り返します。ロゴやサイト名を表示するかどうかは、ブランディングブロックで設定してください。'),
     '#weight' => -7,
   ];
+  $form['clear_layers_settings']['branding_alignment'] = [
+    '#type' => 'select',
+    '#title' => t('サイトブランディングの配置'),
+    '#options' => [
+      'left' => t('左寄せ'),
+      'center' => t('中央寄せ'),
+      'right' => t('右寄せ'),
+    ],
+    '#default_value' => clear_layers_branding_alignment($provider->getSetting('branding_alignment', 'clear_layers')) ?? 'left',
+    '#description' => t('ロゴ・サイト名・スローガンのまとまりを、親要素の左・中央・右に配置します。まとまりの中の文字も同じ方向に揃えます。保存すると Canvas の共通ヘッダーにも適用し、ヘッダー側のブランディングの表示位置より優先します。'),
+    '#weight' => -6,
+  ];
+  $form['clear_layers_settings']['branding_width'] = [
+    '#type' => 'number',
+    '#title' => t('サイトブランディングの幅（％）'),
+    '#default_value' => clear_layers_branding_width($provider->getSetting('branding_width', 'clear_layers')),
+    '#min' => 1,
+    '#max' => 100,
+    '#step' => 1,
+    '#required' => TRUE,
+    '#description' => t('親要素の幅に対して1〜100％で指定します。初期値は100％です。ヘッダー内では操作部品に必要な幅を確保し、残りの領域を基準にします。100％なら空いている幅をすべて使います。ヘッダー側のブランディングの幅より、この設定を優先します。狭い画面でも指定した割合を維持します。ロゴ画像そのものの拡大率ではありません。'),
+    '#weight' => -5,
+  ];
+  $form['#submit'] = array_merge(['clear_layers_branding_submit'], $form['#submit'] ?? []);
 
   $options = [];
   foreach (clear_layers_color_palettes() as $id => $palette) {
@@ -178,6 +203,14 @@ function clear_layers_form_system_theme_settings_alter(&$form, FormStateInterfac
 
   clear_layers_canvas_setup_form($form);
 
+}
+
+/**
+ * Normalizes branding layout before the standard theme settings save.
+ */
+function clear_layers_branding_submit(array &$form, FormStateInterface $form_state): void {
+  $form_state->setValue('branding_alignment', clear_layers_branding_alignment($form_state->getValue('branding_alignment')) ?? 'left');
+  $form_state->setValue('branding_width', clear_layers_branding_width($form_state->getValue('branding_width')));
 }
 
 /**

@@ -1,6 +1,6 @@
 {# Preserve block attributes and contextual editing controls around the SDC. #}
 {{ clear_layers_logo_cache }}
-<div{{ attributes }}>
+<div{{ attributes.addClass('site-branding-block') }}>
   {{ title_prefix }}
   {% if label %}
     <h2{{ title_attributes }}>{{ label }}</h2>

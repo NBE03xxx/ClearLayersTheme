@@ -18,6 +18,12 @@
   padding-block: clamp(1.5rem, 4vw, 3rem);
 }
 
+// When theme-level branding settings are used, reserve only the space the
+// actions need. A percentage inside the old 25% column cannot use spare space.
+:root[data-site-branding-alignment] .site-header .site-header__inner.l-container {
+  grid-template-columns: minmax(0, 1fr) minmax(0, max-content);
+}
+
 .site-header__branding {
   display: flex;
   flex-direction: column;

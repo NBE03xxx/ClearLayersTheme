@@ -19,6 +19,7 @@ require_once __DIR__ . '/includes/background.inc';
 require_once __DIR__ . '/includes/logo.inc';
 require_once __DIR__ . '/includes/spacing.inc';
 require_once __DIR__ . '/includes/glass.inc';
+require_once __DIR__ . '/includes/branding.inc';
 
 /**
  * Implements hook_element_info_alter().
@@ -51,6 +52,14 @@ function clear_layers_preprocess_html(array &$variables): void {
   $attributes->setAttribute('data-glass-depth', clear_layers_glass_depth($config->get('glass_depth')));
   $attributes->setAttribute('data-branding-text-position', $config->get('branding_text_position') === 'below' ? 'below' : 'right');
   $style = (string) ($attributes['style'] ?? '');
+  // Leave existing Canvas alignment intact until the new settings are saved.
+  if ($config->get('branding_alignment') !== NULL || $config->get('branding_width') !== NULL) {
+    $alignment = clear_layers_branding_alignment($config->get('branding_alignment')) ?? 'left';
+    $attributes->setAttribute('data-site-branding-alignment', $alignment);
+    $style .= '; --site-branding-width: ' . clear_layers_branding_width($config->get('branding_width')) . '%';
+    $style .= '; --site-branding-align: ' . ['left' => 'flex-start', 'center' => 'center', 'right' => 'flex-end'][$alignment];
+    $style .= '; --site-branding-text-align: ' . $alignment;
+  }
   foreach (['light', 'dark'] as $mode) {
     foreach ($palette[$mode] as $token => $color) {
       $style .= '; --lg-palette-' . $mode . '-' . $token . ': ' . $color;

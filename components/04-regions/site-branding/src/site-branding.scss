@@ -39,6 +39,41 @@
   max-width: 100%;
 }
 
+// Fill the slot before calculating the SDC's percentage width. This also
+// prevents a flex parent from shrinking the Drupal block to its content.
+:root[data-site-branding-alignment] .site-branding-block {
+  width: 100%;
+  min-width: 0;
+}
+
+:root[data-site-branding-alignment] .site-branding {
+  width: var(--site-branding-width, 100%);
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: auto;
+  justify-content: var(--site-branding-align, flex-start);
+  column-gap: min(1.5rem, 5%);
+  text-align: var(--site-branding-text-align, left);
+}
+
+:root[data-site-branding-alignment='center'] .site-branding {
+  margin-left: auto;
+}
+
+:root[data-site-branding-alignment='right'] .site-branding {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+:root[data-site-branding-alignment] .site-branding__text {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+:root[data-site-branding-alignment][data-branding-text-position='below'] .site-branding {
+  align-items: var(--site-branding-align, flex-start);
+}
+
 // Keep the navy Jisaba wordmark legible against the dark site background.
 @media (prefers-color-scheme: dark) {
   :root:not([data-color-scheme='light']) .site-branding__logo img[src*='/clear_layers/images/branding/logo-'][src$='.svg'] {

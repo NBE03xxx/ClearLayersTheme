@@ -60,6 +60,18 @@ clear_layers.settings:
       label: 'Site name and slogan position relative to the logo'
       constraints:
         Choice: [right, below]
+    branding_alignment:
+      type: string
+      label: 'Site branding alignment within its parent'
+      constraints:
+        Choice: [left, center, right]
+    branding_width:
+      type: integer
+      label: 'Site branding width as a percentage of its parent'
+      constraints:
+        Range:
+          min: 1
+          max: 100
     mobile_menu_direction:
       type: string
       label: 'Mobile menu direction'
