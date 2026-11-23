@@ -4,6 +4,8 @@
 
 設定画面は「外観 → Clear Layers の設定」（`/admin/appearance/settings/clear_layers`）です。
 
+テーマファイルを更新した後は、Drupalプロジェクト直下で `vendor/bin/drush cr` を実行してください。「構成を保存」で設定を有効にすることと、更新されたCSS・JavaScriptを配信するためのキャッシュ再構築は別の操作です。CSSファイル本体が新しくても、古い集約CSSが残っているとページの表示に反映されないことがあります。
+
 ## Canvas の共通レイアウト設定
 
 「Canvas の初期構成」は、ヘッダー・Page content・フッターを持つ「サイト共通レイアウト」を作成するための欄です。作成後の共通ヘッダー・フッターは `/canvas/editor/page_variant/site_layout` で直接編集します。記事・固定ページの本文は用途別コンテンツテンプレート、検索・タグ一覧は一覧側の設定で管理します。

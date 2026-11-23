@@ -179,6 +179,10 @@ body :focus-visible {
   min-width: 0;
 }
 
+.view-search .view-content {
+  overflow-wrap: anywhere;
+}
+
 .site-shell {
   display: flex;
   flex-direction: column;

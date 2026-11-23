@@ -170,6 +170,11 @@ body :focus-visible {
   min-width: 0;
 }
 
+// Search excerpts may contain file paths and other long unbroken strings.
+.view-search .view-content {
+  overflow-wrap: anywhere;
+}
+
 .site-shell {
   display: flex;
   flex-direction: column;

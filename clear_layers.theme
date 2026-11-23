@@ -22,6 +22,38 @@ require_once __DIR__ . '/includes/glass.inc';
 require_once __DIR__ . '/includes/branding.inc';
 
 /**
+ * Implements hook_library_info_alter().
+ */
+function clear_layers_library_info_alter(array &$libraries, string $extension): void {
+  $theme_directory = realpath(__DIR__);
+  $base_directory = $extension === 'core' ? DRUPAL_ROOT . '/core' : $theme_directory;
+  foreach ($libraries as $name => &$library) {
+    if ($extension !== 'clear_layers' && ($extension !== 'core' || !str_starts_with($name, 'components.clear_layers--'))) {
+      continue;
+    }
+    $files = array_keys($library['js'] ?? []);
+    foreach ($library['css'] ?? [] as $assets) {
+      $files = array_merge($files, array_keys($assets));
+    }
+    $versions = [];
+    foreach (array_unique($files) as $file) {
+      // Library paths are relative to their provider (core for SDC), while
+      // leading slashes start at Drupal root. Hash only this theme's assets.
+      $path = realpath(str_starts_with($file, '/') ? DRUPAL_ROOT . $file : $base_directory . '/' . $file);
+      if ($path !== FALSE && str_starts_with($path, $theme_directory . '/') && is_file($path)) {
+        $versions[$file] = hash_file('sha256', $path);
+      }
+    }
+    if ($versions) {
+      ksort($versions);
+      // Also invalidate aggregate URLs on Drupal versions that use library
+      // versions instead of hashing asset contents themselves.
+      $library['version'] = hash('sha256', serialize($versions));
+    }
+  }
+}
+
+/**
  * Implements hook_element_info_alter().
  */
 function clear_layers_element_info_alter(array &$info): void {
